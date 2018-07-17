@@ -4,7 +4,6 @@ import { Navigation } from 'react-native-navigation';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
 import * as EthWallet from './model/ethWallet';
 import { addNewTransaction } from './model/transactions';
-import SplashScreen from 'react-native-splash-screen';
 
 registerScreens();
 registerScreenVisibilityListener();
