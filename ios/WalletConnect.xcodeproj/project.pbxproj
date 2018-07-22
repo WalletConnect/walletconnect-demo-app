@@ -917,7 +917,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 9W2WHQU3D5;
+						DevelopmentTeam = 75WDJA7UZQ;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1558,7 +1558,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 9W2WHQU3D5;
+				DEVELOPMENT_TEAM = 75WDJA7UZQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -1583,7 +1583,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = software.balanced.fcmtest;
+				PRODUCT_BUNDLE_IDENTIFIER = org.walletconnect.walletconnect;
 				PRODUCT_NAME = WalletConnect;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1601,7 +1601,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9W2WHQU3D5;
+				DEVELOPMENT_TEAM = 75WDJA7UZQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -1626,7 +1626,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = software.balanced.fcmtest;
+				PRODUCT_BUNDLE_IDENTIFIER = org.walletconnect.walletconnect;
 				PRODUCT_NAME = WalletConnect;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
