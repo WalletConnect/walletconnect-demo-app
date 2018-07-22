@@ -56,7 +56,7 @@
     "url": "^0.10.3",
     "util": "^0.10.3",
     "vm-browserify": "0.0.4",
-    "walletconnect": "^0.0.1-beta.12"
+    "rn-walletconnect-wallet": "^0.0.1-beta.18"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
