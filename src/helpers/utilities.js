@@ -9,18 +9,17 @@ export const ellipseText = (text = '', maxLength = 9999) => {
   const _maxLength = maxLength - 3;
   let ellipse = false;
   let currentLength = 0;
-  const result =
-    `${text
-      .split(' ')
-      .filter(word => {
-        currentLength += word.length;
-        if (ellipse || currentLength >= _maxLength) {
-          ellipse = true;
-          return false;
-        }
-        return true;
-      })
-      .join(' ')}...`;
+  const result = `${text
+    .split(' ')
+    .filter(word => {
+      currentLength += word.length;
+      if (ellipse || currentLength >= _maxLength) {
+        ellipse = true;
+        return false;
+      }
+      return true;
+    })
+    .join(' ')}...`;
   return result;
 };
 
