@@ -4,7 +4,7 @@ Developer App for Integrating WalletConnect
 
 ## How to run the project
 
-If you are new to React Native, this is a helpful introduction: https://facebook.github.io/react-native/docs/getting-started.html
+New to React Native? Here's a helpful introduction: https://facebook.github.io/react-native/docs/getting-started.html
 
 ### iOS
 
