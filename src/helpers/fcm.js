@@ -2,6 +2,12 @@ import FCM, { FCMEvent, NotificationType, RemoteNotificationResult, WillPresentN
 import { Platform, AsyncStorage, AppState } from 'react-native';
 import { showApproveTransactions } from '../model/transactions';
 
+export function getFCMToken() {
+  FCM.getFCMToken().then(fcmToken => {
+    console.log(`FCM Token: ${fcmToken}`);
+  });
+}
+
 export function registerKilledListener() {
   FCM.on(FCMEvent.Notification, notif => {
     console.log(`registerKilledListener notif: ${notif}`);

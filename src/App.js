@@ -1,11 +1,10 @@
-import FCM from 'react-native-fcm';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
-import { registerAppListener, registerKilledListener } from './helpers/fcm';
+import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
 import * as EthWallet from './model/ethWallet';
 import reducers from './reducers';
 
@@ -16,9 +15,7 @@ registerScreenVisibilityListener();
 
 EthWallet.init();
 
-FCM.getFCMToken().then(fcmToken => {
-  console.log(`FCM Token: ${fcmToken}`);
-});
+getFCMToken();
 
 registerAppListener();
 registerKilledListener();
