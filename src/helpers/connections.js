@@ -1,4 +1,4 @@
-import * as keychain from './keychain';
+import { keychainLoad, keychainSave, keychainRemove } from './keychain';
 
 /*
  * Public
@@ -42,14 +42,14 @@ export async function removeAllConnections() {
 const connectionsKey = 'connectionsKey';
 
 async function loadConnections() {
-  const connections = await keychain.loadObject(connectionsKey);
+  const connections = await keychainLoad(connectionsKey);
   return connections || {};
 }
 
 async function saveConnections(connections) {
-  await keychain.saveObject(connectionsKey, connections);
+  await keychainSave(connectionsKey, connections);
 }
 
 async function removeConnections() {
-  await keychain.removeObject(connectionsKey);
+  await keychainRemove(connectionsKey);
 }

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Clipboard } from 'react-native';
-import * as ethWallet from '../model/ethWallet';
+import { Clipboard } from 'react-native';
+import { loadWallet } from '../helpers/wallet';
 import { apiGetAccountBalances } from '../helpers/api';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import Section from '../components/Section';
 import Text from '../components/Text';
 import Label from '../components/Label';
+import Button from '../components/Button';
 
 class WalletScreen extends Component {
   state = {
@@ -21,7 +22,7 @@ class WalletScreen extends Component {
   }
   loadWallet = async () => {
     try {
-      const wallet = await ethWallet.loadWallet();
+      const wallet = await loadWallet();
       console.log('wallet', wallet);
       if (wallet) {
         const { data } = await apiGetAccountBalances(wallet.address, 'mainnet');

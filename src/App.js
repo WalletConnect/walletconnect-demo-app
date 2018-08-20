@@ -5,7 +5,7 @@ import ReduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
 import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
-import * as EthWallet from './model/ethWallet';
+import { walletInit } from './helpers/wallet';
 import reducers from './reducers';
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThunk)));
@@ -13,7 +13,7 @@ const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThu
 registerScreens(store, Provider);
 registerScreenVisibilityListener();
 
-EthWallet.init();
+walletInit();
 
 getFCMToken();
 

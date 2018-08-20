@@ -1,6 +1,6 @@
 import FCM, { FCMEvent, NotificationType, RemoteNotificationResult, WillPresentNotificationResult } from 'react-native-fcm';
 import { Platform, AsyncStorage, AppState } from 'react-native';
-import { showApproveTransactions } from '../model/transactions';
+import { showApproveTransactions } from '../helpers/transactions';
 
 export function getFCMToken() {
   FCM.getFCMToken().then(fcmToken => {
