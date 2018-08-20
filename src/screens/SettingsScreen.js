@@ -21,7 +21,7 @@ class SettingsScreen extends Component {
           </Section>
           <Section>
             <Label>{'Seed Words'}</Label>
-            <Button>{'Backup'}</Button>
+            <Button onPress={() => {}}>{'Backup'}</Button>
           </Section>
         </Card>
       </Container>
