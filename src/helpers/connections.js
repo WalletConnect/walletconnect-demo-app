@@ -1,8 +1,19 @@
-import * as keychain from './keychain';
+import { keychainLoad, keychainSave, keychainRemove } from './keychain';
 
-/*
- * Public
- */
+const connectionsKey = 'connectionsKey';
+
+async function loadConnections() {
+  const connections = await keychainLoad(connectionsKey);
+  return connections || {};
+}
+
+async function saveConnections(connections) {
+  await keychainSave(connectionsKey, connections);
+}
+
+async function removeConnections() {
+  await keychainRemove(connectionsKey);
+}
 
 export async function createConnection(bridgeDomain, sessionId, sessionKey, iv) {
   const connection = {
@@ -33,23 +44,4 @@ export async function removeConnection(sessionId) {
 
 export async function removeAllConnections() {
   await removeConnections();
-}
-
-/*
- * Private
- */
-
-const connectionsKey = 'connectionsKey';
-
-async function loadConnections() {
-  const connections = await keychain.loadObject(connectionsKey);
-  return connections || {};
-}
-
-async function saveConnections(connections) {
-  await keychain.saveObject(connectionsKey, connections);
-}
-
-async function removeConnections() {
-  await keychain.removeObject(connectionsKey);
 }

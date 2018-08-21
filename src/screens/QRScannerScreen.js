@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { walletConnectInit, walletConnectSendSession } from '../model/walletconnect';
+import { walletConnectInit, walletConnectSendSession } from '../helpers/walletconnect';
 
 class QRScannerScreen extends Component {
   onSuccess = async e => {

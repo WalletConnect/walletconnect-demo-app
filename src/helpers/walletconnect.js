@@ -1,7 +1,6 @@
-import FCM from 'react-native-fcm';
 import RNWalletConnect from 'rn-walletconnect-wallet';
-import * as ethWallet from './ethWallet';
-import personalData from './personalData';
+import { loadAddress } from './wallet';
+import { getFCMToken } from './fcm';
 
 export const walletConnectInstance = {
   pushEndpoint: 'https://walletconnect.balance.io/webhook/push-notify',
@@ -10,7 +9,7 @@ export const walletConnectInstance = {
 };
 
 export const walletConnectInit = async (bridgeUrl, sessionId, sharedKey, dappName) => {
-  const fcmToken = await FCM.getFCMToken();
+  const fcmToken = await getFCMToken();
   const walletConnector = new RNWalletConnect({
     sessionId,
     sharedKey,
@@ -22,12 +21,12 @@ export const walletConnectInit = async (bridgeUrl, sessionId, sharedKey, dappNam
 };
 
 export const walletConnectSendSession = async () => {
-  const address = await ethWallet.loadAddress();
+  const address = await loadAddress();
   try {
     await walletConnectInstance.walletConnector.sendSessionStatus({
       fcmToken: walletConnectInstance.fcmToken,
       pushEndpoint: walletConnectInstance.pushEndpoint,
-      data: { address, personalData },
+      data: [address],
     });
   } catch (err) {
     console.log('send session status error', err);

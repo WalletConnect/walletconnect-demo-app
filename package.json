@@ -47,7 +47,10 @@
     "react-redux": "^5.0.7",
     "readable-stream": "^1.0.33",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.3.0",
+    "remote-redux-devtools": "^0.5.13",
     "rn-nodeify": "^10.0.0",
+    "rn-walletconnect-wallet": "^0.0.1-beta.18",
     "stream-browserify": "^1.0.0",
     "string_decoder": "^0.10.31",
     "styled-components": "^3.3.0",
@@ -55,8 +58,7 @@
     "tty-browserify": "0.0.0",
     "url": "^0.10.3",
     "util": "^0.10.3",
-    "vm-browserify": "0.0.4",
-    "rn-walletconnect-wallet": "^0.0.1-beta.18"
+    "vm-browserify": "0.0.4"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

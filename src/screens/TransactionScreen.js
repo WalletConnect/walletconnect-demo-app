@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { StatusBar, AlertIOS } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Button from '../components/Button';
-import * as ethWallet from '../model/ethWallet';
-import { getTransactionToApprove } from '../model/transactions';
-import { walletConnectSendTransactionHash } from '../model/walletconnect';
+import { sendTransaction } from '../helpers/wallet';
+import { getTransactionToApprove } from '../helpers/transactions';
+import { walletConnectSendTransactionHash } from '../helpers/walletconnect';
 
 const SContainer = styled.View`
   flex: 1;
@@ -154,7 +154,7 @@ class TransactionScreen extends Component {
       .then(async success => {
         console.log('success', success);
         const { transaction } = this.state;
-        const transactionReceipt = await ethWallet.sendTransaction(transaction.transactionData);
+        const transactionReceipt = await sendTransaction(transaction.transactionData);
         if (transactionReceipt && transactionReceipt.hash) {
           await walletConnectSendTransactionHash(transaction.transactionId, true, transactionReceipt.hash);
           this.onClose();

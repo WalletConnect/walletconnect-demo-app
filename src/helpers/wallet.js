@@ -1,5 +1,5 @@
 import ethers from 'ethers';
-import * as keychain from './keychain';
+import { keychainSave, keychainLoad } from './keychain';
 
 const seedPhraseKey = 'seedPhrase';
 const privateKeyKey = 'privateKey';
@@ -9,7 +9,7 @@ export function generateSeedPhrase() {
   return ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
 }
 
-export async function init(seedPhrase = generateSeedPhrase()) {
+export async function walletInit(seedPhrase = generateSeedPhrase()) {
   let wallet = await loadWallet();
   if (!wallet) {
     wallet = await createWallet();
@@ -59,28 +59,28 @@ export async function sendTransaction(transaction) {
 }
 
 export async function saveSeedPhrase(seedPhrase) {
-  await keychain.saveString(seedPhraseKey, seedPhrase);
+  await keychainSave(seedPhraseKey, seedPhrase);
 }
 
 export async function loadSeedPhrase() {
-  const seedPhrase = await keychain.loadString(seedPhraseKey);
+  const seedPhrase = await keychainLoad(seedPhraseKey);
   return seedPhrase;
 }
 
 export async function savePrivateKey(privateKey) {
-  await keychain.saveString(privateKeyKey, privateKey);
+  await keychainSave(privateKeyKey, privateKey);
 }
 
 export async function loadPrivateKey() {
-  const privateKey = await keychain.loadString(privateKeyKey);
+  const privateKey = await keychainLoad(privateKeyKey);
   return privateKey;
 }
 
 export async function saveAddress(address) {
-  await keychain.saveString(addressKey, address);
+  await keychainSave(addressKey, address);
 }
 
 export async function loadAddress() {
-  const privateKey = await keychain.loadString(addressKey);
+  const privateKey = await keychainLoad(addressKey);
   return privateKey;
 }

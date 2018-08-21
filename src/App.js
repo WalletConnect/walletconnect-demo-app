@@ -1,87 +1,21 @@
-import FCM, { FCMEvent, NotificationType, RemoteNotificationResult, WillPresentNotificationResult } from 'react-native-fcm';
-import { Platform, AsyncStorage, AppState } from 'react-native';
 import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
-import * as EthWallet from './model/ethWallet';
-import { addNewTransaction } from './model/transactions';
+import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
+import { walletInit } from './helpers/wallet';
+import store from './redux/store';
 
-registerScreens();
+// const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThunk)));
+
+registerScreens(store, Provider);
 registerScreenVisibilityListener();
 
-EthWallet.init();
+walletInit();
 
-FCM.getFCMToken().then(fcmToken => {
-  console.log(`FCM Token: ${fcmToken}`);
-});
-
-// export default class App extends Component {
-//   componentDidMount() {
-//     SplashScreen.hide();
-//   }
-// }
-
-function registerKilledListener() {
-  FCM.on(FCMEvent.Notification, notif => {
-    console.log(`registerKilledListener notif: ${notif}`);
-    AsyncStorage.setItem('lastNotification', JSON.stringify(notif));
-    if (notif.opened_from_tray) {
-      setTimeout(() => {
-        if (notif._actionIdentifier === 'reply') {
-          if (AppState.currentState !== 'background') {
-            console.log(`User replied ${JSON.stringify(notif._userText)}`);
-          } else {
-            AsyncStorage.setItem('lastMessage', JSON.stringify(notif._userText));
-          }
-        }
-        if (notif._actionIdentifier === 'view') {
-          console.log('User clicked View in App');
-        }
-        if (notif._actionIdentifier === 'dismiss') {
-          console.log('User clicked Dismiss');
-        }
-      }, 1000);
-    }
-  });
-}
-
-function registerAppListener() {
-  FCM.on(FCMEvent.Notification, notif => {
-    console.log(`registerAppListener notif: ${notif}`);
-    const { sessionId, transactionId } = notif;
-
-    if (Platform.OS === 'ios') {
-      switch (notif._notificationType) {
-      case NotificationType.Remote:
-        notif.finish(RemoteNotificationResult.NewData);
-        break;
-      case NotificationType.NotificationResponse:
-        showApproveTransactions(sessionId, transactionId);
-        notif.finish();
-        break;
-      case NotificationType.WillPresent:
-        notif.finish(WillPresentNotificationResult.All);
-
-        break;
-      default:
-        break;
-      }
-    }
-  });
-}
+getFCMToken();
 
 registerAppListener();
 registerKilledListener();
-
-function showApproveTransactions(sessionId, transactionId) {
-  addNewTransaction(sessionId, transactionId).then(() => {
-    Navigation.showModal({
-      screen: 'WalletConnect.TransactionScreen',
-      navigatorStyle: { navBarHidden: true },
-      navigatorButtons: {},
-      animationType: 'slide-up',
-    });
-  });
-}
 
 Navigation.startTabBasedApp({
   tabs: [

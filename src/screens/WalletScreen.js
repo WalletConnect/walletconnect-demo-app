@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Button, Clipboard } from 'react-native';
-import * as ethWallet from '../model/ethWallet';
+import { Clipboard } from 'react-native';
+import { loadWallet } from '../helpers/wallet';
 import { apiGetAccountBalances } from '../helpers/api';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import Section from '../components/Section';
 import Text from '../components/Text';
 import Label from '../components/Label';
+import Button from '../components/Button';
 
 class WalletScreen extends Component {
   state = {
@@ -21,7 +22,7 @@ class WalletScreen extends Component {
   }
   loadWallet = async () => {
     try {
-      const wallet = await ethWallet.loadWallet();
+      const wallet = await loadWallet();
       console.log('wallet', wallet);
       if (wallet) {
         const { data } = await apiGetAccountBalances(wallet.address, 'mainnet');
@@ -55,7 +56,9 @@ class WalletScreen extends Component {
           <Section>
             <Label>{'Wallet Address'}</Label>
             <Text>{address}</Text>
-            <Button onPress={Clipboard.setString(address)} title="Copy" color="#666666" accessibilityLabel="Copy the address of your wallet to the clipboard" />
+            <Button onPress={() => Clipboard.setString(address)} color="#666666" accessibilityLabel="Copy the address of your wallet to the clipboard">
+              {'Copy'}
+            </Button>
           </Section>
           {this.state.wallet &&
             this.state.wallet.assets.map(asset => (
