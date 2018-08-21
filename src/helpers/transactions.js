@@ -1,4 +1,3 @@
-import { Navigation } from 'react-native-navigation';
 import { walletConnectGetTransaction } from './walletconnect';
 
 export const transactionsToApprove = [];
@@ -17,14 +16,3 @@ export const getTransactionToApprove = () => {
   console.log('transaction popped', transaction);
   return transaction;
 };
-
-export function showApproveTransactions(sessionId, transactionId) {
-  addNewTransaction(sessionId, transactionId).then(() => {
-    Navigation.showModal({
-      screen: 'WalletConnect.TransactionScreen',
-      navigatorStyle: { navBarHidden: true },
-      navigatorButtons: {},
-      animationType: 'slide-up',
-    });
-  });
-}

@@ -1,6 +1,7 @@
 import FCM, { FCMEvent, NotificationType, RemoteNotificationResult, WillPresentNotificationResult } from 'react-native-fcm';
 import { Platform, AsyncStorage, AppState } from 'react-native';
-import { showApproveTransactions } from '../helpers/transactions';
+import { Navigation } from 'react-native-navigation';
+import { addNewTransaction } from '../helpers/transactions';
 
 export function getFCMToken() {
   FCM.getFCMToken().then(fcmToken => {
@@ -43,12 +44,17 @@ export function registerAppListener() {
         notif.finish(RemoteNotificationResult.NewData);
         break;
       case NotificationType.NotificationResponse:
-        showApproveTransactions(sessionId, transactionId);
-        notif.finish();
+        addNewTransaction(sessionId, transactionId).then(() => {
+          Navigation.showModal({
+            screen: 'WalletConnect.TransactionScreen',
+            navigatorStyle: { navBarHidden: true },
+            navigatorButtons: {},
+            animationType: 'slide-up',
+          });
+        });
         break;
       case NotificationType.WillPresent:
         notif.finish(WillPresentNotificationResult.All);
-
         break;
       default:
         break;
