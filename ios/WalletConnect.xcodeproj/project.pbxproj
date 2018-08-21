@@ -1585,7 +1585,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.walletconnect.developer-app";
 				PRODUCT_NAME = WalletConnect;
-				PROVISIONING_PROFILE = "93623074-66c6-4d03-9202-a94fea57d3c6";
+				PROVISIONING_PROFILE = "240db296-0c65-4b1d-a2a9-ad4c8aae476a";
 				PROVISIONING_PROFILE_SPECIFIER = "WalletConnect Developer App Dev Profile";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Frameworks";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1628,7 +1628,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.walletconnect.developer-app";
 				PRODUCT_NAME = WalletConnect;
-				PROVISIONING_PROFILE = "93623074-66c6-4d03-9202-a94fea57d3c6";
+				PROVISIONING_PROFILE = "240db296-0c65-4b1d-a2a9-ad4c8aae476a";
 				PROVISIONING_PROFILE_SPECIFIER = "WalletConnect Developer App Dev Profile";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/Frameworks";
 				VERSIONING_SYSTEM = "apple-generic";

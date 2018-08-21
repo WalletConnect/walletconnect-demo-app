@@ -3,10 +3,10 @@ import { Platform, AsyncStorage, AppState } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { addNewTransaction } from '../helpers/transactions';
 
-export function getFCMToken() {
-  FCM.getFCMToken().then(fcmToken => {
-    console.log(`FCM Token: ${fcmToken}`);
-  });
+export async function getFCMToken() {
+  const fcmToken = await FCM.getFCMToken();
+  console.log(`FCM Token: ${fcmToken}`);
+  return fcmToken;
 }
 
 export function registerKilledListener() {

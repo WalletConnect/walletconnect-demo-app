@@ -1,14 +1,11 @@
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import ReduxThunk from 'redux-thunk';
-import { composeWithDevTools } from 'remote-redux-devtools';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
 import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
 import { walletInit } from './helpers/wallet';
-import reducers from './reducers';
+import store from './redux/store';
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThunk)));
+// const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThunk)));
 
 registerScreens(store, Provider);
 registerScreenVisibilityListener();

@@ -1,6 +1,6 @@
-import FCM from 'react-native-fcm';
 import RNWalletConnect from 'rn-walletconnect-wallet';
-import { loadAddress } from '../helpers/wallet';
+import { loadAddress } from './wallet';
+import { getFCMToken } from './fcm';
 
 export const walletConnectInstance = {
   pushEndpoint: 'https://walletconnect.balance.io/webhook/push-notify',
@@ -9,7 +9,7 @@ export const walletConnectInstance = {
 };
 
 export const walletConnectInit = async (bridgeUrl, sessionId, sharedKey, dappName) => {
-  const fcmToken = await FCM.getFCMToken();
+  const fcmToken = await getFCMToken();
   const walletConnector = new RNWalletConnect({
     sessionId,
     sharedKey,
