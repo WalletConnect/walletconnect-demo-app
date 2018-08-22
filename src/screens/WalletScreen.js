@@ -16,11 +16,11 @@ class WalletScreen extends Component {
   };
   componentDidMount() {
     this.setState({ loading: true });
-    this.loadWallet()
+    this._loadWallet()
       .then(wallet => this.setState({ loading: false, wallet }))
       .catch(error => this.setState({ loading: false, wallet: null }));
   }
-  loadWallet = async () => {
+  async _loadWallet()  {
     try {
       const wallet = await loadWallet();
       console.log('wallet', wallet);
