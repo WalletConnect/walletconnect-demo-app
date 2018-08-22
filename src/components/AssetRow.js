@@ -2,15 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ImageLoad from 'react-native-image-placeholder';
 
+
 const styles = StyleSheet.create({
     assetRow: {
 	flexDirection: 'row',
 	height: 80,
     },
-    // balanceContainer: {
-    // 	flexDirection: "column",
-    // 	alignItems: 'center'
-    // },
     balance: {
 	marginTop: 30,
 	marginRight: 11,
@@ -80,7 +77,6 @@ class AssetIcon extends React.PureComponent {
 }
 
 
-
 const AssetRow = ({ asset }) => {    
     return (
 	    <View style={styles.assetRow}>
@@ -88,7 +84,7 @@ const AssetRow = ({ asset }) => {
      	        <AssetIcon asset={asset} />
 	        <Text style={styles.symbol}>{asset.symbol}</Text>
 	      </View>
-	      <View style={styles.balanceContainer}>
+	      <View>
 	        <Text style={styles.balance}>{Number(asset.balance).toFixed(8)}</Text>
 	      </View>
 	    </View>
