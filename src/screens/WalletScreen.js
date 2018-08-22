@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Clipboard } from 'react-native';
+import { Clipboard, ScrollView } from 'react-native';
 import { loadWallet } from '../helpers/wallet';
 import { apiGetAccountBalances } from '../helpers/api';
 import Container from '../components/Container';
@@ -8,6 +8,8 @@ import Section from '../components/Section';
 import Text from '../components/Text';
 import Label from '../components/Label';
 import Button from '../components/Button';
+import AssetRow from '../components/AssetRow';
+
 
 class WalletScreen extends Component {
   state = {
@@ -24,7 +26,7 @@ class WalletScreen extends Component {
     try {
       const wallet = await loadWallet();
       console.log('wallet', wallet);
-      if (wallet) {
+	if (wallet) {
         const { data } = await apiGetAccountBalances(wallet.address, 'mainnet');
         const assets = data.map(asset => {
           const exponent = 10 ** Number(asset.contract.decimals);
@@ -48,27 +50,35 @@ class WalletScreen extends Component {
     }
   };
 
+    _renderAssetRows() {
+	if (!this.state.wallet) { return null; }
+
+        return this.state.wallet.assets
+	    .sort((a,b) => (Number(a.address) - Number(b.address))) // sort by address so that ether is always first
+	    .map(asset => (
+		    <AssetRow asset={asset} key={asset.address}/>
+            ));
+    }
+    
   render() {
     const address = this.state.wallet ? this.state.wallet.address : '';
-    return !this.state.loading ? (
+      return !this.state.loading ? (
+    <ScrollView>
       <Container>
         <Card>
-          <Section>
+              <Section style={{height: 100}}>
             <Label>{'Wallet Address'}</Label>
             <Text>{address}</Text>
             <Button onPress={() => Clipboard.setString(address)} color="#666666" accessibilityLabel="Copy the address of your wallet to the clipboard">
               {'Copy'}
             </Button>
-          </Section>
-          {this.state.wallet &&
-            this.state.wallet.assets.map(asset => (
-              <Section key={asset.symbol}>
-                <Label>{asset.name}</Label>
-                <Text>{`${Number(asset.balance).toFixed(8)} ${asset.symbol}`}</Text>
               </Section>
-            ))}
+	      <Section>	      
+              { this._renderAssetRows() }
+	  </Section>	  
         </Card>
       </Container>
+     </ScrollView>	      
     ) : (
       <Container>
         <Card>
