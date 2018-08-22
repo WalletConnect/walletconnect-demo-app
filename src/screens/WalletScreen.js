@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Clipboard, ScrollView } from 'react-native';
+import { Clipboard, ScrollView, View } from 'react-native';
 import { loadWallet } from '../helpers/wallet';
 import { apiGetAccountBalances } from '../helpers/api';
 import Container from '../components/Container';
@@ -52,11 +52,15 @@ class WalletScreen extends Component {
 
     _renderAssetRows() {
 	if (!this.state.wallet) { return null; }
-
+	const Separator = (<View style={{height: 1, backgroundColor: '#e9eaeb'}} />);
+	
         return this.state.wallet.assets
 	    .sort((a,b) => (Number(a.address) - Number(b.address))) // sort by address so that ether is always first
-	    .map(asset => (
-		    <AssetRow asset={asset} key={asset.address}/>
+	    .map((asset, index) => (
+   	         <View key={index}>
+		    { Separator }
+		    <AssetRow asset={asset}/>		    
+		 </View>
             ));
     }
     
