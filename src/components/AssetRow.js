@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
 	flexDirection: 'row',
 	height: 80,
     },
-    balanceContainer: {
-	flexDirection: "column",
-	alignItems: 'flex-end'
-    },
+    // balanceContainer: {
+    // 	flexDirection: "column",
+    // 	alignItems: 'center'
+    // },
     balance: {
-	marginTop: 20,
+	marginTop: 30,
 	marginRight: 11,
 	color: '#242836',
 	lineHeight: 20 
@@ -88,7 +88,7 @@ const AssetRow = ({ asset }) => {
      	        <AssetIcon asset={asset} />
 	        <Text style={styles.symbol}>{asset.symbol}</Text>
 	      </View>
-	      <View style={styles.centeredFlexEnd}>
+	      <View style={styles.balanceContainer}>
 	        <Text style={styles.balance}>{Number(asset.balance).toFixed(8)}</Text>
 	      </View>
 	    </View>
