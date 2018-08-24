@@ -5,8 +5,6 @@ import { shortenAddress } from '../helpers/utilities';
 
 
 const styles = StyleSheet.create({
-    separator: {
-    },
     transactionRow: {
 	flex: 1,
 	flexDirection: 'row',
@@ -19,7 +17,23 @@ const styles = StyleSheet.create({
     arrow: {
 	marginRight: 25,
 	marginTop: 5
-    }
+    },
+    errorLabel: {
+	color: 'red',
+	fontSize:10
+    },
+    row: {
+	flexDirection: "row"
+    },
+    address: {
+	fontSize: 16,
+	fontWeight: "bold"
+    },
+    date: {
+	color: "grey",
+    },
+    flexEnd: { alignSelf: 'flex-end' },
+    value: { fontSize: 20 }
 });
 
 
@@ -35,45 +49,44 @@ const TransactionRow = ({ tx, navigator, address }) => {
     return (
 	    <TouchableOpacity
 	      onPress={() => {
-		// navigator.push({
-		//     screen: 'quidwallet.home.wallet.history.TransactionRecordScreen',
-		//     passProps: {
-		// 	tx
-		//     },
-		//     navigatorStyle: {
-		// 	tabBarHidden: true
-		//     },
-		//     title: 'Transaction Record', // navigation bar title of the pushed screen (optional)
-		//     backButtonTitle: "" // override the back button title (optional)
-		// });
-	    }}>
+		navigator.push({
+		    screen: 'WalletConnect.TransactionDetailsScreen',
+		    passProps: {
+			txHash: tx.txHash
+		    },
+		    navigatorStyle: {
+			tabBarHidden: true
+		    },
+		    title: 'Transaction Details', // navigation bar title of the pushed screen (optional)
+		    backButtonTitle: "" // override the back button title (optional)
+		});
+	      }}>
 
 	    <View style={styles.transactionRow}>
-	    <View style={{ flexDirection: "row" }}>
+	    <View style={styles.row}>
 	    	     <Image
 	             source={ isTxIncoming ?  require('../assets//arrow-in.png') : require('../assets//arrow-out.png') } 
 	             style={styles.arrow}
 	     />
 
 	    <View> 
-	    <View style={{flexDirection: 'row'}}>
-	    { (tx.txStatus === 'error') ? <Text style={{color: 'red', fontSize:10}}>Fail</Text> : null }		
+	    <View style={styles.row}>
+	    { (tx.txStatus === 'error') ? <Text style={styles.errorLabel}>Fail</Text> : null }		
 
-	    <Text style={{ fontSize: 16, fontWeight: "bold" }}>{shortenAddress(otherAddress, 4)}</Text>
+	    <Text style={styles.address}>{shortenAddress(otherAddress, 4)}</Text>
 	    </View>
 	    { tx.txStatus === 'pending' ? <Text>Pending...</Text> :
-	      <Text style={{ color: "grey", }}> { date } </Text>
+	      <Text style={styles.date}> { date } </Text>
 	    }
       </View>
     </View>
 	    <View>
-	    <View style={{ alignSelf: 'flex-end' }}>
-	    <Text style={{ fontSize: 20 }}>{txValue}</Text>
+	    <View style={styles.flexEnd}>
+	       <Text style={styles.value}>{txValue}</Text>
 	    </View>
 	    </View>
   </View>
     </TouchableOpacity>
-
 );
 }
 

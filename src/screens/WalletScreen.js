@@ -65,7 +65,7 @@ class WalletScreen extends Component {
 		        key={index}
 		        onPress={() => {
 			  this.props.navigator.push({
-			      screen: "WalletConnect.TransactionHistory",
+			      screen: "WalletConnect.TransactionHistoryScreen",
 			      passProps: { asset },
 			      title: `${asset.symbol} Transactions`, 
 			      navigatorStyle: {

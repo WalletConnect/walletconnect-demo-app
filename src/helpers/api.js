@@ -21,6 +21,7 @@ const api = axios.create({
  */
 export const apiGetAccountBalances = async (address = '', network = 'mainnet') => api.get(`/get_balances/${network}/${address}`);
 
+
 /**
  * @desc get transaction data
  * @param  {String}   [address = '']

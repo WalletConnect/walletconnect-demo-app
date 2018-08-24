@@ -32,7 +32,8 @@ export const fetchTransactionsFromApi = (address, network) => {
 			    to: op.to,
 			    from: op.from,
 			    txHash: doc._id,
-			    txStatus: "success"
+			    txStatus: "success",
+			    network
 			};
 			transactions.push(tokenTx);
 		    });		
@@ -51,7 +52,8 @@ export const fetchTransactionsFromApi = (address, network) => {
 		    to: doc.to,
 		    from: doc.from,
 		    txHash: doc._id,
-		    txStatus: doc.error ? "error": "success"
+		    txStatus: doc.error ? "error": "success",
+		    network
 		};
 		transactions.push(ethTx);				    
 	       }		
