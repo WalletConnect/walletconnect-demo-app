@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Clipboard, ScrollView, View } from 'react-native';
+import { Clipboard, ScrollView, View, TouchableOpacity } from 'react-native';
 import { loadWallet } from '../helpers/wallet';
 import { apiGetAccountBalances } from '../helpers/api';
 import Container from '../components/Container';
@@ -25,8 +25,7 @@ class WalletScreen extends Component {
   async _loadWallet()  {
     try {
       const wallet = await loadWallet();
-      console.log('wallet', wallet);
-	if (wallet) {
+      if (wallet) {
         const { data } = await apiGetAccountBalances(wallet.address, 'mainnet');
         const assets = data.map(asset => {
           const exponent = 10 ** Number(asset.contract.decimals);
@@ -40,7 +39,6 @@ class WalletScreen extends Component {
           };
         });
         wallet.assets = assets;
-        console.log('wallet', wallet);
         return wallet;
       }
       return null;
@@ -54,14 +52,32 @@ class WalletScreen extends Component {
 	if (!this.state.wallet) { return null; }
 	const Separator = (<View style={{height: 1, backgroundColor: '#e9eaeb'}} />);
 	
-        return this.state.wallet.assets
-	    .sort((a,b) => (Number(a.address) - Number(b.address))) // sort by address so that ether is always first
-	    .map((asset, index) => (
-   	         <View key={index}>
-		    { Separator }
-		    <AssetRow asset={asset}/>		    
-		 </View>
-            ));
+        return (
+		<Section>
+		{
+	    this.state.wallet.assets
+	      .sort((a,b) => (Number(a.address) - Number(b.address))) // sort by address so that ether is always first
+  	      .map((asset, index) => (
+	              <TouchableOpacity
+		        key={index}
+		        onPress={() => {
+			  this.props.navigator.push({
+			      screen: "WalletConnect.TransactionHistory",
+			      passProps: { asset, address: this.state.wallet.address },
+			      title: `${asset.symbol} Transactions`, 
+			      navigatorStyle: {
+				  tabBarHidden: true,
+			      },
+			      backButtonTitle: ""
+			  });
+		      }}>
+		      { Separator }
+		      <AssetRow asset={asset}/>		    
+ 	         </TouchableOpacity>
+            ))
+		}
+	    </Section>
+	);
     }
     
   render() {
@@ -77,9 +93,7 @@ class WalletScreen extends Component {
               {'Copy'}
             </Button>
               </Section>
-	      <Section>	      
               { this._renderAssetRows() }
-	  </Section>	  
         </Card>
       </Container>
      </ScrollView>	      
