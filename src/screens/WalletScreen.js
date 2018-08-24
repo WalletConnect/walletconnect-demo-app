@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Clipboard, ScrollView, View, TouchableOpacity } from 'react-native';
 import { loadWallet } from '../helpers/wallet';
 import { apiGetAccountBalances } from '../helpers/api';
@@ -23,29 +24,31 @@ class WalletScreen extends Component {
       .catch(error => this.setState({ loading: false, wallet: null }));
   }
   async _loadWallet()  {
-    try {
-      const wallet = await loadWallet();
-      if (wallet) {
-        const { data } = await apiGetAccountBalances(wallet.address, 'mainnet');
-        const assets = data.map(asset => {
-          const exponent = 10 ** Number(asset.contract.decimals);
-          const balance = Number(asset.balance) / exponent;
-          return {
-            address: asset.contract.address,
-            name: asset.contract.name,
-            symbol: asset.contract.symbol,
-            decimals: asset.contract.decimals,
-            balance,
-          };
-        });
-        wallet.assets = assets;
-        return wallet;
+      try {
+	  // #TODO add wallet to redux store
+	  const wallet = await loadWallet();
+	  if (wallet) {
+	      // this.props.walletAddress is hardcoded for testing purposes for now
+              const { data } = await apiGetAccountBalances(this.props.walletAddress, 'mainnet');
+              const assets = data.map(asset => {
+		  const exponent = 10 ** Number(asset.contract.decimals);
+		  const balance = Number(asset.balance) / exponent;
+		  return {
+		      address: asset.contract.address,
+		      name: asset.contract.name,
+		      symbol: asset.contract.symbol,
+		      decimals: asset.contract.decimals,
+		      balance,
+		  };
+              });
+              wallet.assets = assets;
+              return wallet;
+	  }
+	  return null;
+      } catch (error) {
+	  console.error(error);
+	  return error;
       }
-      return null;
-    } catch (error) {
-      console.error(error);
-      return error;
-    }
   };
 
     _renderAssetRows() {
@@ -63,7 +66,7 @@ class WalletScreen extends Component {
 		        onPress={() => {
 			  this.props.navigator.push({
 			      screen: "WalletConnect.TransactionHistory",
-			      passProps: { asset, address: this.state.wallet.address },
+			      passProps: { asset },
 			      title: `${asset.symbol} Transactions`, 
 			      navigatorStyle: {
 				  tabBarHidden: true,
@@ -109,4 +112,4 @@ class WalletScreen extends Component {
   }
 }
 
-export default WalletScreen;
+export default connect(state => ({ walletAddress: state.account.address }))(WalletScreen);

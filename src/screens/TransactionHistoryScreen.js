@@ -36,7 +36,7 @@ class TransactionHistoryScreen extends React.Component {
 
     async _fetchData() {
 	try {	    
-	    await this.props.fetchTransactionsFromApi(this.props.address, 'mainnet');
+	    await this.props.fetchTransactionsFromApi(this.props.walletAddress, 'mainnet');
 	} catch (err) {
 	    console.log(err);
 	}
@@ -61,7 +61,7 @@ class TransactionHistoryScreen extends React.Component {
 	           onRefresh={() => this._fetchData()}
 	           refreshing={this.state.fetching}
 	    keyExtractor={(item) => item.transactionId}
-	           renderItem={({ item }) => <TransactionRow tx={item} address={this.props.address} navigator={this.props.navigator}/>}
+	           renderItem={({ item }) => <TransactionRow tx={item} address={this.props.walletAddress} navigator={this.props.navigator}/>}
 		/>
 	    </View>
 	</View>
@@ -72,6 +72,7 @@ class TransactionHistoryScreen extends React.Component {
 
 export default connect((state, props) => {
     return {
+	walletAddress: state.account.address,
 	transactions: state.account.transactions.filter(tx => tx.asset.address === props.asset.address),
 	transactionsCount: state.account.transactions.length // to rerender component
     }

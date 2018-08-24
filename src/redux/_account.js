@@ -11,13 +11,10 @@ export const fetchTransactionsFromApi = (address, network) => {
 	
 	try { 
 	    const { data } =  await apiGetTransactionData(address, network);
-	    console.log({data});
 	    const transactions = [];
 	    
 	    data.docs.map(doc => {
-
-		if (doc.operations) {
-		    
+		if (doc.operations) {		    
 		    // token transfers		    
 		    doc.operations
 		        .filter(op => op.type === 'token_transfer')
@@ -38,8 +35,7 @@ export const fetchTransactionsFromApi = (address, network) => {
 			    txStatus: "success"
 			};
 			transactions.push(tokenTx);
-		    });
-		
+		    });		
 		
 		// eth transaction
   		const ethTx = {
@@ -60,7 +56,6 @@ export const fetchTransactionsFromApi = (address, network) => {
 		transactions.push(ethTx);				    
 	       }		
 	    });
-	    console.log({transactions}, "dispatch");
 	    dispatch({ type: TRANSACTIONS_ADD_MANY, payload: transactions });
 	} catch (error) {
 	    console.error(error);
@@ -70,9 +65,9 @@ export const fetchTransactionsFromApi = (address, network) => {
 }
 
 
-
 // -- Reducer --------------------------------------------------------------- //
 const INITIAL_STATE = {
+    address: '0x6c0f58ad4eb24da5769412bf34ddee698c4d185b', // #TODO don't use hardcoded address
     transactions: [],
 };
 
