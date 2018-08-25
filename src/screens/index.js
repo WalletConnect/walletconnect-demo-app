@@ -7,15 +7,14 @@ import WalletScreen from './WalletScreen';
 import TransactionHistoryScreen from './TransactionHistoryScreen';
 import TransactionDetailsScreen from './TransactionDetailsScreen';
 
-
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
-    Navigation.registerComponent('WalletConnect.QRScannerScreen', () => QRScannerScreen, store, Provider);
-    Navigation.registerComponent('WalletConnect.SettingsScreen', () => SettingsScreen, store, Provider);
-    Navigation.registerComponent('WalletConnect.TransactionScreen', () => TransactionScreen, store, Provider);
-    Navigation.registerComponent('WalletConnect.WalletScreen', () => WalletScreen, store, Provider);
-    Navigation.registerComponent('WalletConnect.TransactionHistoryScreen', () => TransactionHistoryScreen, store, Provider);
-    Navigation.registerComponent('WalletConnect.TransactionDetailsScreen', () => TransactionDetailsScreen, store, Provider);        
+  Navigation.registerComponent('WalletConnect.QRScannerScreen', () => QRScannerScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.SettingsScreen', () => SettingsScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.TransactionScreen', () => TransactionScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.WalletScreen', () => WalletScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.TransactionHistoryScreen', () => TransactionHistoryScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.TransactionDetailsScreen', () => TransactionDetailsScreen, store, Provider);
 }
 
 export function registerScreenVisibilityListener() {
