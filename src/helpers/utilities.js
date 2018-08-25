@@ -42,7 +42,7 @@ export const capitalize = string =>
  * @return {String}
  */
 export function shortenAddress(address, num, showEnd = true) {
-    const sanitized = address.slice(2);
-    const shorten = `${sanitized.slice(0, num)}...${showEnd ? sanitized.slice(-num) : ''}`;
-    return '0x'.concat(shorten);
+  const sanitized = address.slice(2);
+  const shorten = `${sanitized.slice(0, num)}...${showEnd ? sanitized.slice(-num) : ''}`;
+  return '0x'.concat(shorten);
 }
