@@ -3,15 +3,24 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledText = styled.Text`
-  color: #333333;
+  color: ${({ color }) => color};
   margin-bottom: 6px;
   align-content: flex-end;
 `;
 
-const Text = ({ children, ...props }) => <StyledText {...props}>{children}</StyledText>;
+const Text = ({ color, children, ...props }) => (
+  <StyledText color={color} {...props}>
+    {children}
+  </StyledText>
+);
 
 Text.propTypes = {
+  color: PropTypes.string,
   children: PropTypes.node.isRequired,
+};
+
+Text.defaultProps = {
+  color: '#333333',
 };
 
 export default Text;
