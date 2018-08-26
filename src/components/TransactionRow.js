@@ -1,40 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import styled from 'styled-components';
+import { View, TouchableOpacity } from 'react-native';
+import Text from './Text';
 import { shortenAddress } from '../helpers/utilities';
 // import { Icon } from 'react-native-elements';
 
-const styles = StyleSheet.create({
-  transactionRow: {
-    flex: 1,
-    flexDirection: 'row',
-    height: 100,
-    justifyContent: 'space-between',
-    paddingTop: 15,
-    paddingLeft: 25,
-    paddingRight: 15,
-  },
-  arrow: {
-    marginRight: 25,
-    marginTop: 5,
-  },
-  errorLabel: {
-    color: 'red',
-    fontSize: 10,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  address: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  date: {
-    color: 'grey',
-  },
-  flexEnd: { alignSelf: 'flex-end' },
-  value: { fontSize: 20 },
-});
+const StyledTransactionRow = styled.View`
+  flex: 1;
+  flex-direction: row;
+  height: 100px;
+  justify-content: space-between;
+  padding-top: 15px;
+  padding-left: 25px;
+  padding-right: 15px;
+`;
+
+const StyledArrow = styled.Image`
+  margin-right: 25px;
+  margin-top: 5px;
+`;
+const StyledErrorLabel = styled.Text`
+  color: red;
+  font-size: 10;
+`;
+const StyledAddress = styled.Text`
+  font-size: 16;
+  font-weight: bold;
+`;
+
+const StyledRow = styled.View`
+  flex-direction: row;
+`;
+
+const StyledFlexEnd = styled.View`
+  align-self: flex-end;
+`;
+const StyledValue = styled.Text`
+  font-size: 20px;
+`;
 
 const TransactionRow = ({ tx, navigator, address }) => {
   const exponent = 10 ** Number(tx.asset.decimals);
@@ -60,32 +64,31 @@ const TransactionRow = ({ tx, navigator, address }) => {
         });
       }}
     >
-      <View style={styles.transactionRow}>
-        <View style={styles.row}>
-          <Image
+      <StyledTransactionRow>
+        <StyledRow>
+          <StyledArrow
             source={
               isTxIncoming
                 ? require('../assets//arrow-in.png') // eslint-disable-line
                 : require('../assets//arrow-out.png') // eslint-disable-line
             }
-            style={styles.arrow}
           />
 
           <View>
-            <View style={styles.row}>
-              {tx.txStatus === 'error' ? <Text style={styles.errorLabel}>Fail</Text> : null}
+            <StyledRow>
+              {tx.txStatus === 'error' ? <StyledErrorLabel>Fail</StyledErrorLabel> : null}
 
-              <Text style={styles.address}>{shortenAddress(otherAddress, 4)}</Text>
-            </View>
-            {tx.txStatus === 'pending' ? <Text>Pending...</Text> : <Text style={styles.date}> {date} </Text>}
+              <StyledAddress>{shortenAddress(otherAddress, 4)}</StyledAddress>
+            </StyledRow>
+            {tx.txStatus === 'pending' ? <Text>Pending...</Text> : <Text color={'grey'}> {date} </Text>}
           </View>
-        </View>
+        </StyledRow>
         <View>
-          <View style={styles.flexEnd}>
-            <Text style={styles.value}>{txValue}</Text>
-          </View>
+          <StyledFlexEnd>
+            <StyledValue>{txValue}</StyledValue>
+          </StyledFlexEnd>
         </View>
-      </View>
+      </StyledTransactionRow>
     </TouchableOpacity>
   );
 };

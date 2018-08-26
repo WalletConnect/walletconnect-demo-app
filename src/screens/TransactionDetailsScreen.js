@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
+import styled from 'styled-components';
+import Text from '../components/Text';
 import { accountGetTransactionDetails } from '../redux/_account';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flex: 1,
-    padding: 15,
-  },
-  transactionsContainer: {
-    flex: 5,
-  },
-});
+const StyledContainer = styled.View`
+  flex: 1;
+  background-color: #ffffff;
+`;
+
+const StyledHeader = styled.View`
+  flex: 1;
+  padding: 15px;
+`;
+
+const StyledTransactionDetails = styled.View`
+  flex: 7;
+  padding: 15px;
+`;
 
 class TransactionDetailsScreen extends Component {
   componentDidMount() {
@@ -26,12 +28,12 @@ class TransactionDetailsScreen extends Component {
   render() {
     const { loading, txHash, txDetails } = this.props;
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
+      <StyledContainer>
+        <StyledHeader>
           <Text>Tx Hash: {txHash}</Text>
-        </View>
-        <View>{loading ? <Text>{'Loading...'}</Text> : <Text>{JSON.stringify(txDetails)}</Text>}</View>
-      </View>
+        </StyledHeader>
+        <StyledTransactionDetails>{loading ? <Text>{'Loading...'}</Text> : <Text>{JSON.stringify(txDetails, null, 2)}</Text>}</StyledTransactionDetails>
+      </StyledContainer>
     );
   }
 }
