@@ -4,7 +4,7 @@ Developer App for Integrating WalletConnect
 
 ## Quick Start
 
-**[WIP]** There will soon be a test-flight for iOS and `.apk` for Android
+**[WIP]** There will soon be a *test-flight* for iOS and *apk file* for Android
 
 ## Manual Build
 
