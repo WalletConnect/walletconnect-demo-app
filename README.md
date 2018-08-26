@@ -2,7 +2,11 @@
 
 Developer App for Integrating WalletConnect
 
-## How to run the project
+## Quick Start
+
+**[WIP]** There will soon be a *test-flight* for iOS and *apk file* for Android
+
+## Manual Build
 
 New to React Native? Here's a helpful introduction: https://facebook.github.io/react-native/docs/getting-started.html
 
