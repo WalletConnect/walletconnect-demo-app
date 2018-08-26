@@ -10,11 +10,8 @@ import store from './redux/store';
 registerScreens(store, Provider);
 registerScreenVisibilityListener();
 
+getFCMToken();
 walletInit();
-
-getFCMToken();
-getFCMToken();
-getFCMToken();
 
 registerAppListener();
 registerKilledListener();
