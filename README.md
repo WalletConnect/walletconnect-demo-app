@@ -2,7 +2,11 @@
 
 Developer App for Integrating WalletConnect
 
-## How to run the project
+## Quick Start
+
+**[WIP]** There will soon be a *test-flight* for iOS and *apk file* for Android
+
+## Manual Build
 
 New to React Native? Here's a helpful introduction: https://facebook.github.io/react-native/docs/getting-started.html
 
@@ -10,7 +14,7 @@ New to React Native? Here's a helpful introduction: https://facebook.github.io/r
 
 1.  Clone the GitHub repository to your machine.
 2.  Run `npm install` to get all of the packages required.
-3.  Run `npm run ios` to build the project for XCode.
+3.  Run `npm run start --reset-cache` to start the bundler.
 4.  Open `walletconnect-wallet/ios/WalletConnect.xcodeproj`.
 5.  Run the project by clicking the play button.
 
@@ -18,6 +22,6 @@ New to React Native? Here's a helpful introduction: https://facebook.github.io/r
 
 1.  Clone the GitHub repository to your machine.
 2.  Run `npm install` to get all of the packages required.
-3.  Run `npm run android` to build the project for Android Studio.
+3.  Run `npm run start --reset-cache` to start the bundler.
 4.  Open android directory on Android Studio.
 5.  Run the project by clicking the play button.

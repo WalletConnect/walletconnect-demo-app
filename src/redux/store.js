@@ -5,4 +5,6 @@ import reducers from '.';
 
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThunk)));
 
+export const { dispatch } = store;
+
 export default store;

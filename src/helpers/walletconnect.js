@@ -3,7 +3,7 @@ import { loadAddress } from './wallet';
 import { getFCMToken } from './fcm';
 
 export const walletConnectInstance = {
-  pushEndpoint: 'https://walletconnect.balance.io/webhook/push-notify',
+  pushEndpoint: 'https://us-central1-walletconnect-app.cloudfunctions.net/push',
   fcmToken: null,
   walletConnector: null,
 };
