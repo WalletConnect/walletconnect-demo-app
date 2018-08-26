@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { View, TouchableOpacity } from 'react-native';
 import Text from './Text';
 import { shortenAddress } from '../helpers/utilities';
+import { convertAmountFromRawNumber, handleSignificantDecimals, convertStringToNumber, multiply } from '../helpers/bignumber';
 // import { Icon } from 'react-native-elements';
 
 const StyledTransactionRow = styled.View`
@@ -41,11 +42,10 @@ const StyledValue = styled.Text`
 `;
 
 const TransactionRow = ({ tx, navigator, address }) => {
-  const exponent = 10 ** Number(tx.asset.decimals);
-  const txValue = (Number(tx.value) / exponent).toFixed(4);
+  const txValue = convertAmountFromRawNumber(tx.value, tx.asset.decimals);
   const isTxIncoming = tx.to === address;
 
-  const date = new Date(Number(tx.timeStamp) * 1000).toLocaleString();
+  const date = new Date(convertStringToNumber(multiply(tx.timeStamp, 1000))).toLocaleString();
   const otherAddress = isTxIncoming ? tx.from : tx.to;
 
   return (
@@ -85,7 +85,7 @@ const TransactionRow = ({ tx, navigator, address }) => {
         </StyledRow>
         <View>
           <StyledFlexEnd>
-            <StyledValue>{txValue}</StyledValue>
+            <StyledValue>{`${handleSignificantDecimals(txValue, 8)} ${tx.asset.symbol}`}</StyledValue>
           </StyledFlexEnd>
         </View>
       </StyledTransactionRow>

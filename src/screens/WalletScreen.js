@@ -10,6 +10,7 @@ import Text from '../components/Text';
 import Label from '../components/Label';
 import Button from '../components/Button';
 import AssetRow from '../components/AssetRow';
+import { convertStringToNumber } from '../helpers/bignumber';
 import { accountGetAssets } from '../redux/_account';
 
 class WalletScreen extends Component {
@@ -23,7 +24,7 @@ class WalletScreen extends Component {
     return (
       <Section>
         {assets
-          .sort((a, b) => Number(a.address) - Number(b.address)) // sort by address so that ether is always first
+          .sort((a, b) => convertStringToNumber(a.address) - convertStringToNumber(b.address)) // sort by address so that ether is always first
           .map((asset, index) => (
             <TouchableOpacity
               key={index}

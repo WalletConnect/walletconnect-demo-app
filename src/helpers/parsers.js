@@ -1,7 +1,8 @@
+import { convertAmountFromRawNumber } from './bignumber';
+
 export const parseAccountBalances = data => {
   const assets = data.map(asset => {
-    const exponent = 10 ** Number(asset.contract.decimals);
-    const balance = Number(asset.balance) / exponent;
+    const balance = convertAmountFromRawNumber(asset.balance, asset.decimals);
     return {
       address: asset.contract.address,
       name: asset.contract.name,

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AssetIcon from './AssetIcon';
+import { handleSignificantDecimals } from '../helpers/bignumber';
 
 const StyledAssetRow = styled.View`
   flex-direction: row;
@@ -37,7 +38,7 @@ const AssetRow = ({ asset }) => (
       <StyledSymbol>{asset.name}</StyledSymbol>
     </StyledSymbolWrapper>
     <StyledBalance>
-      <StyledBalanceText>{`${Number(asset.balance).toFixed(8)} ${asset.symbol}`}</StyledBalanceText>
+      <StyledBalanceText>{`${handleSignificantDecimals(asset.balance, 8)} ${asset.symbol}`}</StyledBalanceText>
     </StyledBalance>
   </StyledAssetRow>
 );
