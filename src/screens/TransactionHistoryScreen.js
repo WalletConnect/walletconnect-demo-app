@@ -21,30 +21,14 @@ const styles = StyleSheet.create({
 });
 
 class TransactionHistoryScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-    };
-  }
-
-  componentDidMount() {
-    this._fetchData();
-  }
-
-  async _fetchData() {
+   componentDidMount() {
     const { address, network } = this.props;
-    try {
-      await this.props.accountGetTransactions(address, network);
-    } catch (err) {
-      console.log(err);
-    }
-    this.setState({ loading: false });
+    this.props.accountGetTransactions(address, network);
   }
 
   render() {
     const {
-      navigator, transactions, asset, address,
+      navigator, transactions, asset, address, loading,
     } = this.props;
     const _transactions = transactions.filter(tx => tx.asset.address === asset.address);
     console.log({ transactions });
@@ -62,7 +46,7 @@ class TransactionHistoryScreen extends Component {
               </View>
             }
             onRefresh={() => this._fetchData()}
-            refreshing={this.state.loading}
+            refreshing={loading}
             keyExtractor={item => item.transactionId}
             renderItem={({ item }) => <TransactionRow tx={item} address={address} navigator={navigator} />}
           />
@@ -75,12 +59,15 @@ class TransactionHistoryScreen extends Component {
 TransactionHistoryScreen.propTypes = {
   accountGetTransactions: PropTypes.func.isRequired,
   navigator: PropTypes.any.isRequired,
+  loading: PropTypes.bool.isRequired,
+  network: PropTypes.string.isRequired,
   transactions: PropTypes.array.isRequired,
   asset: PropTypes.object.isRequired,
   address: PropTypes.string.isRequired,
 };
 
 const reduxProps = ({ account }) => ({
+  loading: account.loading,
   network: account.network,
   address: account.address,
   transactions: account.transactions,
