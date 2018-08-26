@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Text from './Text';
 import AssetIcon from './AssetIcon';
 
 const StyledAssetRow = styled.View`
@@ -12,6 +11,9 @@ const StyledAssetRow = styled.View`
 const StyledBalance = styled.View`
   margin-top: 30px;
   margin-right: 11;
+`;
+
+const StyledBalanceText = styled.Text`
   color: #242836;
   line-height: 20px;
 `;
@@ -35,7 +37,7 @@ const AssetRow = ({ asset }) => (
       <StyledSymbol>{asset.symbol}</StyledSymbol>
     </StyledSymbolWrapper>
     <StyledBalance>
-      <Text>{Number(asset.balance).toFixed(8)}</Text>
+      <StyledBalanceText>{Number(asset.balance).toFixed(8)}</StyledBalanceText>
     </StyledBalance>
   </StyledAssetRow>
 );

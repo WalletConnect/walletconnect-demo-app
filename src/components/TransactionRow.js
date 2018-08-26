@@ -20,11 +20,11 @@ const StyledArrow = styled.Image`
   margin-right: 25px;
   margin-top: 5px;
 `;
-const StyledErrorLabel = styled.View`
+const StyledErrorLabel = styled.Text`
   color: red;
   font-size: 10;
 `;
-const StyledAddress = styled.View`
+const StyledAddress = styled.Text`
   font-size: 16;
   font-weight: bold;
 `;

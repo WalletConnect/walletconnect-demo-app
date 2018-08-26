@@ -15,6 +15,11 @@ const StyledHeader = styled.View`
   padding: 15px;
 `;
 
+const StyledTransactionDetails = styled.View`
+  flex: 7;
+  padding: 15px;
+`;
+
 class TransactionDetailsScreen extends Component {
   componentDidMount() {
     this.props.accountGetTransactionDetails(this.props.txHash);
@@ -25,9 +30,9 @@ class TransactionDetailsScreen extends Component {
     return (
       <StyledContainer>
         <StyledHeader>
-          <Text color={'#CCCCCC'}>Tx Hash: {txHash}</Text>
+          <Text>Tx Hash: {txHash}</Text>
         </StyledHeader>
-        <StyledContainer>{loading ? <Text>{'Loading...'}</Text> : <Text>{JSON.stringify(txDetails)}</Text>}</StyledContainer>
+        <StyledTransactionDetails>{loading ? <Text>{'Loading...'}</Text> : <Text>{JSON.stringify(txDetails, null, 2)}</Text>}</StyledTransactionDetails>
       </StyledContainer>
     );
   }
