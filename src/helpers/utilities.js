@@ -33,3 +33,16 @@ export const capitalize = string =>
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
+
+/**
+ * @desc shorten address
+ * @param  {String} [address]
+ * @param  {Number} [num]
+ * @param  {Boolean} [showEnd = true]
+ * @return {String}
+ */
+export function shortenAddress(address, num, showEnd = true) {
+  const sanitized = address.slice(2);
+  const shorten = `${sanitized.slice(0, num)}...${showEnd ? sanitized.slice(-num) : ''}`;
+  return '0x'.concat(shorten);
+}

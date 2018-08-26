@@ -1,4 +1,6 @@
 import ethers from 'ethers';
+import { dispatch } from '../redux/store';
+import { accountUpdateAddress } from '../redux/_account';
 import { keychainSave, keychainLoad } from './keychain';
 
 const seedPhraseKey = 'seedPhrase';
@@ -14,6 +16,7 @@ export async function walletInit(seedPhrase = generateSeedPhrase()) {
   if (!wallet) {
     wallet = await createWallet();
   }
+  dispatch(accountUpdateAddress(wallet.address));
 }
 
 export async function createWallet(seedPhrase = generateSeedPhrase()) {

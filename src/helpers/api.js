@@ -22,10 +22,18 @@ const api = axios.create({
 export const apiGetAccountBalances = async (address = '', network = 'mainnet') => api.get(`/get_balances/${network}/${address}`);
 
 /**
- * @desc get transaction data
+ * @desc get account transactions
  * @param  {String}   [address = '']
  * @param  {String}   [network = 'mainnet']
  * @param  {Number}   [page = 1]
  * @return {Promise}
  */
-export const apiGetTransactionData = (address = '', network = 'mainnet', page = 1) => api.get(`/get_transactions/${network}/${address}/${page}`);
+export const apiGetAccountTransactions = (address = '', network = 'mainnet', page = 1) => api.get(`/get_transactions/${network}/${address}/${page}`);
+
+/**
+ * @desc get transaction details
+ * @param  {String}   [txnHash = '']
+ * @param  {String}   [network = 'mainnet']
+ * @return {Promise}
+ */
+export const apiGetTransactionDetails = (txnHash = '', network = 'mainnet') => api.get(`/get_transaction/${network}/${txnHash}`);
