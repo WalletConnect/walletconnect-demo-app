@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { StyleSheet, View, FlatList, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import AssetRow from '../components/AssetRow';
 import TransactionRow from '../components/TransactionRow';
 import { accountGetTransactions } from '../redux/_account';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  assetHeader: {
-    flex: 1,
-    padding: 15,
-  },
-  transactionsContainer: {
-    flex: 5,
-  },
-});
+const StyledContainer = styled.View`
+  flex: 1;
+  background-color: #ffffff;
+`;
+
+const StyledAssetHeader = styled.View`
+  flex: 1;
+  padding: 15px;
+`;
+
+const StyledTransactionsContainer = styled.View`
+  flex: 5;
+`;
+
+const StyledDash = styled.Text`
+  color: #ccc;
+  text-align: center;
+  font-size: 20px;
+`;
 
 class TransactionHistoryScreen extends Component {
-   componentDidMount() {
+  componentDidMount() {
     const { address, network } = this.props;
     this.props.accountGetTransactions(address, network);
   }
@@ -33,16 +40,16 @@ class TransactionHistoryScreen extends Component {
     const _transactions = transactions.filter(tx => tx.asset.address === asset.address);
     console.log({ transactions });
     return (
-      <View style={styles.container}>
-        <View style={styles.assetHeader}>
+      <StyledContainer>
+        <StyledAssetHeader>
           <AssetRow asset={asset} />
-        </View>
-        <View style={styles.transactionsContainer}>
+        </StyledAssetHeader>
+        <StyledTransactionsContainer>
           <FlatList
             data={_transactions}
             ListEmptyComponent={
               <View style={{ height: 100 }}>
-                <Text style={{ color: '#ccc', textAlign: 'center', fontSize: 20 }}>-</Text>
+                <StyledDash>-</StyledDash>
               </View>
             }
             onRefresh={() => this._fetchData()}
@@ -50,8 +57,8 @@ class TransactionHistoryScreen extends Component {
             keyExtractor={item => item.transactionId}
             renderItem={({ item }) => <TransactionRow tx={item} address={address} navigator={navigator} />}
           />
-        </View>
-      </View>
+        </StyledTransactionsContainer>
+      </StyledContainer>
     );
   }
 }

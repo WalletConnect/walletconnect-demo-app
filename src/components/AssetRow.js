@@ -1,41 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View } from 'react-native';
+import styled from 'styled-components';
 import AssetIcon from './AssetIcon';
 
-const styles = StyleSheet.create({
-  assetRow: {
-    flexDirection: 'row',
-    height: 80,
-  },
-  balance: {
-    marginTop: 30,
-    marginRight: 11,
-    color: '#242836',
-    lineHeight: 20,
-  },
-  symbol: {
-    color: '#242836',
-    letterSpacing: 1,
-    lineHeight: 20,
-  },
-  assetSymbolContent: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
+const StyledAssetRow = styled.View`
+  flex-direction: row;
+  height: 80px;
+`;
+
+const StyledBalance = styled.View`
+  margin-top: 30px;
+  margin-right: 11;
+`;
+
+const StyledBalanceText = styled.Text`
+  color: #242836;
+  line-height: 20px;
+`;
+
+const StyledSymbol = styled.Text`
+  color: #242836;
+  letter-spacing: 1px;
+  line-height: 20px;
+`;
+
+const StyledSymbolWrapper = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
 
 const AssetRow = ({ asset }) => (
-  <View style={styles.assetRow}>
-    <View style={styles.assetSymbolContent}>
+  <StyledAssetRow>
+    <StyledSymbolWrapper>
       <AssetIcon asset={asset} />
-      <Text style={styles.symbol}>{asset.symbol}</Text>
-    </View>
-    <View>
-      <Text style={styles.balance}>{Number(asset.balance).toFixed(8)}</Text>
-    </View>
-  </View>
+      <StyledSymbol>{asset.symbol}</StyledSymbol>
+    </StyledSymbolWrapper>
+    <StyledBalance>
+      <StyledBalanceText>{Number(asset.balance).toFixed(8)}</StyledBalanceText>
+    </StyledBalance>
+  </StyledAssetRow>
 );
 
 AssetRow.propTypes = {

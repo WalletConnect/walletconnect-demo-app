@@ -1,7 +1,19 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View } from 'react-native';
+import styled from 'styled-components';
+import { StyleSheet } from 'react-native';
 import ImageLoad from 'react-native-image-placeholder';
+
+const StyledCircle = styled.View`
+  margin-left: 14px;
+  height: 36px;
+  width: 36px;
+  margin-right: 15px;
+  border-radius: 18px;
+  border-color: #d4d4d7;
+  border-width: 1px;
+  background-color: #ffffff;
+`;
 
 const styles = StyleSheet.create({
   circleIcon: {
@@ -9,16 +21,6 @@ const styles = StyleSheet.create({
     width: 30,
     borderRadius: 15,
     margin: 2,
-  },
-  circle: {
-    marginLeft: 14,
-    height: 36,
-    width: 36,
-    marginRight: 15,
-    borderRadius: 18,
-    borderColor: '#d4d4d7',
-    borderWidth: 1,
-    backgroundColor: '#fff',
   },
 });
 
@@ -36,7 +38,7 @@ class AssetIcon extends PureComponent {
     const { asset } = this.props;
 
     return (
-      <View style={styles.circle}>
+      <StyledCircle>
         <ImageLoad
           source={{ uri: this._getIconUrl(asset.address) }}
           style={styles.circleIcon}
@@ -47,7 +49,7 @@ class AssetIcon extends PureComponent {
           borderRadius={15}
           placeholderStyle={styles.circleIcon}
         />
-      </View>
+      </StyledCircle>
     );
   }
 }
