@@ -13,6 +13,8 @@ registerScreenVisibilityListener();
 walletInit();
 
 getFCMToken();
+getFCMToken();
+getFCMToken();
 
 registerAppListener();
 registerKilledListener();

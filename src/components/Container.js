@@ -7,7 +7,7 @@ const StyledContainer = styled.View`
   justify-content: flex-start;
   align-items: flex-start;
   background-color: #eeeeee;
-  padding: 00px;
+  padding: 0;
 `;
 
 const Container = ({ children, ...props }) => <StyledContainer {...props}>{children}</StyledContainer>;

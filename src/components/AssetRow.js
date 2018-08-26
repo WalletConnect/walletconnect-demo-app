@@ -34,10 +34,10 @@ const AssetRow = ({ asset }) => (
   <StyledAssetRow>
     <StyledSymbolWrapper>
       <AssetIcon asset={asset} />
-      <StyledSymbol>{asset.symbol}</StyledSymbol>
+      <StyledSymbol>{asset.name}</StyledSymbol>
     </StyledSymbolWrapper>
     <StyledBalance>
-      <StyledBalanceText>{Number(asset.balance).toFixed(8)}</StyledBalanceText>
+      <StyledBalanceText>{`${Number(asset.balance).toFixed(8)} ${asset.symbol}`}</StyledBalanceText>
     </StyledBalance>
   </StyledAssetRow>
 );

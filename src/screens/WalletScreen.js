@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Clipboard, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Clipboard, ScrollView, TouchableOpacity } from 'react-native';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import Section from '../components/Section';
+import Separator from '../components/Separator';
 import Text from '../components/Text';
 import Label from '../components/Label';
 import Button from '../components/Button';
@@ -19,8 +20,6 @@ class WalletScreen extends Component {
     if (!assets.length) {
       return null;
     }
-    const Separator = <View style={{ height: 1, backgroundColor: '#e9eaeb' }} />;
-
     return (
       <Section>
         {assets
@@ -40,7 +39,7 @@ class WalletScreen extends Component {
                 });
               }}
             >
-              {Separator}
+              <Separator />
               <AssetRow asset={asset} />
             </TouchableOpacity>
           ))}
@@ -50,7 +49,7 @@ class WalletScreen extends Component {
 
   render() {
     const { loading, assets, address } = this.props;
-    return !loading ? (
+    return (
       <ScrollView>
         <Container>
           <Card>
@@ -61,18 +60,17 @@ class WalletScreen extends Component {
                 {'Copy'}
               </Button>
             </Section>
-            {this._renderAssetRows(assets)}
+            {!loading ? (
+              this._renderAssetRows(assets)
+            ) : (
+              <Section>
+                <Separator />
+                <Label>{'Loading...'}</Label>
+              </Section>
+            )}
           </Card>
         </Container>
       </ScrollView>
-    ) : (
-      <Container>
-        <Card>
-          <Section>
-            <Label>Loading...</Label>
-          </Section>
-        </Card>
-      </Container>
     );
   }
 }
