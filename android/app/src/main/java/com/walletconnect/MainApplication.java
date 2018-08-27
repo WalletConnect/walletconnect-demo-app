@@ -5,8 +5,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.oblador.keychain.KeychainPackage;
+import org.reactnative.camera.RNCameraPackage;
 
-
+    
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,7 @@ import com.reactnativenavigation.NavigationApplication;
 	 return Arrays.<ReactPackage>asList(
 					    // eg. new VectorIconsPackage()
 					    new RandomBytesPackage(),
+					    new RNCameraPackage(),					    
 					    new KeychainPackage()					    
 					      );
      }     
