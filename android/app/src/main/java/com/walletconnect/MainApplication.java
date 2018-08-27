@@ -6,9 +6,8 @@ import com.facebook.soloader.SoLoader;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.oblador.keychain.KeychainPackage;
 import org.reactnative.camera.RNCameraPackage;
-//import com.evollu.react.fcm.FIRMessagingPackage;
 import io.invertase.firebase.RNFirebasePackage;
-//import io.invertase.firebase.messaging.RNFirebaseMessagingPackage; 
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,10 +32,9 @@ import com.reactnativenavigation.NavigationApplication;
 					    // eg. new VectorIconsPackage()
 					    new RandomBytesPackage(),
 					    new RNCameraPackage(),
-					    // new FIRMessagingPackage(),				    
 					    new KeychainPackage(),
-					    new RNFirebasePackage()
-					    // new RNFirebaseMessagingPackage() 
+					    new RNFirebasePackage(),
+					    new RNFirebaseNotificationsPackage() 
 					      );
      }     
  }
