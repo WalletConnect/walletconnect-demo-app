@@ -1,4 +1,4 @@
-package com.walletconnect;
+package org.walletconnect;
 
 import android.app.Application;
 
