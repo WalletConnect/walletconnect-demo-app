@@ -26,17 +26,17 @@
       <!-- <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@mipmap/ic_notif"/> -->
       <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="my_default_channel"/>
 
-        <service android:name="com.evollu.react.fcm.MessagingService" android:enabled="true" android:exported="true">
-           <intent-filter>
-             <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-           </intent-filter>
-         </service>
-
-         <service android:name="com.evollu.react.fcm.InstanceIdService" android:exported="false">
-           <intent-filter>
-             <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-           </intent-filter>
-         </service>
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+	<intent-filter>
+	  <action android:name="com.google.firebase.MESSAGING_EVENT" />
+	</intent-filter>
+      </service>
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseInstanceIdService">
+	<intent-filter>
+	  <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+	</intent-filter>	
+      </service>
+      <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
       
     </application>
 
