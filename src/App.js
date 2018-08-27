@@ -1,7 +1,7 @@
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
-import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
+//import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
 import { walletInit } from './helpers/wallet';
 import store from './redux/store';
 
@@ -10,11 +10,11 @@ import store from './redux/store';
 registerScreens(store, Provider);
 registerScreenVisibilityListener();
 
-getFCMToken();
+//getFCMToken();
 walletInit();
 
-registerAppListener();
-registerKilledListener();
+// registerAppListener();
+// registerKilledListener();
 
 Navigation.startTabBasedApp({
   tabs: [
@@ -25,13 +25,13 @@ Navigation.startTabBasedApp({
 
       title: 'Wallet',
     },
-    {
-      label: 'Scan',
-      screen: 'WalletConnect.QRScannerScreen',
-      icon: require('./assets/scan-icon.png'), // eslint-disable-line
+    // {
+    //   label: 'Scan',
+    //   screen: 'WalletConnect.QRScannerScreen',
+    //   icon: require('./assets/scan-icon.png'), // eslint-disable-line
 
-      title: 'WalletConnect',
-    },
+    //   title: 'WalletConnect',
+    // },
     {
       label: 'Settings',
       screen: 'WalletConnect.SettingsScreen',
