@@ -21,45 +21,39 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+import com.reactnativenavigation.NavigationApplication;
 
-  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+public class MainApplication extends NavigationApplication {
+
     @Override
-    public boolean getUseDeveloperSupport() {
-      return BuildConfig.DEBUG;
+    public boolean isDebug() {
+        // Make sure you are using BuildConfig from your own application
+        return BuildConfig.DEBUG;
     }
 
-    @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new SplashScreenReactPackage(),
-            new FingerprintAuthPackage(),
-            new UdpSocketsModule(),
-            new TcpSocketsModule(),
-            new RNOSModule(),
-            new NavigationReactPackage(),
-            new RNCameraPackage(),
-            new FIRMessagingPackage(),
-            new RandomBytesPackage(),
-            new KeychainPackage()
-      );
+        // Add additional packages you require here
+        // No need to add RnnPackage and MainReactPackage
+        return Arrays.<ReactPackage>asList(
+          new SplashScreenReactPackage(),
+          new FingerprintAuthPackage(),
+          new UdpSocketsModule(),
+          new TcpSocketsModule(),
+          new RNOSModule(),
+          new NavigationReactPackage(),
+          new RNCameraPackage(),
+          new FIRMessagingPackage(),
+          new RandomBytesPackage(),
+          new KeychainPackage()
+        );
     }
 
     @Override
-    protected String getJSMainModuleName() {
-      return "index";
+    public List<ReactPackage> createAdditionalReactPackages() {
+        return getPackages();
     }
-  };
-
-  @Override
-  public ReactNativeHost getReactNativeHost() {
-    return mReactNativeHost;
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
-  }
+    @Override
+    public String getJSMainModuleName() {
+        return "index";
+    }
 }
