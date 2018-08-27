@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.bitgo.randombytes.RandomBytesPackage;
+import com.oblador.keychain.KeychainPackage;
 
 
 
@@ -28,7 +29,8 @@ import com.reactnativenavigation.NavigationApplication;
 	 // No need to add RnnPackage and MainReactPackage
 	 return Arrays.<ReactPackage>asList(
 					    // eg. new VectorIconsPackage()
-					    new RandomBytesPackage()					    
+					    new RandomBytesPackage(),
+					    new KeychainPackage()					    
 					      );
      }     
  }
