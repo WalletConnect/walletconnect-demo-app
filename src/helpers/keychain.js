@@ -1,4 +1,9 @@
-import { setInternetCredentials, getInternetCredentials, resetInternetCredentials } from 'react-native-keychain';
+// import { setInternetCredentials, getInternetCredentials, resetInternetCredentials } from 'react-native-keychain';
+
+// DELETE THIS
+const setInternetCredentials = async () => {};
+const getInternetCredentials = async () => {};
+const resetInternetCredentials = async () => {};
 
 export async function keychainSave(key, value) {
   const jsonValue = JSON.stringify(value);
