@@ -36,9 +36,9 @@
 		74EE7BA92135BBC0001ADF9E /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EE7BA82135BBC0001ADF9E /* nanopb.framework */; };
 		74EE7BAB2135BBC5001ADF9E /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EE7BAA2135BBC5001ADF9E /* FirebaseMessaging.framework */; };
 		74EE7BAD2135BBC5001ADF9E /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EE7BAC2135BBC5001ADF9E /* Protobuf.framework */; };
-		74EE7BAF2135BCDE001ADF9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74EE7BAE2135BCDE001ADF9E /* GoogleService-Info.plist */; };
 		74EE7BDF2135C29F001ADF9E /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FAF7B12068B7DF001FD233 /* libRNCamera.a */; };
 		74EE7C112135C2B0001ADF9E /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A94BFB20688A170085527E /* libRNKeychain.a */; };
+		74EE7C132135C8C4001ADF9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74EE7C122135C8C4001ADF9E /* GoogleService-Info.plist */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
@@ -444,7 +444,7 @@
 		74EE7BA82135BBC0001ADF9E /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nanopb.framework; path = ../Firebase/Analytics/nanopb.framework; sourceTree = "<group>"; };
 		74EE7BAA2135BBC5001ADF9E /* FirebaseMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseMessaging.framework; path = ../Firebase/Messaging/FirebaseMessaging.framework; sourceTree = "<group>"; };
 		74EE7BAC2135BBC5001ADF9E /* Protobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Protobuf.framework; path = ../Firebase/Messaging/Protobuf.framework; sourceTree = "<group>"; };
-		74EE7BAE2135BCDE001ADF9E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		74EE7C122135C8C4001ADF9E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		775E7E5D2F4D46BF8A72A363 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -584,7 +584,7 @@
 		13B07FAE1A68108700A75B9A /* WalletConnect */ = {
 			isa = PBXGroup;
 			children = (
-				74EE7BAE2135BCDE001ADF9E /* GoogleService-Info.plist */,
+				74EE7C122135C8C4001ADF9E /* GoogleService-Info.plist */,
 				53A94C2B20688B6B0085527E /* WalletConnect.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -1379,7 +1379,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				74EE7BAF2135BCDE001ADF9E /* GoogleService-Info.plist in Resources */,
+				74EE7C132135C8C4001ADF9E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

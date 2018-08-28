@@ -2,6 +2,7 @@ import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
 //import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
+import firebase from 'react-native-firebase';
 import { walletInit } from './helpers/wallet';
 import store from './redux/store';
 
@@ -12,6 +13,20 @@ registerScreenVisibilityListener();
 
 //getFCMToken();
 walletInit();
+
+const requestPermissions = async () => { 
+    try {
+	await firebase.messaging().requestPermission();
+	// User has authorised
+	console.log("Permissions granted");
+    } catch (error) {
+	// User has rejected permissions
+	console.log("Error while requesting permissions");
+	console.log(error);
+    }
+}
+
+requestPermissions();
 
 // registerAppListener();
 // registerKilledListener();
