@@ -37,6 +37,8 @@
 		74EE7BAB2135BBC5001ADF9E /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EE7BAA2135BBC5001ADF9E /* FirebaseMessaging.framework */; };
 		74EE7BAD2135BBC5001ADF9E /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74EE7BAC2135BBC5001ADF9E /* Protobuf.framework */; };
 		74EE7BAF2135BCDE001ADF9E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74EE7BAE2135BCDE001ADF9E /* GoogleService-Info.plist */; };
+		74EE7BDF2135C29F001ADF9E /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FAF7B12068B7DF001FD233 /* libRNCamera.a */; };
+		74EE7C112135C2B0001ADF9E /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A94BFB20688A170085527E /* libRNKeychain.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
@@ -466,6 +468,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74EE7C112135C2B0001ADF9E /* libRNKeychain.a in Frameworks */,
+				74EE7BDF2135C29F001ADF9E /* libRNCamera.a in Frameworks */,
 				74EE7B982135B8AC001ADF9E /* libRNFirebase.a in Frameworks */,
 				3CB9C3B72093DD930020FD52 /* libRNRandomBytes.a in Frameworks */,
 				538D53692066FC78000BD833 /* libReactNativeNavigation.a in Frameworks */,
