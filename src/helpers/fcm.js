@@ -1,7 +1,17 @@
-import FCM, { FCMEvent, NotificationType, RemoteNotificationResult, WillPresentNotificationResult } from 'react-native-fcm';
+// import FCM, { FCMEvent, NotificationType, RemoteNotificationResult, WillPresentNotificationResult } from 'react-native-fcm';
 import { Platform, AsyncStorage, AppState } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { addNewTransaction } from '../helpers/transactions';
+
+// DELETE THIS
+const FCM = {
+  getFCMToken: () => {},
+  on: () => {},
+};
+const FCMEvent = null;
+const NotificationType = null;
+const RemoteNotificationResult = null;
+const WillPresentNotificationResult = null;
 
 export async function getFCMToken() {
   const fcmToken = await FCM.getFCMToken();
