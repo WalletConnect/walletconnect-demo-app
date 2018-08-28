@@ -1,6 +1,6 @@
 import RNWalletConnect from 'rn-walletconnect-wallet';
 import { loadAddress } from './wallet';
-import { getFCMToken } from './fcm';
+import { getFCMToken } from './firebase';
 
 export const walletConnectInstance = {
   pushEndpoint: 'https://us-central1-walletconnect-app.cloudfunctions.net/push',
