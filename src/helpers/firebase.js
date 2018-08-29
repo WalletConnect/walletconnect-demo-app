@@ -1,12 +1,13 @@
 import firebase from 'react-native-firebase';
 
 let MessageListener = null;
+let NotificationListener = null;
+let NotificationDisplayedListener = null;
 
 export async function initFCM() {
   await requestPermissions();
-  await registerMessageListener();
-  const fcmToken = await getFCMToken();
-  return fcmToken;
+  await registerListeners();
+  await getFCMToken();
 }
 
 export async function getFCMToken() {
@@ -27,16 +28,22 @@ export async function requestPermissions() {
   }
 }
 
-export async function registerMessageListener() {
+export async function registerListeners() {
   MessageListener = firebase.messaging().onMessage(message => {
-    console.log('FCM Notification =====>', message);
+    console.log('FCM onMessage =====>', message);
   });
-  console.log('Firebase Cloud Messaging Listener REGISTERED');
-  return MessageListener;
+  NotificationListener = firebase.notifications().onNotification(notification => {
+    console.log('FCM onNotification  =====>', notification);
+  });
+  NotificationDisplayedListener = firebase.notifications().onNotificationDisplayed(notification => {
+    console.log('FCM onNotificationDisplayed =====>', notification);
+  });
+  console.log('FCM Listeners REGISTERED');
 }
 
-export async function unregisterMessageListener() {
+export async function unregisterListeners() {
   await MessageListener();
-  console.log('Firebase Cloud Messaging Listener UNREGISTERED');
-  return MessageListener;
+  await NotificationListener();
+  await NotificationDisplayedListener();
+  console.log('FCM Listeners UNREGISTERED');
 }
