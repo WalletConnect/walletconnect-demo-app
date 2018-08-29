@@ -15,14 +15,14 @@ import { accountGetAssets } from '../redux/_account';
 class WalletScreen extends Component {
   state={ refreshing: false }
   componentDidMount() {
-      this._fetchAccountAssets();
+    this._fetchAccountAssets();
   }
   _fetchAccountAssets() {
-      this.setState({ refreshing: true });
-      setTimeout(async () => {
-	  await this.props.accountGetAssets();
-	  this.setState({ refreshing: false });
-      }, 0);
+    this.setState({ refreshing: true });
+    setTimeout(async () => {
+      await this.props.accountGetAssets();
+      this.setState({ refreshing: false });
+    }, 0);
   }
   _renderAssetRows(assets) {
     if (!assets.length) {
@@ -56,14 +56,14 @@ class WalletScreen extends Component {
   }
 
   render() {
-   const { loading, assets, address } = this.props;
-   return (
-     <ScrollView
-	refreshControl={<RefreshControl
-	    refreshing={this.state.refreshing}
-  	    onRefresh={this._fetchAccountAssets.bind(this)}
-			/>}
-	    >
+    const { loading, assets, address } = this.props;
+    return (
+      <ScrollView
+        refreshControl={<RefreshControl
+          refreshing={this.state.refreshing}
+          onRefresh={this._fetchAccountAssets.bind(this)}
+        />}
+      >
         <Container>
           <Card>
             <Section style={{ height: 100 }}>

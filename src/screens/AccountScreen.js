@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import Section from '../components/Section';

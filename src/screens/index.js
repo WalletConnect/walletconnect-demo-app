@@ -13,17 +13,16 @@ import NetworkScreen from './NetworkScreen';
 export function registerScreens(store, Provider) {
   Navigation.registerComponent('WalletConnect.QRScannerScreen', () => QRScannerScreen, store, Provider);
 
-  // Settings Tab Screens  
+  // Settings Tab Screens
   Navigation.registerComponent('WalletConnect.SettingsScreen', () => SettingsScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.AccountScreen', () => AccountScreen, store, Provider);
-  Navigation.registerComponent('WalletConnect.NetworkScreen', () => NetworkScreen, store, Provider);    
+  Navigation.registerComponent('WalletConnect.NetworkScreen', () => NetworkScreen, store, Provider);
 
   // Wallet Tab Screens
-  Navigation.registerComponent('WalletConnect.WalletScreen', () => WalletScreen, store, Provider);    
+  Navigation.registerComponent('WalletConnect.WalletScreen', () => WalletScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.TransactionScreen', () => TransactionScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.TransactionHistoryScreen', () => TransactionHistoryScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.TransactionDetailsScreen', () => TransactionDetailsScreen, store, Provider);
-    
 }
 
 export function registerScreenVisibilityListener() {
