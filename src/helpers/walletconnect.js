@@ -18,6 +18,7 @@ export const walletConnectInit = async (bridgeUrl, sessionId, sharedKey, dappNam
   });
   walletConnectInstance.walletConnector = walletConnector;
   walletConnectInstance.fcmToken = fcmToken;
+  console.log('walletConnectInstance ===>', walletConnectInstance);
 };
 
 export const walletConnectSendSession = async () => {

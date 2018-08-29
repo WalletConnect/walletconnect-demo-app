@@ -1,7 +1,7 @@
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
-import { requestPermissions } from './helpers/firebase';
+import { initFCM } from './helpers/firebase';
 
 import { walletInit } from './helpers/wallet';
 import store from './redux/store';
@@ -9,9 +9,8 @@ import store from './redux/store';
 registerScreens(store, Provider);
 registerScreenVisibilityListener();
 
+initFCM();
 walletInit();
-
-requestPermissions();
 
 Navigation.startTabBasedApp({
   tabs: [

@@ -14,7 +14,9 @@ import { accountGetAssets } from '../redux/_account';
 
 class WalletScreen extends Component {
   componentDidMount() {
-    this.props.accountGetAssets();
+    if (this.props.address) {
+      this.props.accountGetAssets();
+    }
   }
   _renderAssetRows(assets) {
     if (!assets.length) {
