@@ -1,20 +1,17 @@
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { registerScreens, registerScreenVisibilityListener } from './screens';
-import { getFCMToken, registerAppListener, registerKilledListener } from './helpers/fcm';
+import { requestPermissions } from './helpers/firebase';
+
 import { walletInit } from './helpers/wallet';
 import store from './redux/store';
-
-// const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThunk)));
 
 registerScreens(store, Provider);
 registerScreenVisibilityListener();
 
-getFCMToken();
 walletInit();
 
-registerAppListener();
-registerKilledListener();
+requestPermissions();
 
 Navigation.startTabBasedApp({
   tabs: [

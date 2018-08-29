@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "835942330957",
+    "firebase_url": "https://walletconnect-app.firebaseio.com",
+    "project_id": "walletconnect-app",
+    "storage_bucket": "walletconnect-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835942330957:android:0a6cade3c3af182f",
+        "android_client_info": {
+          "package_name": "com.walletconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835942330957-6hao0n5a4b2ol9g8g8ge4tundshqntn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAigfgh7QXi7q1UlwZICodQPqVzGV36z-k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
