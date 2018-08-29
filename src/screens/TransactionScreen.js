@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import TouchID from 'react-native-touch-id';
+import TouchID from 'react-native-touch-id';
 import styled from 'styled-components';
 import { StatusBar, AlertIOS } from 'react-native';
 import { Navigation } from 'react-native-navigation';
@@ -131,11 +131,6 @@ const SFaceID = styled.Image`
   height: 32px;
   transform: translateX(-91px) translateY(-6px);
 `;
-
-// DELETE THIS
-const TouchID = {
-  authenticate: () => {},
-};
 
 class TransactionScreen extends Component {
   state = {
