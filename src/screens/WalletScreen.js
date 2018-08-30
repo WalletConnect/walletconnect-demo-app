@@ -18,11 +18,7 @@ class WalletScreen extends Component {
     this._fetchAccountAssets();
   }
   _fetchAccountAssets() {
-    this.setState({ refreshing: true });
-    setTimeout(async () => {
-      await this.props.accountGetAssets();
-      this.setState({ refreshing: false });
-    }, 0);
+    this.props.accountGetAssets();
   }
   _renderAssetRows(assets) {
     if (!assets.length) {
@@ -60,7 +56,7 @@ class WalletScreen extends Component {
     return (
       <ScrollView
         refreshControl={<RefreshControl
-          refreshing={this.state.refreshing}
+          refreshing={this.props.loading}
           onRefresh={this._fetchAccountAssets.bind(this)}
         />}
       >
