@@ -19,26 +19,33 @@ export const parseAccountTransactions = (data, network) => {
 
   if (!!data && data.docs) {
     data.docs.forEach(doc => {
+      const events = [];
       if (doc.operations) {
-        // token transfers
-        doc.operations.filter(op => op.type === 'token_transfer').forEach(op => {
-          const tokenTx = {
-            transactionId: op.transactionId,
-            asset: {
-              symbol: op.contract.symbol,
-              decimals: op.contract.decimals,
-              address: op.contract.address,
-              name: op.contract.name,
-            },
-            timeStamp: doc.timeStamp,
-            value: op.value,
-            to: op.to,
-            from: op.from,
-            txHash: doc._id,
-            txStatus: 'success',
-            network,
-          };
-          transactions.push(tokenTx);
+        // parse events in the tx
+        doc.operations.forEach(op => {
+          let event = {};
+          // token transfers
+          if (op.type === 'token_transfer') {
+            event = {
+              transactionId: op.transactionId,
+              asset: {
+                symbol: op.contract.symbol,
+                decimals: op.contract.decimals,
+                address: op.contract.address,
+                name: op.contract.name,
+              },
+              value: op.value,
+              to: op.to,
+              from: op.from,
+              type: op.type,
+            };
+          } else {
+            // unknown operation type
+            event = {
+              ...op,
+            };
+          }
+          events.push(event);
         });
 
         // eth transaction
@@ -57,6 +64,7 @@ export const parseAccountTransactions = (data, network) => {
           txHash: doc._id,
           txStatus: doc.error ? 'error' : 'success',
           network,
+          events,
         };
         transactions.push(ethTx);
       }

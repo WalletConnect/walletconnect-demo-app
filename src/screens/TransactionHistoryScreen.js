@@ -37,7 +37,6 @@ class TransactionHistoryScreen extends Component {
     const {
       navigator, transactions, asset, address, loading,
     } = this.props;
-    const _transactions = transactions.filter(tx => tx.asset.address === asset.address);
     console.log({ transactions });
     return (
       <StyledContainer>
@@ -46,7 +45,7 @@ class TransactionHistoryScreen extends Component {
         </StyledAssetHeader>
         <StyledTransactionsContainer>
           <FlatList
-            data={_transactions}
+            data={transactions}
             ListEmptyComponent={
               <View style={{ height: 100 }}>
                 <StyledDash>-</StyledDash>
