@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { List, ListItem } from 'react-native-elements';
 import Container from '../components/Container';
 import Card from '../components/Card';
-import { capitalize } from '../helpers/utilities';
-
+import networks from '../ref/networks.json';
 
 class SettingsScreen extends Component {
   render() {
@@ -13,7 +12,7 @@ class SettingsScreen extends Component {
     const rows = [
       {
         title: 'Network',
-        subtitle: capitalize(network),
+        subtitle: networks[network].name,
         screen: 'WalletConnect.NetworkScreen',
       },
       {
@@ -27,25 +26,23 @@ class SettingsScreen extends Component {
       <Container>
         <Card>
           <List containerStyle={{ marginTop: 0 }}>
-            {
-              rows.map((r) => (
-                <ListItem
-                  key={r.title}
-                  title={r.title}
-                  subtitle={r.subtitle}
-                  onPress={() => {
-                    this.props.navigator.push({
-                      screen: r.screen,
-                      title: r.title,
-                      navigatorStyle: {
-                        tabBarHidden: true,
-                      },
-                      backButtonTitle: '',
-                    });
-                  }}
-                />
-              ))
-            }
+            {rows.map(r => (
+              <ListItem
+                key={r.title}
+                title={r.title}
+                subtitle={r.subtitle}
+                onPress={() => {
+                  this.props.navigator.push({
+                    screen: r.screen,
+                    title: r.title,
+                    navigatorStyle: {
+                      tabBarHidden: true,
+                    },
+                    backButtonTitle: '',
+                  });
+                }}
+              />
+            ))}
           </List>
         </Card>
       </Container>

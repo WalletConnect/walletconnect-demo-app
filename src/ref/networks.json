@@ -1,0 +1,18 @@
+{
+  "mainnet": {
+    "id": 1,
+    "name": "Mainnet"
+  },
+  "ropsten": {
+    "id": 3,
+    "name": "Ropsten"
+  },
+  "rinkeby": {
+    "id": 4,
+    "name": "Rinkeby"
+  },
+  "kovan": {
+    "id": 42,
+    "name": "Kovan"
+  }
+}

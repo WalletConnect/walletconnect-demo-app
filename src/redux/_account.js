@@ -21,9 +21,18 @@ const ACCOUNT_GET_TRANSACTION_DETAILS_FAILURE = 'account/ACCOUNT_GET_TRANSACTION
 
 // -- Actions --------------------------------------------------------------- //
 
-export const accountUpdateAddress = address => ({ type: ACCOUNT_UPDATE_ADDRESS, payload: address });
+export const accountUpdateAddress = address => dispatch => {
+  dispatch({ type: ACCOUNT_UPDATE_ADDRESS, payload: address });
+  dispatch(accountGetAssets());
+};
 
-export const accountUpdateNetwork = network => ({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
+export const accountUpdateNetwork = network => (dispatch, getState) => {
+  dispatch({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
+  const { address } = getState().account;
+  if (address) {
+    dispatch(accountGetAssets());
+  }
+};
 
 export const accountGetAssets = () => async (dispatch, getState) => {
   const { address, network } = getState().account;
@@ -71,7 +80,15 @@ const INITIAL_STATE = {
   loading: false,
   network: 'mainnet',
   address: '',
-  assets: [],
+  assets: [
+    {
+      address: null,
+      balance: '0',
+      decimals: 18,
+      name: 'Ethereum',
+      symbol: 'ETH',
+    },
+  ],
   transactions: [],
   txDetails: {},
 };
