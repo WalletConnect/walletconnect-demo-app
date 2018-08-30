@@ -11,8 +11,15 @@ export const parseAccountBalances = data => {
       balance,
     };
   });
-  return assets;
+  return assets.sort((a, b) => Number(a.address) - Number(b.address)); // sort by address so that ether is always first;
 };
+
+export const getEtherAssetObject = () => ({
+  symbol: 'ETH',
+  decimals: 18,
+  address: null,
+  name: 'Ethereum',
+});
 
 export const parseAccountTransactions = (data, network) => {
   const transactions = [];
@@ -51,12 +58,7 @@ export const parseAccountTransactions = (data, network) => {
         // eth transaction
         const ethTx = {
           transactionId: doc._id,
-          asset: {
-            symbol: 'ETH',
-            decimals: 18,
-            address: null,
-            name: 'Ethereum',
-          },
+          asset: getEtherAssetObject,
           timeStamp: doc.timeStamp,
           value: doc.value,
           to: doc.to,

@@ -86,7 +86,7 @@ const TransactionRow = ({ tx, navigator, address }) => {
         </StyledRow>
         <View>
           <StyledFlexEnd>
-            <StyledValue>{`${handleSignificantDecimals(txValue, 8)} ${tx.asset.symbol}`}</StyledValue>
+            <StyledValue>{`${handleSignificantDecimals(txValue, 8)}`}</StyledValue>
           </StyledFlexEnd>
         </View>
       </StyledTransactionRow>
