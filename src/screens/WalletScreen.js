@@ -21,7 +21,9 @@ class WalletScreen extends Component {
       this.props.accountGetAssets();
     }
   };
-  _renderAssetRows(assets) {
+  _renderAssetRows = () => {
+    const { assets, navigator } = this.props;
+    console.log(assets);
     if (!assets.length) {
       return null;
     }
@@ -33,7 +35,7 @@ class WalletScreen extends Component {
             <TouchableOpacity
               key={index}
               onPress={() => {
-                this.props.navigator.push({
+                navigator.push({
                   screen: 'WalletConnect.TransactionHistoryScreen',
                   passProps: { asset },
                   title: `${asset.symbol} Transactions`,
@@ -50,12 +52,12 @@ class WalletScreen extends Component {
           ))}
       </Section>
     );
-  }
+  };
 
   render() {
-    const { loading, assets, address } = this.props;
+    const { loading, address } = this.props;
     return (
-      <ScrollView refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={this._fetchAccountAssets} />}>
+      <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={this._fetchAccountAssets} />}>
         <Container>
           <Card>
             <Section style={{ height: 100 }}>
@@ -65,14 +67,7 @@ class WalletScreen extends Component {
                 {'Copy'}
               </Button>
             </Section>
-            {!loading ? (
-              this._renderAssetRows(assets)
-            ) : (
-              <Section>
-                <Separator />
-                <Label>{'Loading...'}</Label>
-              </Section>
-            )}
+            {this._renderAssetRows()}
           </Card>
         </Container>
       </ScrollView>

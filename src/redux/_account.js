@@ -74,7 +74,15 @@ const INITIAL_STATE = {
   loading: false,
   network: 'mainnet',
   address: '',
-  assets: [],
+  assets: [
+    {
+      address: null,
+      balance: '0',
+      decimals: 18,
+      name: 'Ethereum',
+      symbol: 'ETH',
+    },
+  ],
   transactions: [],
   txDetails: {},
 };
