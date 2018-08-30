@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Clipboard, ScrollView, TouchableOpacity } from 'react-native';
+import { Clipboard, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import Section from '../components/Section';
@@ -13,11 +13,15 @@ import AssetRow from '../components/AssetRow';
 import { accountGetAssets } from '../redux/_account';
 
 class WalletScreen extends Component {
+  state = { refreshing: false };
   componentDidMount() {
+    this._fetchAccountAssets();
+  }
+  _fetchAccountAssets = () => {
     if (this.props.address) {
       this.props.accountGetAssets();
     }
-  }
+  };
   _renderAssetRows(assets) {
     if (!assets.length) {
       return null;
@@ -52,7 +56,7 @@ class WalletScreen extends Component {
   render() {
     const { loading, assets, address } = this.props;
     return (
-      <ScrollView>
+      <ScrollView refreshControl={<RefreshControl refreshing={this.props.loading} onRefresh={this._fetchAccountAssets} />}>
         <Container>
           <Card>
             <Section style={{ height: 100 }}>
