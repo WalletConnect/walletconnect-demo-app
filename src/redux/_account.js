@@ -1,5 +1,6 @@
 import { apiGetAccountBalances, apiGetAccountTransactions, apiGetTransactionDetails } from '../helpers/api';
 import { parseAccountBalances, parseAccountTransactions } from '../helpers/parsers';
+import alert from '../helpers/alert';
 
 // -- Constants ------------------------------------------------------------- //
 
@@ -21,7 +22,10 @@ const ACCOUNT_GET_TRANSACTION_DETAILS_FAILURE = 'account/ACCOUNT_GET_TRANSACTION
 
 // -- Actions --------------------------------------------------------------- //
 
-export const accountUpdateAddress = address => ({ type: ACCOUNT_UPDATE_ADDRESS, payload: address });
+export const accountUpdateAddress = address => dispatch => {
+  dispatch({ type: ACCOUNT_UPDATE_ADDRESS, payload: address });
+  dispatch(accountGetAssets());
+};
 
 export const accountUpdateNetwork = network => ({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
 
@@ -33,7 +37,8 @@ export const accountGetAssets = () => async (dispatch, getState) => {
     const assets = parseAccountBalances(data);
     dispatch({ type: ACCOUNT_GET_ASSETS_SUCCESS, payload: assets });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    alert('ERROR', `Message: ${ACCOUNT_GET_ASSETS_FAILURE}`);
     dispatch({ type: ACCOUNT_GET_ASSETS_FAILURE });
     return error;
   }
@@ -47,7 +52,8 @@ export const accountGetTransactions = address => async (dispatch, getState) => {
     const transactions = parseAccountTransactions(data, network);
     dispatch({ type: ACCOUNT_GET_TRANSACTIONS_SUCCESS, payload: transactions });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    alert('ERROR', `Message: ${ACCOUNT_GET_TRANSACTIONS_FAILURE}`);
     dispatch({ type: ACCOUNT_GET_TRANSACTIONS_FAILURE });
     return error;
   }
@@ -60,7 +66,8 @@ export const accountGetTransactionDetails = txHash => async (dispatch, getState)
     const { data } = await apiGetTransactionDetails(txHash, network);
     dispatch({ type: ACCOUNT_GET_TRANSACTION_DETAILS_SUCCESS, payload: data });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    alert('ERROR', `Message: ${ACCOUNT_GET_TRANSACTION_DETAILS_FAILURE}`);
     dispatch({ type: ACCOUNT_GET_TRANSACTION_DETAILS_FAILURE });
     return error;
   }
