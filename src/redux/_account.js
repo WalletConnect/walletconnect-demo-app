@@ -69,7 +69,7 @@ export const accountGetTransactionDetails = txHash => async (dispatch, getState)
 // -- Reducer --------------------------------------------------------------- //
 const INITIAL_STATE = {
   loading: false,
-  network: 'mainnet',
+  network: 'ropsten',
   address: '',
   assets: [],
   transactions: [],

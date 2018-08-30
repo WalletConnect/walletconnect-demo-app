@@ -55,6 +55,7 @@ const TransactionRow = ({ tx, navigator, address }) => {
           screen: 'WalletConnect.TransactionDetailsScreen',
           passProps: {
             txHash: tx.txHash,
+            asset: tx.asset,
           },
           navigatorStyle: {
             tabBarHidden: true,
