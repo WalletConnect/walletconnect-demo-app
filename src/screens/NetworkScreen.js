@@ -4,37 +4,28 @@ import { connect } from 'react-redux';
 import { List, ListItem } from 'react-native-elements';
 import Container from '../components/Container';
 import Card from '../components/Card';
-import { capitalize } from '../helpers/utilities';
 import { accountUpdateNetwork } from '../redux/_account';
-
+import networks from '../ref/networks.json';
 
 class NetworkScreen extends Component {
   render() {
     const { currentNetwork } = this.props;
 
-    const networks = [
-      'mainnet',
-      'ropsten',
-      'rinkeby',
-      'koval',
-    ];
     return (
       <Container>
         <Card>
           <List containerStyle={{ marginTop: 0 }}>
-            {
-              networks.map((n) => (
-                <ListItem
-                  key={n}
-                  title={capitalize(n)}
-                  hideChevron
-                  leftIcon={(n === currentNetwork) ? { name: 'check' } : null }
-                  onPress={() => {
-                    this.props.accountUpdateNetwork(n);
-                  }}
-                />
-              ))
-            }
+            {Object.keys(networks).map(network => (
+              <ListItem
+                key={network}
+                title={networks[network].name}
+                hideChevron
+                leftIcon={network === currentNetwork ? { name: 'check' } : null}
+                onPress={() => {
+                  this.props.accountUpdateNetwork(network);
+                }}
+              />
+            ))}
           </List>
         </Card>
       </Container>
@@ -55,4 +46,3 @@ export default connect(
   reduxProps,
   { accountUpdateNetwork },
 )(NetworkScreen);
-

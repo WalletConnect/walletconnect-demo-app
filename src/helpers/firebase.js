@@ -23,8 +23,8 @@ export async function requestPermissions() {
     console.log('Permissions granted');
   } catch (error) {
     // User has rejected permissions
-    console.log('Error while requesting permissions');
-    console.log(error);
+    console.log('Failed requesting permissions');
+    console.error(error);
   }
 }
 
@@ -38,12 +38,12 @@ export async function registerListeners() {
   NotificationDisplayedListener = firebase.notifications().onNotificationDisplayed(notification => {
     console.log('FCM onNotificationDisplayed =====>', notification);
   });
-  console.log('FCM Listeners REGISTERED');
+  console.log('FCM Listeners succesfully registered');
 }
 
 export async function unregisterListeners() {
   await MessageListener();
   await NotificationListener();
   await NotificationDisplayedListener();
-  console.log('FCM Listeners UNREGISTERED');
+  console.log('FCM Listeners succesfully unrgistered');
 }
