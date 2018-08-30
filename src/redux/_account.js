@@ -21,7 +21,10 @@ const ACCOUNT_GET_TRANSACTION_DETAILS_FAILURE = 'account/ACCOUNT_GET_TRANSACTION
 
 // -- Actions --------------------------------------------------------------- //
 
-export const accountUpdateAddress = address => ({ type: ACCOUNT_UPDATE_ADDRESS, payload: address });
+export const accountUpdateAddress = address => dispatch => {
+  dispatch({ type: ACCOUNT_UPDATE_ADDRESS, payload: address });
+  dispatch(accountGetAssets());
+};
 
 export const accountUpdateNetwork = network => ({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
 
