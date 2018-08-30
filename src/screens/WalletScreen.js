@@ -13,7 +13,6 @@ import AssetRow from '../components/AssetRow';
 import { accountGetAssets } from '../redux/_account';
 
 class WalletScreen extends Component {
-  state = { refreshing: false };
   componentDidMount() {
     this._fetchAccountAssets();
   }
