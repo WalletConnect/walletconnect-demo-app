@@ -26,7 +26,13 @@ export const accountUpdateAddress = address => dispatch => {
   dispatch(accountGetAssets());
 };
 
-export const accountUpdateNetwork = network => ({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
+export const accountUpdateNetwork = network => (dispatch, getState) => {
+  dispatch({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
+  const { address } = getState().account;
+  if (address) {
+    dispatch(accountGetAssets());
+  }
+};
 
 export const accountGetAssets = () => async (dispatch, getState) => {
   const { address, network } = getState().account;
