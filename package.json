@@ -1,6 +1,6 @@
 {
   "name": "walletconnect-developer-app",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -8,7 +8,8 @@
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "lint": "eslint ./src/ --ext .js",
-    "postinstall": "rn-nodeify --install --hack"
+    "postinstall": "rn-nodeify --install --hack",
+    "clean-install": "rm -rf node_modules yarn.lock package-lock.json && npm install"
   },
   "dependencies": {
     "@tradle/react-native-http": "^2.0.0",
@@ -55,7 +56,7 @@
     "redux-thunk": "^2.3.0",
     "remote-redux-devtools": "^0.5.13",
     "rn-nodeify": "^10.0.0",
-    "rn-walletconnect-wallet": "^0.0.1-beta.18",
+    "rn-walletconnect-wallet": "^0.6.11",
     "stream-browserify": "^1.0.0",
     "string_decoder": "^0.10.31",
     "styled-components": "^3.3.0",
