@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
-import AssetRow from '../components/AssetRow';
 import TransactionRow from '../components/TransactionRow';
 import { accountGetTransactions } from '../redux/_account';
 
@@ -12,16 +11,11 @@ const StyledContainer = styled.View`
   background-color: #ffffff;
 `;
 
-const StyledAssetHeader = styled.View`
-  flex: 1;
-  padding: 15px;
-`;
-
 const StyledTransactionsContainer = styled.View`
   flex: 5;
 `;
 
-const StyledDash = styled.Text`
+const StyledNoTxsText = styled.Text`
   color: #ccc;
   text-align: center;
   font-size: 20px;
@@ -35,21 +29,18 @@ class TransactionHistoryScreen extends Component {
 
   render() {
     const {
-      navigator, transactions, asset, address, loading,
+      navigator, transactions, address, loading,
     } = this.props;
-    const _transactions = transactions.filter(tx => tx.asset.address === asset.address);
     console.log({ transactions });
+
     return (
       <StyledContainer>
-        <StyledAssetHeader>
-          <AssetRow asset={asset} />
-        </StyledAssetHeader>
         <StyledTransactionsContainer>
           <FlatList
-            data={_transactions}
+            data={transactions}
             ListEmptyComponent={
-              <View style={{ height: 100 }}>
-                <StyledDash>-</StyledDash>
+              <View style={{ height: 100, marginTop: 50 }}>
+                <StyledNoTxsText>No Transactions yet</StyledNoTxsText>
               </View>
             }
             onRefresh={() => this._fetchData()}
@@ -69,7 +60,6 @@ TransactionHistoryScreen.propTypes = {
   loading: PropTypes.bool.isRequired,
   network: PropTypes.string.isRequired,
   transactions: PropTypes.array.isRequired,
-  asset: PropTypes.object.isRequired,
   address: PropTypes.string.isRequired,
 };
 

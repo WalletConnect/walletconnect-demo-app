@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Clipboard, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
+import { Clipboard, ScrollView, View, RefreshControl } from 'react-native';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import Section from '../components/Section';
@@ -22,7 +22,7 @@ class WalletScreen extends Component {
     }
   };
   _renderAssetRows = () => {
-    const { assets, navigator } = this.props;
+    const { assets } = this.props;
     console.log(assets);
     if (!assets.length) {
       return null;
@@ -30,32 +30,18 @@ class WalletScreen extends Component {
     return (
       <Section>
         {assets
-          .sort((a, b) => Number(a.address) - Number(b.address)) // sort by address so that ether is always first
           .map((asset, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {
-                navigator.push({
-                  screen: 'WalletConnect.TransactionHistoryScreen',
-                  passProps: { asset },
-                  title: `${asset.symbol} Transactions`,
-                  navigatorStyle: {
-                    tabBarHidden: true,
-                  },
-                  backButtonTitle: '',
-                });
-              }}
-            >
+            <View key={index}>
               <Separator />
               <AssetRow asset={asset} />
-            </TouchableOpacity>
+            </View>
           ))}
       </Section>
     );
   };
 
   render() {
-    const { loading, address } = this.props;
+    const { loading, address, navigator } = this.props;
     return (
       <ScrollView refreshControl={<RefreshControl refreshing={loading} onRefresh={this._fetchAccountAssets} />}>
         <Container>
@@ -65,6 +51,23 @@ class WalletScreen extends Component {
               <Text>{address}</Text>
               <Button onPress={() => Clipboard.setString(address)} color="#666666" accessibilityLabel="Copy the address of your wallet to the clipboard">
                 {'Copy'}
+              </Button>
+            </Section>
+            <Section style={{ height: 100 }}>
+              <Separator />
+              <Button
+                onPress={() => {
+                  navigator.push({
+                    screen: 'WalletConnect.TransactionHistoryScreen',
+                    title: 'Transactions',
+                    navigatorStyle: {
+                      tabBarHidden: true,
+                    },
+                    backButtonTitle: '',
+                  });
+                }}
+                color="#666666" accessibilityLabel="Go to Transaction History Screen">
+                {'Transaction History'}
               </Button>
             </Section>
             {this._renderAssetRows()}
