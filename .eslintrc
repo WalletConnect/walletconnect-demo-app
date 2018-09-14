@@ -21,7 +21,8 @@
     "no-plusplus": ["off"],
     "no-underscore-dangle": ["off"],
     "arrow-parens": ["off"],
-    "no-param-reassign": ["off"]
+    "no-param-reassign": ["off"],
+    "import/no-mutable-exports": ["off"]
   },
   "globals": {
     "fetch": false
