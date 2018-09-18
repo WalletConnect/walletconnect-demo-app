@@ -31,7 +31,7 @@
     "prop-types": "^15.6.1",
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
-    "react": "^16.3.2",
+    "react": "^16.5.2",
     "react-native": "^0.57.0",
     "react-native-camera": "^1.0.3",
     "react-native-crypto": "^2.1.2",
@@ -45,7 +45,7 @@
     "react-native-permissions": "^1.1.1",
     "react-native-qrcode-scanner": "^0.0.30",
     "react-native-randombytes": "^3.1.0",
-    "react-native-splash-screen": "3.0.6",
+    "react-native-splash-screen": "^3.1.1",
     "react-native-tcp": "^3.3.0",
     "react-native-touch-id": "^4.0.1",
     "react-native-udp": "^2.3.1",
@@ -59,7 +59,7 @@
     "rn-walletconnect-wallet": "^0.6.13",
     "stream-browserify": "^1.0.0",
     "string_decoder": "^0.10.31",
-    "styled-components": "^3.3.0",
+    "styled-components": "^3.4.9",
     "timers-browserify": "^1.4.2",
     "tty-browserify": "0.0.0",
     "url": "^0.10.3",
@@ -76,7 +76,7 @@
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-react-native": "^3.2.1",
     "jest": "^22.4.3",
-    "react-test-renderer": "^16.2.0"
+    "react-test-renderer": "^16.5.2"
   },
   "jest": {
     "preset": "react-native"
