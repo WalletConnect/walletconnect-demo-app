@@ -6,36 +6,37 @@ const pushEndpoint = 'https://us-central1-walletconnect-app.cloudfunctions.net/p
 
 let walletConnector = null;
 
-export const walletConnectInitSession = async uri => {
+export async function walletConnectInitSession(uri) {
   console.log('uri', uri);
   walletConnector = new RNWalletConnect(uri);
   console.log('walletConnector', walletConnector);
   await walletConnectSendSession();
-};
+}
 
-export const walletConnectSendSession = async () => {
+export async function walletConnectSendSession() {
   const address = await loadAddress();
   const fcmToken = await getFCMToken();
   try {
-    await walletConnector.sendSessionStatus({
+    const result = await walletConnector.sendSessionStatus({
       fcmToken,
       pushEndpoint,
       data: [address],
     });
+    console.log('sendSessionStatus', result);
   } catch (err) {
     console.log('send session status error', err);
   }
-};
+}
 
-export const walletConnectGetTransaction = async transactionId => {
+export async function walletConnectGetTransaction(transactionId) {
   const transactionData = await walletConnector.getTransactionRequest(transactionId);
   return transactionData;
-};
+}
 
-export const walletConnectSendTransactionHash = async (transactionId, success, txHash) => {
+export async function walletConnectSendTransactionHash(transactionId, success, txHash) {
   try {
     await walletConnector.sendTransactionStatus(transactionId, { success, txHash });
   } catch (err) {
     console.log('sending txn status error', err);
   }
-};
+}

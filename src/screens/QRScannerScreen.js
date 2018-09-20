@@ -7,8 +7,8 @@ import { walletConnectInitSession } from '../helpers/walletconnect';
 class QRScannerScreen extends Component {
   onSuccess = async event => {
     const { data } = event;
+    console.log('URI', data);
     if (data && typeof data === 'string') {
-      console.log('URI', data);
       await walletConnectInitSession(data);
     }
 
