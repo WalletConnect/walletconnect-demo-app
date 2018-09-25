@@ -8,6 +8,7 @@ import com.oblador.keychain.KeychainPackage;
 import org.reactnative.camera.RNCameraPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,8 @@ import com.reactnativenavigation.NavigationApplication;
 					    new RNCameraPackage(),
 					    new KeychainPackage(),
 					    new RNFirebasePackage(),
-					    new RNFirebaseNotificationsPackage() 
-					      );
-     }     
+					    new RNFirebaseNotificationsPackage(),
+              new RNFirebaseMessagingPackage()
+				      );
+     }
  }
