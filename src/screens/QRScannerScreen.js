@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { walletConnectInit, walletConnectSendSession } from '../helpers/walletconnect';
+import { walletConnectInitSession } from '../helpers/walletconnect';
 
 class QRScannerScreen extends Component {
-  onSuccess = async e => {
-    const data = JSON.parse(e.data);
-    if (data.domain && data.sessionId && data.sharedKey && data.dappName) {
-      await walletConnectInit(data.domain, data.sessionId, data.sharedKey, data.dappName);
-      await walletConnectSendSession();
+  onSuccess = async event => {
+    const { data } = event;
+    console.log('URI', data);
+    if (data && typeof data === 'string') {
+      await walletConnectInitSession(data);
     }
 
     setTimeout(() => {
