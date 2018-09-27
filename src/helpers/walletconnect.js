@@ -8,7 +8,7 @@ let walletConnector = null;
 
 export async function walletConnectInitSession(uri) {
   console.log('uri', uri);
-  walletConnector = new RNWalletConnect(uri);
+  walletConnector = new RNWalletConnect({ uri });
   console.log('walletConnector', walletConnector);
   await walletConnectSendSession();
 }
