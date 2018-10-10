@@ -2,41 +2,44 @@ import RNWalletConnect from 'rn-walletconnect-wallet';
 import { loadAddress } from './wallet';
 import { getFCMToken } from './firebase';
 
-const pushEndpoint = 'https://us-central1-walletconnect-app.cloudfunctions.net/push';
-
 let walletConnector = null;
 
 export async function walletConnectInitSession(uri) {
+  const fcmToken = await getFCMToken();
+  const pushEndpoint = 'https://us-central1-walletconnect-app.cloudfunctions.net/push';
   console.log('uri', uri);
-  walletConnector = new RNWalletConnect({ uri });
+  walletConnector = new RNWalletConnect({
+    uri,
+    push: {
+      type: 'fcm',
+      token: fcmToken,
+      endpoint: pushEndpoint,
+    },
+  });
   console.log('walletConnector', walletConnector);
-  await walletConnectSendSession();
+  await walletConnectApproveSession();
 }
 
-export async function walletConnectSendSession() {
+export async function walletConnectApproveSession() {
   const address = await loadAddress();
-  const fcmToken = await getFCMToken();
+
   try {
-    const result = await walletConnector.sendSessionStatus({
-      fcmToken,
-      pushEndpoint,
-      data: [address],
-    });
-    console.log('sendSessionStatus', result);
+    const result = await walletConnector.approveSession({ accounts: [address] });
+    console.log('approveSession', result);
   } catch (err) {
-    console.log('send session status error', err);
+    console.log('Error: Approve WalletConnect Session Failed', err);
   }
 }
 
-export async function walletConnectGetTransaction(transactionId) {
-  const transactionData = await walletConnector.getTransactionRequest(transactionId);
-  return transactionData;
+export async function walletConnectGetCallRequest(callId) {
+  const callData = await walletConnector.getCallRequest(callId);
+  return callData;
 }
 
-export async function walletConnectSendTransactionHash(transactionId, success, txHash) {
+export async function walletConnectApproveCallRequest(callId, txHash) {
   try {
-    await walletConnector.sendTransactionStatus(transactionId, { success, txHash });
+    await walletConnector.approveCallRequest(callId, { result: txHash });
   } catch (err) {
-    console.log('sending txn status error', err);
+    console.log('Error: Approve WalletConnect Call Request Failed', err);
   }
 }

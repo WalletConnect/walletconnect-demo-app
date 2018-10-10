@@ -1,7 +1,7 @@
 // import FCM, { FCMEvent, NotificationType, RemoteNotificationResult, WillPresentNotificationResult } from 'react-native-fcm';
 import { Platform, AsyncStorage, AppState } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { addNewTransaction } from '../helpers/transactions';
+import { addNewCallRequest } from '../redux/_callRequests';
 
 // DELETE THIS
 const FCM = {
@@ -46,7 +46,7 @@ export function registerKilledListener() {
 export function registerAppListener() {
   FCM.on(FCMEvent.Notification, notif => {
     console.log(`registerAppListener notif: ${notif}`);
-    const { sessionId, transactionId } = notif;
+    const { sessionId, callId } = notif;
 
     if (Platform.OS === 'ios') {
       switch (notif._notificationType) {
@@ -54,7 +54,7 @@ export function registerAppListener() {
         notif.finish(RemoteNotificationResult.NewData);
         break;
       case NotificationType.NotificationResponse:
-        addNewTransaction(sessionId, transactionId).then(() => {
+        addNewCallRequest(sessionId, callId).then(() => {
           Navigation.showModal({
             screen: 'WalletConnect.TransactionScreen',
             navigatorStyle: { navBarHidden: true },

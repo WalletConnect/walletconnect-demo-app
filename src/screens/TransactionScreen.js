@@ -6,8 +6,8 @@ import { StatusBar, AlertIOS } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Button from '../components/Button';
 import { sendTransaction } from '../helpers/wallet';
-import { getTransactionToApprove } from '../helpers/transactions';
-import { walletConnectSendTransactionHash } from '../helpers/walletconnect';
+import { getLastCallRequest } from '../redux/_callRequests';
+import { walletConnectApproveCallRequest } from '../helpers/walletconnect';
 
 const SContainer = styled.View`
   flex: 1;
@@ -144,7 +144,7 @@ class TransactionScreen extends Component {
   }
 
   showNewTransaction = () => {
-    const transaction = getTransactionToApprove();
+    const transaction = getLastCallRequest();
     console.log('transaction', transaction);
     this.setState({ transaction });
   };
@@ -156,11 +156,11 @@ class TransactionScreen extends Component {
         const { transaction } = this.state;
         const transactionReceipt = await sendTransaction(transaction.transactionData);
         if (transactionReceipt && transactionReceipt.hash) {
-          await walletConnectSendTransactionHash(transaction.transactionId, true, transactionReceipt.hash);
+          await walletConnectApproveCallRequest(transaction.transactionId, transactionReceipt.hash);
           this.onClose();
           this.setState(() => ({ confirmed: true, transaction: null }));
         } else {
-          await walletConnectSendTransactionHash(false, null);
+          await walletConnectApproveCallRequest(false, null);
           this.setState(() => ({ confirmed: false }));
         }
       })
