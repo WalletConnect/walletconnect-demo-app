@@ -2,22 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { walletConnectInitSession } from '../helpers/walletconnect';
+import { walletConnectNewSession } from '../helpers/walletConnect';
 
 class QRScannerScreen extends Component {
   onSuccess = async event => {
-    const { data } = event;
-    console.log('URI', data);
-    if (data && typeof data === 'string') {
-      await walletConnectInitSession(data);
+    const uri = event.data;
+    console.log('URI', uri);
+    if (uri && typeof uri === 'string') {
+      await walletConnectNewSession(uri);
     }
 
     setTimeout(() => {
       this.qrCodeScanner.reactivate();
     }, 1000);
   };
-
   render() {
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <Text style={styles.centerText}>Scan a WalletConnect QR code</Text>

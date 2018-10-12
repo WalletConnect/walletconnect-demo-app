@@ -1,37 +1,56 @@
-import store, { dispatch } from '../redux/store';
-import { walletConnectGetCallRequest } from '../helpers/walletconnect';
+import { dispatch, getState } from '../redux/store';
+import { walletConnectGetCallRequest } from '../helpers/walletConnect';
 
 // -- Constants ------------------------------------------------------------- //
 
-const CALL_REQUESTS_ADD_NEW = 'call_requests/CALL_REQUESTS_ADD_NEW';
+const CALL_REQUESTS_ADD = 'callRequests/CALL_REQUESTS_ADD';
+
+const CALL_REQUESTS_REMOVE = 'callRequests/CALL_REQUESTS_REMOVE';
 
 // -- Actions --------------------------------------------------------------- //
 
-export const addNewCallRequest = async callId => {
-  console.log('adding new call request');
-  // TODO: future: use the sessionId to find the corresponding walletConnectInstance; for now assume only one
-  const callData = await walletConnectGetCallRequest(callId);
-  const callRequest = { id: callId, data: callData };
-  dispatch({ type: CALL_REQUESTS_ADD_NEW, payload: callRequest });
+export const addCallRequest = async (sessionId, callId) => {
+  console.log('[redux] addCallRequest sessionId', sessionId);
+  console.log('[redux] addCallRequest callId', callId);
+  const prevCallRequests = getState().callRequests.callRequests;
+  const callRequests = { ...prevCallRequests };
+  const sessionCallRequests = callRequests[sessionId] || {};
+  const callData = await walletConnectGetCallRequest(sessionId, callId);
+  console.log('[redux] addCallRequest callData', callData);
+  sessionCallRequests[callId] = callData;
+  callRequests[sessionId] = sessionCallRequests;
+  dispatch({ type: CALL_REQUESTS_ADD, payload: callRequests });
 };
 
-export const getLastCallRequest = callId => {
-  const { callRequests } = store.getState();
-  return callRequests[0];
+export const removeCallRequest = async (sessionId, callId) => {
+  console.log('[redux] removeCallRequest sessionId', sessionId);
+  console.log('[redux] removeCallRequest callId', callId);
+  const prevCallRequests = getState().callRequests.callRequests;
+  const callRequests = { ...prevCallRequests };
+  delete callRequests[sessionId][callId];
+  dispatch({ type: CALL_REQUESTS_REMOVE, payload: callRequests });
+};
+
+export const getCallRequest = (sessionId, callId) => {
+  console.log('[redux] getCallRequest sessionId', sessionId);
+  console.log('[redux] getCallRequest callId', callId);
+  const { callRequests } = getState().callRequests;
+  return callRequests[sessionId][callId];
 };
 
 // -- Reducer --------------------------------------------------------------- //
 
 const INITIAL_STATE = {
-  callRequests: [],
+  callRequests: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case CALL_REQUESTS_ADD_NEW:
+  case CALL_REQUESTS_ADD:
+  case CALL_REQUESTS_REMOVE:
     return {
       ...state,
-      callRequests: [...state.callRequests, action.payload],
+      callRequests: action.payload,
     };
   default:
     return state;

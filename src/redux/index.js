@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import callRequests from './_callRequests';
 import account from './_account';
+import callRequests from './_callRequests';
 
 export default combineReducers({
-  callRequests,
   account,
+  callRequests,
 });

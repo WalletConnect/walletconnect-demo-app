@@ -27,8 +27,9 @@ export const accountUpdateAddress = address => dispatch => {
 };
 
 export const accountUpdateNetwork = network => (dispatch, getState) => {
-  dispatch({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
   const { address } = getState().account;
+  console.log('accountUpdateNetwork network', network);
+  dispatch({ type: ACCOUNT_UPDATE_NETWORK, payload: network });
   if (address) {
     dispatch(accountGetAssets());
   }

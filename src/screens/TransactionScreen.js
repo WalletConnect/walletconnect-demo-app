@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import TouchID from 'react-native-touch-id';
 import styled from 'styled-components';
 import { StatusBar, AlertIOS } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { hideActiveModal } from '../navigation';
 import Button from '../components/Button';
 import { sendTransaction } from '../helpers/wallet';
-import { getLastCallRequest } from '../redux/_callRequests';
-import { walletConnectApproveCallRequest } from '../helpers/walletconnect';
+import { getCallRequest } from '../redux/_callRequests';
+import { walletConnectApproveCallRequest, walletConnectGetSessionData } from '../helpers/walletConnect';
 
 const SContainer = styled.View`
   flex: 1;
@@ -36,7 +36,7 @@ const SVendorName = styled.Text`
   letter-spacing: 0.2px;
 `;
 
-const SRequestPayment = styled.Text`
+const SRequestText = styled.Text`
   color: rgb(255, 255, 255);
   font-size: 17px;
   opacity: 0.78;
@@ -134,31 +134,40 @@ const SFaceID = styled.Image`
 
 class TransactionScreen extends Component {
   state = {
+    dappName: '',
     confirmed: false,
-    transaction: null,
+    callRequest: null,
   };
 
   componentDidMount() {
     StatusBar.setBarStyle('light-content', true);
+    console.log('TransactionScreen', this.props);
+    this.getDappName();
     this.showNewTransaction();
   }
 
+  getDappName = () => {
+    const { dappName } = walletConnectGetSessionData(this.props.sessionId);
+    this.setState({ dappName });
+  };
+
   showNewTransaction = () => {
-    const transaction = getLastCallRequest();
-    console.log('transaction', transaction);
-    this.setState({ transaction });
+    const callRequest = getCallRequest(this.props.sessionId, this.props.callId);
+    console.log('showNewTransaction callRequest', callRequest);
+    console.log('callRequest', callRequest);
+    this.setState({ callRequest });
   };
 
   confirmTransaction = () =>
-    TouchID.authenticate('Confirm transaction')
+    TouchID.authenticate('Confirm callRequest')
       .then(async success => {
         console.log('success', success);
-        const { transaction } = this.state;
-        const transactionReceipt = await sendTransaction(transaction.transactionData);
+        const transaction = this.state.callRequest.params[0];
+        const transactionReceipt = await sendTransaction(transaction);
         if (transactionReceipt && transactionReceipt.hash) {
-          await walletConnectApproveCallRequest(transaction.transactionId, transactionReceipt.hash);
+          await walletConnectApproveCallRequest(this.props.callId, transactionReceipt.hash);
           this.onClose();
-          this.setState(() => ({ confirmed: true, transaction: null }));
+          this.setState(() => ({ confirmed: true, callRequest: null }));
         } else {
           await walletConnectApproveCallRequest(false, null);
           this.setState(() => ({ confirmed: false }));
@@ -171,47 +180,47 @@ class TransactionScreen extends Component {
 
   onClose() {
     StatusBar.setBarStyle('dark-content', true);
-    Navigation.dismissModal({
-      animationType: 'slide-down',
-    });
+    hideActiveModal();
   }
 
   render() {
+    const transaction = this.state.callRequest ? this.state.callRequest.params[0] : null;
     return (
       <SContainer>
         <SContainer>
           <STopContainer>
             {/* eslint-disable-next-line */}
             <SVendorLogo source={require('../assets/ethereum.png')} />
-            <SVendorName>{'Ethereum Store'}</SVendorName>
-            <SRequestPayment>{'Request for payment'}</SRequestPayment>
+            <SVendorName>{this.state.dappName}</SVendorName>
+            <SRequestText>{'New Request'}</SRequestText>
           </STopContainer>
-          <SBottomContainer>
-            {/* eslint-disable-next-line */}
-            <SCloseModal onPress={this.onClose}>Cancel</SCloseModal>
-            <STransactionDetailContainer>
-              <STransactionDetailTitle>FROM</STransactionDetailTitle>
-              <STransactionDetailText>{this.state.transaction.transactionData.from}</STransactionDetailText>
+          {transaction && (
+            <SBottomContainer>
               <SCloseModal onPress={this.onClose}>Cancel</SCloseModal>
-              <STransactionDetailSeparator />
-            </STransactionDetailContainer>
-            <STransactionDetailContainer>
-              <STransactionDetailTitle>TO</STransactionDetailTitle>
-              <STransactionDetailText>{this.state.transaction.transactionData.to}</STransactionDetailText>
-              <STransactionDetailSeparator />
-            </STransactionDetailContainer>
-            <STransactionDetailContainer>
-              <SCurrencyNameText>{this.props.currencyName}</SCurrencyNameText>
-              <SAmountText>{this.state.transaction.transactionData.value}</SAmountText>
-              {/* <SConvertedAmountText>{this.props.convertedAmount}</SConvertedAmountText> */}
-            </STransactionDetailContainer>
-            <SConfirmButtonContainer>
-              <Button onPress={() => this.confirmTransaction()}>
-                {/* eslint-disable-next-line */}
-                <SFaceID source={require('../assets/faceid.png')} />Confirm with FaceID
-              </Button>
-            </SConfirmButtonContainer>
-          </SBottomContainer>
+              <STransactionDetailContainer>
+                <STransactionDetailTitle>FROM</STransactionDetailTitle>
+                <STransactionDetailText>{transaction.from}</STransactionDetailText>
+                <SCloseModal onPress={this.onClose}>Cancel</SCloseModal>
+                <STransactionDetailSeparator />
+              </STransactionDetailContainer>
+              <STransactionDetailContainer>
+                <STransactionDetailTitle>TO</STransactionDetailTitle>
+                <STransactionDetailText>{transaction.to}</STransactionDetailText>
+                <STransactionDetailSeparator />
+              </STransactionDetailContainer>
+              <STransactionDetailContainer>
+                <SCurrencyNameText>{this.props.currencyName}</SCurrencyNameText>
+                <SAmountText>{transaction.value}</SAmountText>
+                {/* <SConvertedAmountText>{this.props.convertedAmount}</SConvertedAmountText> */}
+              </STransactionDetailContainer>
+              <SConfirmButtonContainer>
+                <Button onPress={() => this.confirmTransaction()}>
+                  {/* eslint-disable-next-line */}
+                  <SFaceID source={require('../assets/faceid.png')} />Confirm with FaceID
+                </Button>
+              </SConfirmButtonContainer>
+            </SBottomContainer>
+          )}
         </SContainer>
       </SContainer>
     );
@@ -220,14 +229,13 @@ class TransactionScreen extends Component {
 
 TransactionScreen.propTypes = {
   navigation: PropTypes.any,
-  transaction: PropTypes.any,
+  sessionId: PropTypes.string.isRequired,
+  callId: PropTypes.string.isRequired,
   convertedAmount: PropTypes.string,
   currencyName: PropTypes.string,
 };
 
 TransactionScreen.defaultProps = {
-  fromAddress: 'fake address',
-  toAddress: 'fake address',
   currencyName: 'AVO',
   convertedAmount: 'TBD',
 };

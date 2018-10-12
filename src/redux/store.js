@@ -7,4 +7,6 @@ const store = createStore(reducers, composeWithDevTools(applyMiddleware(ReduxThu
 
 export const { dispatch } = store;
 
+export const { getState } = store;
+
 export default store;

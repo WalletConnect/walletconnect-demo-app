@@ -1,44 +1,144 @@
 import RNWalletConnect from 'rn-walletconnect-wallet';
 import { loadAddress } from './wallet';
 import { getFCMToken } from './firebase';
+import { asyncStorageLoadSessions, asyncStorageSaveSession, asyncStorageDeleteSession } from './asyncStorage';
 
-let walletConnector = null;
+const walletConnectors = {};
 
-export async function walletConnectInitSession(uri) {
-  const fcmToken = await getFCMToken();
-  const pushEndpoint = 'https://us-central1-walletconnect-app.cloudfunctions.net/push';
-  console.log('uri', uri);
-  walletConnector = new RNWalletConnect({
-    uri,
-    push: {
-      type: 'fcm',
-      token: fcmToken,
-      endpoint: pushEndpoint,
-    },
-  });
-  console.log('walletConnector', walletConnector);
-  await walletConnectApproveSession();
+function setWalletConnector(sessionId, walletConnector) {
+  walletConnectors[sessionId] = walletConnector;
+  return true;
 }
 
-export async function walletConnectApproveSession() {
-  const address = await loadAddress();
+function getWalletConnector(sessionId) {
+  const walletConnector = walletConnectors[sessionId];
+  return walletConnector;
+}
 
+async function generateWalletConnector(session) {
+  const pushType = 'fcm';
+  const pushToken = await getFCMToken();
+  const pushEndpoint = 'https://us-central1-walletconnect-app.cloudfunctions.net/push';
+
+  const push = {
+    type: pushType,
+    token: pushToken,
+    endpoint: pushEndpoint,
+  };
+
+  const walletConnector = new RNWalletConnect({ ...session, push });
+
+  return walletConnector;
+}
+
+export async function walletConnectNewSession(uri) {
+  console.log('uri', uri);
+
+  const walletConnector = await generateWalletConnector({ uri });
+
+  const { sessionId } = walletConnector;
+  setWalletConnector(sessionId, walletConnector);
+
+  const session = await walletConnectApproveSession(sessionId);
+
+  console.log('session', session);
+  try {
+    await asyncStorageSaveSession(session);
+  } catch (err) {
+    console.error(err);
+    console.log('Error: Async Storage Save Session Failed', err);
+  }
+  return session;
+}
+
+export async function walletConnectGetLiveSessions() {
+  const liveSessions = {};
+  let savedSessions = {};
+  try {
+    savedSessions = await asyncStorageLoadSessions();
+    console.log('savedSessions', savedSessions);
+  } catch (err) {
+    console.error(err);
+    console.log('Error: Async Storage Load Sessions Failed', err);
+  }
+  const savedSessionIds = savedSessions ? Object.keys(savedSessions) : [];
+  console.log('savedSessionIds', savedSessionIds);
+  if (savedSessions && savedSessionIds.length) {
+    try {
+      await Promise.all(savedSessionIds.map(async sessionId => {
+        const now = Date.now();
+        const session = savedSessions[sessionId];
+        if (session.expires > now) {
+          liveSessions[sessionId] = session;
+        } else {
+          try {
+            await asyncStorageDeleteSession(session);
+          } catch (err) {
+            console.error(err);
+            console.log('Error: Async Storage Delete Session Failed', err);
+          }
+        }
+      }));
+    } catch (err) {
+      console.error(err);
+      console.log('Error: Filtering Saved Sessions Failed', err);
+    }
+    const liveSessionIds = liveSessions ? Object.keys(liveSessions) : {};
+    console.log('liveSessionIds', liveSessionIds);
+    if (liveSessions && liveSessionIds.length) {
+      try {
+        await Promise.all(liveSessionIds.map(async sessionId => {
+          const session = liveSessions[sessionId];
+
+          const walletConnector = await generateWalletConnector(session);
+
+          setWalletConnector(sessionId, walletConnector);
+          console.log('session', session);
+        }));
+      } catch (err) {
+        console.error(err);
+        console.log('Error: Filtering Live Sessions Failed', err);
+      }
+    }
+  }
+  return liveSessions;
+}
+
+export function walletConnectGetSessionData(sessionId) {
+  const walletConnector = getWalletConnector(sessionId);
+  return walletConnector.toJSON();
+}
+
+export async function walletConnectApproveSession(sessionId) {
+  const address = await loadAddress();
+  const walletConnector = getWalletConnector(sessionId);
   try {
     const result = await walletConnector.approveSession({ accounts: [address] });
     console.log('approveSession', result);
+    return result;
   } catch (err) {
     console.log('Error: Approve WalletConnect Session Failed', err);
   }
 }
 
-export async function walletConnectGetCallRequest(callId) {
-  const callData = await walletConnector.getCallRequest(callId);
-  return callData;
+export async function walletConnectGetCallRequest(sessionId, callId) {
+  const walletConnector = getWalletConnector(sessionId);
+  try {
+    const result = await walletConnector.getCallRequest(callId);
+    console.log('getCallRequest', result);
+    const callData = result.data;
+    console.log('callData', callData);
+    return callData;
+  } catch (err) {
+    console.log('Error: Get WalletConnect Call Request Failed', err);
+  }
 }
 
-export async function walletConnectApproveCallRequest(callId, txHash) {
+export async function walletConnectApproveCallRequest(sessionId, callId, txHash) {
+  const walletConnector = getWalletConnector(sessionId);
   try {
-    await walletConnector.approveCallRequest(callId, { result: txHash });
+    const result = await walletConnector.approveCallRequest(callId, { result: txHash });
+    console.log('approveCallRequest', result);
   } catch (err) {
     console.log('Error: Approve WalletConnect Call Request Failed', err);
   }

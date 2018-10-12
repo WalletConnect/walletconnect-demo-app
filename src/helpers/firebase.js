@@ -1,8 +1,10 @@
 import firebase from 'react-native-firebase';
+import { addCallRequest } from '../redux/_callRequests';
+import { showTransactionModal } from '../navigation';
 
-let MessageListener = null;
 let NotificationListener = null;
 let NotificationDisplayedListener = null;
+let NotificationOpenedListener = null;
 
 export async function initFCM() {
   await requestPermissions();
@@ -19,31 +21,58 @@ export async function getFCMToken() {
 export async function requestPermissions() {
   try {
     await firebase.messaging().requestPermission();
-    // User has authorised
     console.log('Permissions granted');
   } catch (error) {
-    // User has rejected permissions
     console.log('Failed requesting permissions');
     console.error(error);
   }
 }
 
 export async function registerListeners() {
-  MessageListener = firebase.messaging().onMessage(message => {
-    console.log('FCM onMessage =====>', message);
-  });
-  NotificationListener = firebase.notifications().onNotification(notification => {
-    console.log('FCM onNotification  =====>', notification);
-  });
-  NotificationDisplayedListener = firebase.notifications().onNotificationDisplayed(notification => {
-    console.log('FCM onNotificationDisplayed =====>', notification);
-  });
+  NotificationListener = firebase.notifications().onNotification(onNotification);
+  NotificationDisplayedListener = firebase.notifications().onNotificationDisplayed(onNotificationDisplayed);
+  NotificationOpenedListener = firebase.notifications().onNotificationOpened(onNotificationOpened);
+
   console.log('FCM Listeners succesfully registered');
 }
 
 export async function unregisterListeners() {
-  await MessageListener();
   await NotificationListener();
   await NotificationDisplayedListener();
-  console.log('FCM Listeners succesfully unrgistered');
+  await NotificationOpenedListener();
+  console.log('FCM Listeners succesfully unregistered');
+}
+
+async function onCallRequest(notification) {
+  const { sessionId, callId } = notification.data;
+  await addCallRequest(sessionId, callId);
+  await showTransactionModal({ sessionId, callId });
+}
+
+async function onNotification(notification) {
+  try {
+    console.log('FCM onNotification  =====>', notification);
+    await onCallRequest(notification);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function onNotificationDisplayed(notification) {
+  try {
+    console.log('FCM onNotificationDisplayed =====>', notification);
+    await onCallRequest(notification);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function onNotificationOpened(notificationOpened) {
+  try {
+    console.log('FCM onNotificationOpened =====>', notificationOpened);
+    const { notification } = notificationOpened;
+    await onCallRequest(notification);
+  } catch (error) {
+    console.error(error);
+  }
 }
