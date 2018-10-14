@@ -1,6 +1,7 @@
 import firebase from 'react-native-firebase';
 import { addCallRequest } from '../redux/_callRequests';
-import { showTransactionModal } from '../navigation';
+import { showCallRequestModal } from '../navigation';
+import { walletConnectGetSessionData } from './walletConnect';
 
 let NotificationListener = null;
 let NotificationDisplayedListener = null;
@@ -45,8 +46,9 @@ export async function unregisterListeners() {
 
 async function onCallRequest(notification) {
   const { sessionId, callId } = notification.data;
+  const { dappName } = walletConnectGetSessionData(sessionId);
   await addCallRequest(sessionId, callId);
-  await showTransactionModal({ sessionId, callId });
+  await showCallRequestModal({ sessionId, callId, dappName });
 }
 
 async function onNotification(notification) {

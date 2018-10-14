@@ -9,6 +9,18 @@ const CALL_REQUESTS_REMOVE = 'callRequests/CALL_REQUESTS_REMOVE';
 
 // -- Actions --------------------------------------------------------------- //
 
+export const addTestCallRequest = async (sessionId, callId, callData) => {
+  console.log('[redux] addTestCallRequest sessionId', sessionId);
+  console.log('[redux] addTestCallRequest callId', callId);
+  const prevCallRequests = getState().callRequests.callRequests;
+  const callRequests = { ...prevCallRequests };
+  const sessionCallRequests = callRequests[sessionId] || {};
+  console.log('[redux] addTestCallRequest callData', callData);
+  sessionCallRequests[callId] = callData;
+  callRequests[sessionId] = sessionCallRequests;
+  dispatch({ type: CALL_REQUESTS_ADD, payload: callRequests });
+};
+
 export const addCallRequest = async (sessionId, callId) => {
   console.log('[redux] addCallRequest sessionId', sessionId);
   console.log('[redux] addCallRequest callId', callId);

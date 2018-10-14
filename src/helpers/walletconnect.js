@@ -134,12 +134,22 @@ export async function walletConnectGetCallRequest(sessionId, callId) {
   }
 }
 
-export async function walletConnectApproveCallRequest(sessionId, callId, txHash) {
+export async function walletConnectApproveCallRequest(sessionId, callId, result) {
   const walletConnector = getWalletConnector(sessionId);
   try {
-    const result = await walletConnector.approveCallRequest(callId, { result: txHash });
-    console.log('approveCallRequest', result);
+    const res = await walletConnector.approveCallRequest(callId, result);
+    console.log('approveCallRequest', res);
   } catch (err) {
     console.log('Error: Approve WalletConnect Call Request Failed', err);
+  }
+}
+
+export async function walletConnectRejectCallRequest(sessionId, callId) {
+  const walletConnector = getWalletConnector(sessionId);
+  try {
+    const res = await walletConnector.rejectCallRequest(callId);
+    console.log('rejectCallRequest', res);
+  } catch (err) {
+    console.log('Error: Reject WalletConnect Call Request Failed', err);
   }
 }

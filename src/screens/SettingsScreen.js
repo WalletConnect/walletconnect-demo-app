@@ -6,6 +6,62 @@ import Container from '../components/Container';
 import Card from '../components/Card';
 import networks from '../ref/networks.json';
 
+import { addTestCallRequest } from '../redux/_callRequests';
+import { showCallRequestModal } from '../navigation';
+
+/* ------------------ TESTING ----------------------------------------------- */
+
+async function onTestCallRequest(callData) {
+  const sessionId = 'fake';
+  const callId = '0x0';
+  const dappName = 'Test Dapp';
+  await addTestCallRequest(sessionId, callId, callData);
+  await showCallRequestModal({ sessionId, callId, dappName });
+}
+
+const address = 0x7daf8edf399a40b7a96025ce1b3b886a65219e32;
+
+const testTx = {
+  id: 1,
+  jsonrpc: '2.0',
+  method: 'eth_sendTransaction',
+  params: [
+    {
+      from: address,
+      nonce: '0x0',
+      gasPrice: '0x4a817c800',
+      gas: '0x5208',
+      to: '0x3535353535353535353535353535353535353535',
+      value: '0xde0b6b3a7640000',
+      input: '0x',
+    },
+  ],
+};
+
+const testMsg = {
+  id: 1,
+  jsonrpc: '2.0',
+  method: 'eth_sign',
+  params: [address, '0xdeadbeaf'],
+};
+
+const testModals = [
+  {
+    title: 'Testing',
+    subtitle: 'Test Transaction Modal',
+    screen: 'WalletConnect.CallRequestScreen',
+    onPress: () => onTestCallRequest(testTx),
+  },
+  {
+    title: 'Testing',
+    subtitle: 'Test Message Modal',
+    screen: 'WalletConnect.CallRequestScreen',
+    onPress: () => onTestCallRequest(testMsg),
+  },
+];
+
+/* ------------------ TESTING ----------------------------------------------- */
+
 class SettingsScreen extends Component {
   render() {
     const { network } = this.props;
@@ -43,6 +99,7 @@ class SettingsScreen extends Component {
                 }}
               />
             ))}
+            {testModals.map(r => <ListItem key={r.title} title={r.title} subtitle={r.subtitle} onPress={r.onPress} />)}
           </List>
         </Card>
       </Container>

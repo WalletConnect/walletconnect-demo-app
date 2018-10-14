@@ -2,7 +2,7 @@ import { Navigation, ScreenVisibilityListener } from 'react-native-navigation';
 
 import QRScannerScreen from '../screens/QRScannerScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import TransactionScreen from '../screens/TransactionScreen';
+import CallRequestScreen from '../screens/CallRequestScreen';
 import WalletScreen from '../screens/WalletScreen';
 import TransactionHistoryScreen from '../screens/TransactionHistoryScreen';
 import TransactionDetailsScreen from '../screens/TransactionDetailsScreen';
@@ -20,7 +20,7 @@ export function registerScreens(store, Provider) {
 
   // Wallet Tab Screens
   Navigation.registerComponent('WalletConnect.WalletScreen', () => WalletScreen, store, Provider);
-  Navigation.registerComponent('WalletConnect.TransactionScreen', () => TransactionScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.CallRequestScreen', () => CallRequestScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.TransactionHistoryScreen', () => TransactionHistoryScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.TransactionDetailsScreen', () => TransactionDetailsScreen, store, Provider);
 }
@@ -43,12 +43,16 @@ export async function hideActiveModal() {
   });
 }
 
-export async function showTransactionModal(passProps = {}) {
+export function showModal(screen, passProps = {}) {
   Navigation.showModal({
-    screen: 'WalletConnect.TransactionScreen',
+    screen,
     navigatorStyle: { navBarHidden: true },
     navigatorButtons: {},
     animationType: 'slide-up',
     passProps,
   });
+}
+
+export async function showCallRequestModal(passProps = {}) {
+  showModal('WalletConnect.CallRequestScreen', passProps);
 }
