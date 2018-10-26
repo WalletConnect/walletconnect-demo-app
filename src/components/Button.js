@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 const ButtonContainer = styled.TouchableHighlight`
   position: relative;
   background-color: #00b371;
-  width: 100%;
-  height: 33%;
-  border-radius: 14px;
+  width: ${({ width }) => `${width}`};
+  height: 35px;
+  border-radius: 8px;
+  align-self: stretch;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,9 +22,11 @@ const Label = styled.Text`
   text-align: center;
 `;
 
-const Button = props => (
-  <ButtonContainer underlayColor={'#00A367'} onPress={props.onPress} outline={props.outline}>
-    <Label outline={props.outline}>{props.children}</Label>
+const Button = ({
+  children, width, outline, onPress, ...props
+}) => (
+  <ButtonContainer width={width} underlayColor={'#00A367'} outline={outline} onPress={onPress} {...props}>
+    <Label outline={outline}>{children}</Label>
   </ButtonContainer>
 );
 
@@ -31,10 +34,12 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   onPress: PropTypes.func.isRequired,
   outline: PropTypes.bool,
+  width: PropTypes.string,
 };
 
 Button.defaultProps = {
   outline: false,
+  width: '100%',
 };
 
 export default Button;

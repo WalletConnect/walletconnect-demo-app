@@ -1,17 +1,19 @@
 import { Navigation, ScreenVisibilityListener } from 'react-native-navigation';
 
-import QRScannerScreen from '../screens/QRScannerScreen';
+import QRCodeScannerScreen from '../screens/QRCodeScannerScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import CallRequestScreen from '../screens/CallRequestScreen';
 import WalletScreen from '../screens/WalletScreen';
 import TransactionHistoryScreen from '../screens/TransactionHistoryScreen';
 import TransactionDetailsScreen from '../screens/TransactionDetailsScreen';
+import CallRequestScreen from '../screens/CallRequestScreen';
+import SendTransactionScreen from '../screens/SendTransactionScreen';
+import ReceiveTransactionScreen from '../screens/ReceiveTransactionScreen';
 import AccountScreen from '../screens/AccountScreen';
 import NetworkScreen from '../screens/NetworkScreen';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
-  Navigation.registerComponent('WalletConnect.QRScannerScreen', () => QRScannerScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.QRCodeScannerScreen', () => QRCodeScannerScreen, store, Provider);
 
   // Settings Tab Screens
   Navigation.registerComponent('WalletConnect.SettingsScreen', () => SettingsScreen, store, Provider);
@@ -20,9 +22,13 @@ export function registerScreens(store, Provider) {
 
   // Wallet Tab Screens
   Navigation.registerComponent('WalletConnect.WalletScreen', () => WalletScreen, store, Provider);
-  Navigation.registerComponent('WalletConnect.CallRequestScreen', () => CallRequestScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.TransactionHistoryScreen', () => TransactionHistoryScreen, store, Provider);
   Navigation.registerComponent('WalletConnect.TransactionDetailsScreen', () => TransactionDetailsScreen, store, Provider);
+
+  // Transaction / Signing Screens
+  Navigation.registerComponent('WalletConnect.CallRequestScreen', () => CallRequestScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.SendTransactionScreen', () => SendTransactionScreen, store, Provider);
+  Navigation.registerComponent('WalletConnect.ReceiveTransactionScreen', () => ReceiveTransactionScreen, store, Provider);
 }
 
 export function registerScreenVisibilityListener() {

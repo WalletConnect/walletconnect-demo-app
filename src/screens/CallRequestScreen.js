@@ -11,24 +11,32 @@ import TransactionRequest from '../components/TransactionRequest';
 const SContainer = styled.View`
   flex: 1;
   background-color: rgb(0, 0, 0);
+  justify-content: flex-end;
+`;
+
+const SHeaderContainer = styled.View`
+  flex: 1;
+`;
+
+const SHeaderTextContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SHeaderText = styled.Text`
-  font-size: 17px;
-  opacity: 0.78;
+  color: white;
+  font-size: 20px;
+  opacity: 0.8;
 `;
 
 const SCloseModal = styled.Text`
-  color: #5376ff;
-  font-size: 17px;
-  position: absolute;
-  top: 15px;
-  right: 16px;
+  color: white;
+  margin: 10px;
+  align-self: flex-end;
 `;
 
-const SConfirmationContainer = styled.View`
-  flex: 1;
-`;
+const SConfirmationContainer = styled.View``;
 
 class CallRequestScreen extends Component {
   state = {
@@ -102,8 +110,12 @@ class CallRequestScreen extends Component {
   render() {
     return (
       <SContainer>
-        <SCloseModal onPress={this.onClose}>{'Cancel'}</SCloseModal>
-        <SHeaderText>{`New Request from ${this.props.dappName}`}</SHeaderText>
+        <SHeaderContainer>
+          <SHeaderTextContainer>
+            <SHeaderText>{`New Request from ${this.props.dappName}`}</SHeaderText>
+          </SHeaderTextContainer>
+          <SCloseModal onPress={this.onClose}>{'Close'}</SCloseModal>
+        </SHeaderContainer>
         <SConfirmationContainer>{this.renderCallRequest()}</SConfirmationContainer>
       </SContainer>
     );

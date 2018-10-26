@@ -5,7 +5,26 @@ import { List, ListItem } from 'react-native-elements';
 import Container from '../components/Container';
 import Card from '../components/Card';
 import { accountUpdateNetwork } from '../redux/_account';
-import networks from '../ref/networks.json';
+// import networks from '../ref/networks.json';
+
+const networks = {
+  mainnet: {
+    id: 1,
+    name: 'Mainnet',
+  },
+  // "ropsten": {
+  //   "id": 3,
+  //   "name": "Ropsten"
+  // },
+  // "rinkeby": {
+  //   "id": 4,
+  //   "name": "Rinkeby"
+  // },
+  // "kovan": {
+  //   "id": 42,
+  //   "name": "Kovan"
+  // }
+};
 
 class NetworkScreen extends Component {
   render() {

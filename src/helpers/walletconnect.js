@@ -18,12 +18,12 @@ function getWalletConnector(sessionId) {
 async function generateWalletConnector(session) {
   const pushType = 'fcm';
   const pushToken = await getFCMToken();
-  const pushEndpoint = 'https://us-central1-walletconnect-app.cloudfunctions.net/push';
+  const pushWebhook = 'https://us-central1-walletconnect-app.cloudfunctions.net/push';
 
   const push = {
     type: pushType,
     token: pushToken,
-    endpoint: pushEndpoint,
+    webhook: pushWebhook,
   };
 
   const walletConnector = new RNWalletConnect({ ...session, push });
@@ -111,6 +111,7 @@ export function walletConnectGetSessionData(sessionId) {
 
 export async function walletConnectApproveSession(sessionId) {
   const address = await loadAddress();
+
   const walletConnector = getWalletConnector(sessionId);
   try {
     const result = await walletConnector.approveSession({ accounts: [address] });

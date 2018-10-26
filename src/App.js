@@ -20,21 +20,18 @@ Navigation.startTabBasedApp({
       label: 'Wallet',
       screen: 'WalletConnect.WalletScreen',
       icon: require('./assets/wallet-icon.png'), // eslint-disable-line
-
       title: 'Wallet',
     },
     {
       label: 'Scan',
-      screen: 'WalletConnect.QRScannerScreen',
+      screen: 'WalletConnect.QRCodeScannerScreen',
       icon: require('./assets/scan-icon.png'), // eslint-disable-line
-
       title: 'WalletConnect',
     },
     {
       label: 'Settings',
       screen: 'WalletConnect.SettingsScreen',
       icon: require('./assets/settings-icon.png'), // eslint-disable-line
-
       title: 'Settings',
     },
   ],

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Row from './Row';
 import AssetIcon from './AssetIcon';
 import { handleSignificantDecimals } from '../helpers/bignumber';
 
-const StyledAssetRow = styled.View`
-  flex-direction: row;
+const StyledAssetRow = styled(Row)`
   height: 80px;
 `;
 

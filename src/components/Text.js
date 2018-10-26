@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const StyledText = styled.Text`
   color: ${({ color }) => color};
   margin-bottom: 6px;
-  align-content: flex-end;
 `;
 
 const Text = ({ color, children, ...props }) => (

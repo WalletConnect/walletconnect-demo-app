@@ -19,7 +19,7 @@ async function onTestCallRequest(callData) {
   await showCallRequestModal({ sessionId, callId, dappName });
 }
 
-const address = 0x7daf8edf399a40b7a96025ce1b3b886a65219e32;
+const address = '0x7daf8edf399a40b7a96025ce1b3b886a65219e32';
 
 const testTx = {
   id: 1,
@@ -47,13 +47,13 @@ const testMsg = {
 
 const testModals = [
   {
-    title: 'Testing',
+    title: 'Testing-1',
     subtitle: 'Test Transaction Modal',
     screen: 'WalletConnect.CallRequestScreen',
     onPress: () => onTestCallRequest(testTx),
   },
   {
-    title: 'Testing',
+    title: 'Testing-2',
     subtitle: 'Test Message Modal',
     screen: 'WalletConnect.CallRequestScreen',
     onPress: () => onTestCallRequest(testMsg),
@@ -99,7 +99,9 @@ class SettingsScreen extends Component {
                 }}
               />
             ))}
-            {testModals.map(r => <ListItem key={r.title} title={r.title} subtitle={r.subtitle} onPress={r.onPress} />)}
+            {testModals.map(r => (
+              <ListItem key={r.title} title={r.title} subtitle={r.subtitle} onPress={r.onPress} />
+            ))}
           </List>
         </Card>
       </Container>
