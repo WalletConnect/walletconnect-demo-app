@@ -1,7 +1,7 @@
 import firebase from 'react-native-firebase';
 import { addCallRequest } from '../redux/_callRequests';
 import { showCallRequestModal } from '../navigation';
-import { walletConnectGetSessionData } from './walletConnect';
+import { walletConnectGetSessionData } from './walletconnect';
 
 let NotificationListener = null;
 let NotificationDisplayedListener = null;

@@ -8,10 +8,10 @@ const StyledCard = styled.View`
   margin: 0px;
   padding: 15px;
   border-radius: 0px;
-  shadow-color: #000;
-  shadow-offset: 0 2px;
-  shadow-opacity: 0.1;
 `;
+//   shadow-color: #000;
+//   shadow-offset: 0 2px;
+//   shadow-opacity: 0.1;
 
 const Card = ({ children, ...props }) => <StyledCard {...props}>{children}</StyledCard>;
 

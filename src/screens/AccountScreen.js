@@ -6,7 +6,6 @@ import Label from '../components/Label';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
-
 class AccountScreen extends Component {
   render() {
     return (
@@ -25,6 +24,5 @@ class AccountScreen extends Component {
     );
   }
 }
-
 
 export default AccountScreen;

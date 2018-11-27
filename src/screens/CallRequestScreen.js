@@ -5,7 +5,7 @@ import { StatusBar } from 'react-native';
 import { hideActiveModal } from '../navigation';
 import { sendTransaction, signMessage } from '../helpers/wallet';
 import { getCallRequest } from '../redux/_callRequests';
-import { walletConnectApproveCallRequest, walletConnectRejectCallRequest } from '../helpers/walletConnect';
+import { walletConnectApproveCallRequest, walletConnectRejectCallRequest } from '../helpers/walletconnect';
 import TransactionRequest from '../components/TransactionRequest';
 import MessageRequest from '../components/MessageRequest';
 

@@ -16,7 +16,10 @@
     "max-len": ["error", { "code": 130, "comments": 500 }],
     "no-tabs": "error",
     "indent": ["error", 2],
-    "no-use-before-define": ["error", { "functions": false, "variables": false }],
+    "no-use-before-define": [
+      "error",
+      { "functions": false, "variables": false }
+    ],
     "no-unused-vars": ["error", { "args": "none" }],
     "no-plusplus": ["off"],
     "no-underscore-dangle": ["off"],

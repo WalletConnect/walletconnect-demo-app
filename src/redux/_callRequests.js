@@ -1,5 +1,5 @@
 import { dispatch, getState } from '../redux/store';
-import { walletConnectGetCallRequest } from '../helpers/walletConnect';
+import { walletConnectGetCallRequest } from '../helpers/walletconnect';
 
 // -- Constants ------------------------------------------------------------- //
 

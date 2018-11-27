@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Container from '../components/Container';
 import Text from '../components/Text';
-import { walletConnectNewSession } from '../helpers/walletConnect';
+import { walletConnectNewSession } from '../helpers/walletconnect';
 
 const StyledText = styled(Text)`
   flex-wrap: wrap;

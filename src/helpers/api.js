@@ -28,7 +28,8 @@ export const apiGetAccountBalances = async (address = '', network = 'mainnet') =
  * @param  {Number}   [page = 1]
  * @return {Promise}
  */
-export const apiGetAccountTransactions = (address = '', network = 'mainnet', page = 1) => api.get(`/get_transactions/${network}/${address}/${page}`);
+export const apiGetAccountTransactions = (address = '', network = 'mainnet', page = 1) =>
+  api.get(`/get_transactions/${network}/${address}/${page}`);
 
 /**
  * @desc get transaction details
