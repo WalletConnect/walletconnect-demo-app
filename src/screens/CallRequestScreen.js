@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { StatusBar } from 'react-native';
 import { hideActiveModal } from '../navigation';
-import { sendTransaction } from '../helpers/wallet';
+import { sendTransaction, signMessage } from '../helpers/wallet';
 import { getCallRequest } from '../redux/_callRequests';
 import { walletConnectApproveCallRequest, walletConnectRejectCallRequest } from '../helpers/walletConnect';
 import TransactionRequest from '../components/TransactionRequest';
+import MessageRequest from '../components/MessageRequest';
 
 const SContainer = styled.View`
   flex: 1;
@@ -62,14 +63,30 @@ class CallRequestScreen extends Component {
 
     switch (callRequest.method) {
     case 'eth_sendTransaction':
-      result = await sendTransaction(callRequest.params[0]);
+      try {
+        const signedTx = await sendTransaction(callRequest.params[0]);
+        result = signedTx.hash;
+        console.log('eth_sendTransaction result', result);
+      } catch (error) {
+        console.error(error);
+      }
       break;
+
+    case 'eth_sign':
+      try {
+        result = await signMessage(callRequest.params[1]);
+        console.log('eth_sign result', result);
+      } catch (error) {
+        console.error(error);
+      }
+      break;
+
     default:
       break;
     }
 
     if (result) {
-      await walletConnectApproveCallRequest(this.props.sessionId, this.props.callId, result);
+      await walletConnectApproveCallRequest(this.props.sessionId, this.props.callId, { result });
       this.onClose();
       this.setState(() => ({ confirmed: true, callRequest: null }));
     } else {
@@ -99,6 +116,15 @@ class CallRequestScreen extends Component {
             rejectCallRequest={this.rejectCallRequest}
           />
         );
+      case 'eth_sign':
+        return (
+          <MessageRequest
+            callRequest={callRequest}
+            approveCallRequest={this.approveCallRequest}
+            rejectCallRequest={this.rejectCallRequest}
+          />
+        );
+
       default:
         return null;
       }

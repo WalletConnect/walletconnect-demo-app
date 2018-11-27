@@ -17,15 +17,6 @@ const STransactionDetailContainer = styled.View`
   min-height: 77px;
 `;
 
-// const STransactionDetailLabel = styled.Text`
-//   font-weight: bold;
-//   margin-bottom: 6px;
-// `;
-
-// const STransactionDetailValue = styled.Text`
-//   font-family: 'Menlo-Regular';
-// `;
-
 const STransactionDetailSeparator = styled.View`
   width: 100%;
   position: absolute;
@@ -56,7 +47,7 @@ class TransactionRequest extends Component {
       { label: 'From', value: tx.from },
       { label: 'To', value: tx.to },
       { label: 'Value', value: `${convertAmountFromRawNumber(convertHexToString(tx.value))} ETH` },
-      { label: 'Input', value: tx.input },
+      { label: 'Data', value: tx.input || tx.data || '0x' },
     ];
     return (
       <SCard>

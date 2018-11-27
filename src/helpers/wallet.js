@@ -3,10 +3,6 @@ import { dispatch } from '../redux/store';
 import { accountUpdateAddress } from '../redux/_account';
 import { keychainSave, keychainLoad } from './keychain';
 
-const seedPhraseKey = 'seedPhrase';
-const privateKeyKey = 'privateKey';
-const addressKey = 'addressKey';
-
 export function generateSeedPhrase() {
   return ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
 }
@@ -44,22 +40,23 @@ export async function loadWallet() {
   return null;
 }
 
-export async function createTransaction(to, data, value, gasLimit, gasPrice, nonce = null) {
-  return {
-    to,
-    data,
-    value: ethers.utils.parseEther(value),
-    gasLimit,
-    gasPrice,
-    nonce,
-  };
-}
-
 export async function sendTransaction(transaction) {
   const wallet = await loadWallet();
   const transactionHash = await wallet.sendTransaction(transaction);
   return transactionHash;
 }
+
+export async function signMessage(message) {
+  const wallet = await loadWallet();
+  const result = await wallet.signMessage(message);
+  return result;
+}
+
+/* ------------- Keychain ----------------------------------------------------------*/
+
+const seedPhraseKey = 'seedPhrase';
+const privateKeyKey = 'privateKey';
+const addressKey = 'addressKey';
 
 export async function saveSeedPhrase(seedPhrase) {
   await keychainSave(seedPhraseKey, seedPhrase);
