@@ -6,7 +6,6 @@ import { Image, Linking } from 'react-native';
 import { accountGetTransactionDetails } from '../redux/_account';
 import { convertAmountFromRawNumber, multiply, convertStringToNumber } from '../helpers/bignumber';
 
-
 const StyledContainer = styled.View`
   flex: 1;
   background-color: #ffffff;
@@ -48,10 +47,10 @@ const StyledText = styled.Text`
 `;
 
 const StyledDirectionLabel = styled.Text`
-   fontSize: 13;
-   fontWeight: 500;
-   color: #24283666;
-   margin-top: 10;
+  font-size: 13;
+  font-weight: 500;
+  color: #24283666;
+  margin-top: 10;
 `;
 
 const StyledRow = styled.View`
@@ -69,7 +68,6 @@ const StyledLink = styled.Text`
   margin-top: 6;
   margin-bottom: 8;
 `;
-
 
 class TransactionDetailsScreen extends Component {
   componentDidMount() {
@@ -89,8 +87,8 @@ class TransactionDetailsScreen extends Component {
           <Image
             source={
               isTxIncoming
-                    ? require('../assets//arrow-in.png') // eslint-disable-line
-                    : require('../assets//arrow-out.png') // eslint-disable-line
+                ? require('../assets//arrow-in.png') // eslint-disable-line
+                : require('../assets//arrow-out.png') // eslint-disable-line
             }
           />
         </StyledArrowCell>
@@ -107,7 +105,7 @@ class TransactionDetailsScreen extends Component {
     } = this.props;
 
     const txStatus = txDetails.error === '' ? 'Success' : 'Fail';
-    const txStatusColor = (txStatus === 'Success') ? '#00BF19' : '#E33E59';
+    const txStatusColor = txStatus === 'Success' ? '#00BF19' : '#E33E59';
 
     const gasPriceInGwei = convertAmountFromRawNumber(txDetails.gasPrice, 9);
     const gasCost = convertAmountFromRawNumber(multiply(txDetails.gasPrice, txDetails.gasUsed), 18);
@@ -128,7 +126,7 @@ class TransactionDetailsScreen extends Component {
     // when tx tx details loaded
     return (
       <StyledContainer>
-        { this._renderArrowRow() }
+        {this._renderArrowRow()}
         <StyledRow>
           <StyledSection>
             <StyledDirectionLabel>From:</StyledDirectionLabel>
