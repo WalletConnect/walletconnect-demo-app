@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { StatusBar } from 'react-native';
 import { hideActiveModal } from '../navigation';
-import { sendTransaction, signMessage } from '../helpers/wallet';
+import { sendTransaction, signMessage, signTypedData, signTypedDataLegacy } from '../helpers/wallet';
 import { getCallRequest } from '../redux/_callRequests';
 import { walletConnectApproveCallRequest, walletConnectRejectCallRequest } from '../helpers/walletconnect';
-import { TypedDataUtils, typedSignatureHashBuffer } from '../helpers/ethSigUtil';
 import TransactionRequest from '../components/CallRequest/Transaction';
 import MessageRequest from '../components/CallRequest/Message';
 import TypedDataRequest from '../components/CallRequest/TypedData';
@@ -88,8 +87,7 @@ class CallRequestScreen extends Component {
     case 'eth_signTypedData_v3':
       try {
         console.log('eth_signTypedData_v3 approve');
-        const msg = TypedDataUtils.sign(callRequest.params[1]);
-        result = await signMessage(msg);
+        result = await signTypedData(callRequest.params[1]);
         console.log('eth_signTypedData_v3 result', result);
       } catch (error) {
         console.error(error);
@@ -98,8 +96,7 @@ class CallRequestScreen extends Component {
     case 'eth_signTypedData_v1':
       try {
         console.log('eth_signTypedData_v1 approve');
-        const msg = typedSignatureHashBuffer(callRequest.params[1]);
-        result = await signMessage(msg);
+        result = await signTypedDataLegacy(callRequest.params[1]);
         console.log('eth_signTypedData_v1 result', result);
       } catch (error) {
         console.error(error);
@@ -119,6 +116,7 @@ class CallRequestScreen extends Component {
   };
 
   rejectCallRequest = async () => {
+    this.onClose();
     await walletConnectRejectCallRequest(this.props.sessionId, this.props.callId);
     this.setState(() => ({ confirmed: false }));
   };

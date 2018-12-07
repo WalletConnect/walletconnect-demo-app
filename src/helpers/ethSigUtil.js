@@ -238,7 +238,7 @@ export const personalSign = (privateKey, msgParams) => {
   const message = ethUtil.toBuffer(msgParams.data);
   const msgHash = ethUtil.hashPersonalMessage(message);
   const sig = ethUtil.ecsign(msgHash, privateKey);
-  const serialized = ethUtil.bufferToHex(this.concatSig(sig.v, sig.r, sig.s));
+  const serialized = ethUtil.bufferToHex(concatSig(sig.v, sig.r, sig.s));
   return serialized;
 };
 
@@ -262,7 +262,7 @@ export const typedSignatureHash = typedData => {
 export const signTypedDataLegacy = (privateKey, msgParams) => {
   const msgHash = typedSignatureHashBuffer(msgParams.data);
   const sig = ethUtil.ecsign(msgHash, privateKey);
-  return ethUtil.bufferToHex(this.concatSig(sig.v, sig.r, sig.s));
+  return ethUtil.bufferToHex(concatSig(sig.v, sig.r, sig.s));
 };
 
 export const recoverTypedSignatureLegacy = msgParams => {
@@ -275,7 +275,7 @@ export const recoverTypedSignatureLegacy = msgParams => {
 export const signTypedData = (privateKey, msgParams) => {
   const message = TypedDataUtils.sign(msgParams.data);
   const sig = ethUtil.ecsign(message, privateKey);
-  return ethUtil.bufferToHex(this.concatSig(sig.v, sig.r, sig.s));
+  return ethUtil.bufferToHex(concatSig(sig.v, sig.r, sig.s));
 };
 
 export const recoverTypedSignature = msgParams => {

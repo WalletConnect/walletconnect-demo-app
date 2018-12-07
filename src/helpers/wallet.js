@@ -2,6 +2,7 @@ import ethers from 'ethers';
 import { dispatch } from '../redux/store';
 import { accountUpdateAddress } from '../redux/_account';
 import { keychainSave, keychainLoad } from './keychain';
+import * as EthSigUtil from './ethSigUtil';
 
 export function generateSeedPhrase() {
   return ethers.HDNode.entropyToMnemonic(ethers.utils.randomBytes(16));
@@ -42,13 +43,35 @@ export async function loadWallet() {
 
 export async function sendTransaction(transaction) {
   const wallet = await loadWallet();
+  console.log('sendTransaction address', wallet.address);
+  console.log('sendTransaction transaction', transaction);
   const transactionHash = await wallet.sendTransaction(transaction);
   return transactionHash;
 }
 
 export async function signMessage(message) {
   const wallet = await loadWallet();
+  console.log('signMessage address', wallet.address);
+  console.log('signMessage message', message);
   const result = await wallet.signMessage(message);
+  return result;
+}
+
+export async function signTypedData(typedData) {
+  const wallet = await loadWallet();
+  console.log('signTypedData address', wallet.address);
+  console.log('signTypedData typedData', typedData);
+  const keyBuffer = EthSigUtil.toBuffer(wallet.privateKey);
+  const result = EthSigUtil.signTypedData(keyBuffer, { data: typedData });
+  return result;
+}
+
+export async function signTypedDataLegacy(typedData) {
+  const wallet = await loadWallet();
+  console.log('signTypedDataLegacy address', wallet.address);
+  console.log('signTypedDataLegacy typedData', typedData);
+  const keyBuffer = EthSigUtil.toBuffer(wallet.privateKey);
+  const result = EthSigUtil.signTypedDataLegacy(keyBuffer, { data: typedData });
   return result;
 }
 
