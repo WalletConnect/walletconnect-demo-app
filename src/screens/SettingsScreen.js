@@ -21,7 +21,7 @@ async function onTestCallRequest(callData) {
 
 const address = '0x7daf8edf399a40b7a96025ce1b3b886a65219e32';
 
-const testTx = {
+const testTransaction = {
   id: 1,
   jsonrpc: '2.0',
   method: 'eth_sendTransaction',
@@ -38,11 +38,50 @@ const testTx = {
   ],
 };
 
-const testMsg = {
-  id: 1,
+const testMessage = {
+  id: 2,
   jsonrpc: '2.0',
   method: 'eth_sign',
   params: [address, '0xdeadbeaf'],
+};
+
+const testTypedData = {
+  id: 3,
+  jsonrpc: '2.0',
+  method: 'eth_signTypedData',
+  params: [
+    address,
+    {
+      types: {
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' },
+        ],
+        Person: [{ name: 'name', type: 'string' }, { name: 'account', type: 'address' }],
+        Mail: [{ name: 'from', type: 'Person' }, { name: 'to', type: 'Person' }, { name: 'contents', type: 'string' }],
+      },
+      primaryType: 'Mail',
+      domain: {
+        name: 'Example Dapp',
+        version: '0.7.0',
+        chainId: 1,
+        verifyingContract: '0x0000000000000000000000000000000000000000',
+      },
+      message: {
+        from: {
+          name: 'Alice',
+          account: '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        },
+        to: {
+          name: 'Bob',
+          account: '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+        },
+        contents: 'Hey, Bob!',
+      },
+    },
+  ],
 };
 
 const testModals = [
@@ -50,13 +89,19 @@ const testModals = [
     title: 'Testing-1',
     subtitle: 'Test Transaction Modal',
     screen: 'WalletConnect.CallRequestScreen',
-    onPress: () => onTestCallRequest(testTx),
+    onPress: () => onTestCallRequest(testTransaction),
   },
   {
     title: 'Testing-2',
     subtitle: 'Test Message Modal',
     screen: 'WalletConnect.CallRequestScreen',
-    onPress: () => onTestCallRequest(testMsg),
+    onPress: () => onTestCallRequest(testMessage),
+  },
+  {
+    title: 'Testing-3',
+    subtitle: 'Test TypedData Modal',
+    screen: 'WalletConnect.CallRequestScreen',
+    onPress: () => onTestCallRequest(testTypedData),
   },
 ];
 

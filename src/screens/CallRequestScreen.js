@@ -6,8 +6,10 @@ import { hideActiveModal } from '../navigation';
 import { sendTransaction, signMessage } from '../helpers/wallet';
 import { getCallRequest } from '../redux/_callRequests';
 import { walletConnectApproveCallRequest, walletConnectRejectCallRequest } from '../helpers/walletconnect';
-import TransactionRequest from '../components/TransactionRequest';
-import MessageRequest from '../components/MessageRequest';
+import { TypedDataUtils, typedSignatureHashBuffer } from '../helpers/ethSigUtil';
+import TransactionRequest from '../components/CallRequest/Transaction';
+import MessageRequest from '../components/CallRequest/Message';
+import TypedDataRequest from '../components/CallRequest/TypedData';
 
 const SContainer = styled.View`
   flex: 1;
@@ -64,6 +66,7 @@ class CallRequestScreen extends Component {
     switch (callRequest.method) {
     case 'eth_sendTransaction':
       try {
+        console.log('eth_sendTransaction approve');
         const signedTx = await sendTransaction(callRequest.params[0]);
         result = signedTx.hash;
         console.log('eth_sendTransaction result', result);
@@ -74,13 +77,34 @@ class CallRequestScreen extends Component {
 
     case 'eth_sign':
       try {
+        console.log('eth_sign approve');
         result = await signMessage(callRequest.params[1]);
         console.log('eth_sign result', result);
       } catch (error) {
         console.error(error);
       }
       break;
-
+    case 'eth_signTypedData':
+    case 'eth_signTypedData_v3':
+      try {
+        console.log('eth_signTypedData_v3 approve');
+        const msg = TypedDataUtils.sign(callRequest.params[1]);
+        result = await signMessage(msg);
+        console.log('eth_signTypedData_v3 result', result);
+      } catch (error) {
+        console.error(error);
+      }
+      break;
+    case 'eth_signTypedData_v1':
+      try {
+        console.log('eth_signTypedData_v1 approve');
+        const msg = typedSignatureHashBuffer(callRequest.params[1]);
+        result = await signMessage(msg);
+        console.log('eth_signTypedData_v1 result', result);
+      } catch (error) {
+        console.error(error);
+      }
+      break;
     default:
       break;
     }
@@ -124,7 +148,16 @@ class CallRequestScreen extends Component {
             rejectCallRequest={this.rejectCallRequest}
           />
         );
-
+      case 'eth_signTypedData':
+      case 'eth_signTypedData_v1':
+      case 'eth_signTypedData_v3':
+        return (
+          <TypedDataRequest
+            callRequest={callRequest}
+            approveCallRequest={this.approveCallRequest}
+            rejectCallRequest={this.rejectCallRequest}
+          />
+        );
       default:
         return null;
       }

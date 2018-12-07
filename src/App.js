@@ -1,3 +1,4 @@
+import { StatusBar } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { registerScreens, registerScreenVisibilityListener } from './navigation';
@@ -13,6 +14,8 @@ registerScreenVisibilityListener();
 initFCM();
 walletInit();
 walletConnectGetLiveSessions();
+
+StatusBar.setBarStyle('dark-content', true);
 
 Navigation.startTabBasedApp({
   tabs: [
@@ -48,7 +51,6 @@ Navigation.startTabBasedApp({
 
     hideBackButtonTitle: false,
   },
-
   passProps: {},
   animationType: 'slide-down',
 });
