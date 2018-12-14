@@ -3,6 +3,7 @@ import { addCallRequest } from '../redux/_callRequests';
 import { showCallRequestModal } from '../navigation';
 import { walletConnectGetSessionData } from './walletconnect';
 
+let MessageListener = null;
 let NotificationListener = null;
 let NotificationDisplayedListener = null;
 let NotificationOpenedListener = null;
@@ -30,6 +31,7 @@ export async function requestPermissions() {
 }
 
 export async function registerListeners() {
+  MessageListener = firebase.messaging().onMessage(onMessage);
   NotificationListener = firebase.notifications().onNotification(onNotification);
   NotificationDisplayedListener = firebase.notifications().onNotificationDisplayed(onNotificationDisplayed);
   NotificationOpenedListener = firebase.notifications().onNotificationOpened(onNotificationOpened);
@@ -38,6 +40,7 @@ export async function registerListeners() {
 }
 
 export async function unregisterListeners() {
+  await MessageListener();
   await NotificationListener();
   await NotificationDisplayedListener();
   await NotificationOpenedListener();
@@ -49,6 +52,15 @@ async function onCallRequest(notification) {
   const { dappName } = walletConnectGetSessionData(sessionId);
   await addCallRequest(sessionId, callId);
   await showCallRequestModal({ sessionId, callId, dappName });
+}
+
+async function onMessage(message) {
+  try {
+    console.log('FCM onMessage  =====>', message);
+    await onCallRequest(message);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function onNotification(notification) {

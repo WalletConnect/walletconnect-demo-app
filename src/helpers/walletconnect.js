@@ -44,6 +44,7 @@ export async function walletConnectNewSession(uri) {
   console.log('session', session);
   try {
     await asyncStorageSaveSession(session);
+    await asyncStorageSaveSession(session);
   } catch (err) {
     console.error(err);
     console.log('Error: Async Storage Save Session Failed', err);

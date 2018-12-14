@@ -12,7 +12,7 @@ class TransactionRequest extends Component {
       { label: 'From', value: tx.from },
       { label: 'To', value: tx.to },
       { label: 'Value', value: `${convertAmountFromRawNumber(convertHexToString(tx.value))} ETH` },
-      { label: 'Data', value: tx.input || tx.data || '0x' },
+      { label: 'Data', value: tx.data || '0x' },
     ];
     return (
       <SCard>
