@@ -70,8 +70,8 @@ const TransactionRow = ({ tx, navigator, address }) => {
           <StyledArrow
             source={
               isTxIncoming
-                ? require('../assets//arrow-in.png') // eslint-disable-line
-                : require('../assets//arrow-out.png') // eslint-disable-line
+                ? require('../assets/arrow-in.png') // eslint-disable-line
+                : require('../assets/arrow-out.png') // eslint-disable-line
             }
           />
 

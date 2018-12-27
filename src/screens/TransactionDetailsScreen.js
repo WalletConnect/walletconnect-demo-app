@@ -87,8 +87,8 @@ class TransactionDetailsScreen extends Component {
           <Image
             source={
               isTxIncoming
-                ? require('../assets//arrow-in.png') // eslint-disable-line
-                : require('../assets//arrow-out.png') // eslint-disable-line
+                ? require('../assets/arrow-in.png') // eslint-disable-line
+                : require('../assets/arrow-out.png') // eslint-disable-line
             }
           />
         </StyledArrowCell>
