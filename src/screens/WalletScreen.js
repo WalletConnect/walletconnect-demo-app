@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Alert, Image, TouchableHighlight, Clipboard, ScrollView, View, RefreshControl } from 'react-native';
-import Container from '../components/Container';
+import { Alert, Image, TouchableHighlight, Clipboard, View } from 'react-native';
+import ScrollViewContainer from '../components/ScrollViewContainer';
 import Card from '../components/Card';
 import Section from '../components/Section';
 import Separator from '../components/Separator';
@@ -46,56 +46,53 @@ class WalletScreen extends Component {
 
   render() {
     const { loading, address, navigator } = this.props;
-    const refreshControl = <RefreshControl refreshing={loading} onRefresh={this._fetchAccountAssets} />;
     return (
-      <ScrollView refreshControl={refreshControl}>
-        <Container>
-          <Card>
-            <View style={{ flexDirection: 'row', height: 50 }}>
-              <Section style={{ width: 'auto', height: 50, flex: 10 }}>
-                <Label>{'Wallet Address'}</Label>
-                <Text style={{ fontSize: 12, fontFamily: 'Menlo-Regular' }}>{address}</Text>
-              </Section>
-              <Section
-                style={{
-                  width: 'auto',
-                  height: 50,
-                  flex: 1,
-                }}
-              >
-                <TouchableHighlight onPress={this._copyToClipboard}>
-                  <Image
-                    source={
-                      require('../assets/clipboard.png') // eslint-disable-line
-                    }
-                    style={{ width: 20, height: 20, margin: 5 }}
-                  />
-                </TouchableHighlight>
-              </Section>
-            </View>
-
-            <Section style={{ height: 50 }}>
-              <Button
-                onPress={() => {
-                  navigator.push({
-                    screen: 'WalletConnect.TransactionHistoryScreen',
-                    title: 'Transactions',
-                    navigatorStyle: {
-                      tabBarHidden: true,
-                    },
-                    backButtonTitle: '',
-                  });
-                }}
-                color="#666666"
-                accessibilityLabel="Go to Transactions Screen"
-              >
-                {'Transactions'}
-              </Button>
+      <ScrollViewContainer refreshing={loading} onRefresh={this._fetchAccountAssets}>
+        <Card>
+          <View style={{ flexDirection: 'row', height: 50 }}>
+            <Section style={{ width: 'auto', height: 50, flex: 10 }}>
+              <Label>{'Wallet Address'}</Label>
+              <Text style={{ fontSize: 12, fontFamily: 'Menlo-Regular' }}>{address}</Text>
             </Section>
-            {this._renderAssetRows()}
-          </Card>
-        </Container>
-      </ScrollView>
+            <Section
+              style={{
+                width: 'auto',
+                height: 50,
+                flex: 1,
+              }}
+            >
+              <TouchableHighlight onPress={this._copyToClipboard}>
+                <Image
+                  source={
+                    require('../assets/clipboard.png') // eslint-disable-line
+                  }
+                  style={{ width: 20, height: 20, margin: 5 }}
+                />
+              </TouchableHighlight>
+            </Section>
+          </View>
+
+          <Section style={{ height: 50 }}>
+            <Button
+              onPress={() => {
+                navigator.push({
+                  screen: 'WalletConnect.TransactionHistoryScreen',
+                  title: 'Transactions',
+                  navigatorStyle: {
+                    tabBarHidden: true,
+                  },
+                  backButtonTitle: '',
+                });
+              }}
+              color="#666666"
+              accessibilityLabel="Go to Transactions Screen"
+            >
+              {'Transactions'}
+            </Button>
+          </Section>
+          {this._renderAssetRows()}
+        </Card>
+      </ScrollViewContainer>
     );
   }
 }
