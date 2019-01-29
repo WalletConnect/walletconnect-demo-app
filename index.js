@@ -1,4 +1,3 @@
-/*eslint-disable*/
-import './shim.js';
-
-import App from './src/App';
+import { AppRegistry } from "react-native";
+import App from "./src";
+AppRegistry.registerComponent("walletconnectdeveloperapp", () => App);

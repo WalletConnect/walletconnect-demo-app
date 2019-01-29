@@ -1,0 +1,14 @@
+{
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "prefer-for-of": false,
+    "no-shadowed-variable": false,
+    "no-bitwise": false,
+    "variable-name": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false
+  },
+  "linterOptions": {
+    "exclude": ["rn-cli.config.js", "ios", "android", "node_modules", "build"]
+  }
+}
