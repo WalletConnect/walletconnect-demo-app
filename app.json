@@ -1,4 +1,14 @@
 {
-  "name": "WalletConnect",
+  "expo": {
+    "sdkVersion": "27.0.0",
+    "packagerOpts": {
+      "sourceExts": [
+        "ts",
+        "tsx"
+      ],
+      "transformer": "node_modules/react-native-typescript-transformer/index.js"
+    }
+  },
+  "name": "walletconnectdeveloperapp",
   "displayName": "WalletConnect"
 }

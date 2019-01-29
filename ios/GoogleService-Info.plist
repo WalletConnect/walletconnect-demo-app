@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>835942330957-2qrsis8s2gqpb48h5f2256uufj76c9un.apps.googleusercontent.com</string>
+	<string>282797811366-bo0944cr2c8spnj6pm2sj3kdge13cjgd.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.835942330957-2qrsis8s2gqpb48h5f2256uufj76c9un</string>
+	<string>com.googleusercontent.apps.282797811366-bo0944cr2c8spnj6pm2sj3kdge13cjgd</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBUdVFikBJn_C0Yr2W4TT_vyIp38AvJI_I</string>
+	<string>AIzaSyC3NQIJozysGjaiwYwylX-8x9Eu6rvaxsA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>835942330957</string>
+	<string>282797811366</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.walletconnect.developer-app</string>
+	<string>org.walletconnect.developerapp</string>
 	<key>PROJECT_ID</key>
-	<string>walletconnect-app</string>
+	<string>walletconnect-developer-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>walletconnect-app.appspot.com</string>
+	<string>walletconnect-developer-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:835942330957:ios:419fca2f38481a44</string>
+	<string>1:282797811366:ios:2c35eabff9903655</string>
 	<key>DATABASE_URL</key>
-	<string>https://walletconnect-app.firebaseio.com</string>
+	<string>https://walletconnect-developer-app.firebaseio.com</string>
 </dict>
 </plist>
