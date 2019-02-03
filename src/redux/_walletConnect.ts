@@ -9,8 +9,8 @@ import {
   asyncStorageLoadSessions,
   asyncStorageDeleteSession
 } from "../helpers/asyncStorage";
-import { getFCMToken } from "../helpers/firebase";
-import { DEVICE_LANGUAGE } from "../helpers/constants";
+// import { getFCMToken } from "../helpers/firebase";
+// import { DEVICE_LANGUAGE } from "../helpers/constants";
 
 // -- Constants ------------------------------------------------------------- //
 
