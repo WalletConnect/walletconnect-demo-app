@@ -1,5 +1,5 @@
 import { AsyncStorage } from "react-native";
-import { IWalletConnectSession } from "../lib/types";
+import { IWalletConnectSession } from "@walletconnect/types";
 
 export async function asyncStorageSave(key: string, value: any) {
   const jsonValue = JSON.stringify(value);

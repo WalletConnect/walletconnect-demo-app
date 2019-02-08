@@ -1,4 +1,4 @@
-import WalletConnect from "../lib";
+import WalletConnect from "@walletconnect/react-native";
 import { navigate } from "../navigation";
 import {
   IWalletConnectReduxState,
@@ -9,8 +9,8 @@ import {
   asyncStorageLoadSessions,
   asyncStorageDeleteSession
 } from "../helpers/asyncStorage";
-import { getFCMToken } from "../helpers/firebase";
-import { DEVICE_LANGUAGE } from "../helpers/constants";
+// import { getFCMToken } from "../helpers/firebase";
+// import { DEVICE_LANGUAGE } from "../helpers/constants";
 
 // -- Constants ------------------------------------------------------------- //
 

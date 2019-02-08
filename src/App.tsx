@@ -14,7 +14,7 @@ import AccountStack from "./screens/Account";
 import ScanStack from "./screens/Scan";
 import SettingsStack from "./screens/Settings";
 import ModalStack from "./screens/Modal";
-import { initFCM } from "./helpers/firebase";
+// import { initFCM } from "./helpers/firebase";
 
 const MainTabNavigator = createBottomTabNavigator(
   {
