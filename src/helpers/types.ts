@@ -1,6 +1,17 @@
-import WalletConnect from "../lib";
-import { IJsonRpcRequest } from "../lib/types";
+import WalletConnect from "@walletconnect/react-native";
+import { IJsonRpcRequest } from "@walletconnect/types";
 
+export interface IWalletConnectCallRequest {
+  walletConnector: WalletConnect[];
+  payload: IJsonRpcRequest;
+}
+
+export interface IWalletConnectReduxState {
+  loading: boolean;
+  activeConnectors: WalletConnect[];
+  pendingConnectors: WalletConnect[];
+  callRequests: IWalletConnectCallRequest[];
+}
 export interface IAssetData {
   symbol: string;
   name: string;
@@ -16,18 +27,17 @@ export interface IChainData {
   network: string;
   chain_id: number;
   network_id: number;
+  rpc_url: string;
 }
 
-export interface IWalletConnectCallRequest {
-  walletConnector: WalletConnect[];
-  payload: IJsonRpcRequest;
-}
-
-export interface IWalletConnectReduxState {
-  loading: boolean;
-  activeConnectors: WalletConnect[];
-  pendingConnectors: WalletConnect[];
-  callRequests: IWalletConnectCallRequest[];
+export interface ITxData {
+  from: string;
+  to: string;
+  nonce: string;
+  gasPrice: string;
+  gasLimit: string;
+  value: string;
+  data: string;
 }
 
 export interface IBlockScoutTx {
@@ -74,7 +84,7 @@ export interface IBlockScoutTokenTx {
 }
 
 export interface IParsedTx {
-  timeStamp: string;
+  timestamp: string;
   hash: string;
   from: string;
   to: string;
@@ -117,7 +127,18 @@ export interface IGasPrice {
 }
 
 export interface IGasPrices {
+  timestamp: number;
   slow: IGasPrice;
   average: IGasPrice;
   fast: IGasPrice;
+}
+
+export interface IMethodArgument {
+  type: string;
+}
+
+export interface IMethod {
+  signature: string;
+  name: string;
+  args: IMethodArgument[];
 }

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tradle/react-native-http": "^2.0.1",
+    "@walletconnect/react-native": "^1.0.0-beta.3",
     "assert": "^1.4.1",
     "bignumber.js": "^8.0.1",
     "browserify-zlib": "^0.1.4",
@@ -51,7 +52,8 @@
     "vm-browserify": "0.0.4"
   },
   "scripts": {
-    "start": "react-native start",
+    "clean:cache": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean --force && npm cache verify",
+    "start": "npm run clean:cache && react-native start --reset-cache",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest",
