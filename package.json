@@ -52,7 +52,8 @@
     "vm-browserify": "0.0.4"
   },
   "scripts": {
-    "start": "react-native start",
+    "clean:cache": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean --force && npm cache verify",
+    "start": "npm run clean:cache && react-native start --reset-cache",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest",
