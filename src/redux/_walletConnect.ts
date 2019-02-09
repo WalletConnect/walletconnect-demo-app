@@ -1,4 +1,4 @@
-import WalletConnect from "../lib";
+import WalletConnect from "@walletconnect/react-native";
 import { navigate } from "../navigation";
 import {
   IWalletConnectReduxState,
