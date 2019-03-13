@@ -22,7 +22,7 @@
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
     "react": "16.3.1",
-    "react-native": "~0.55.2",
+    "react-native": "~0.59.0",
     "react-native-blockies": "^1.0.2",
     "react-native-camera": "^1.6.4",
     "react-native-crypto": "^2.1.2",
