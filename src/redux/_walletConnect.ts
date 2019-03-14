@@ -88,7 +88,7 @@ export const walletConnectOnSessionRequest = (uri: string) => async (
 
   const walletConnector = new WalletConnect({ uri }, nativeOptions);
 
-  walletConnector.on("wc_sessionRequest", (error: any, payload: any) => {
+  walletConnector.on("session_request", (error: any, payload: any) => {
     if (error) {
       throw error;
     }

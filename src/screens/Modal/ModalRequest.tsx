@@ -49,15 +49,20 @@ const SCloseModal = styled.Text`
 
 const SConfirmationContainer = styled.View``;
 
+const sessionMethods = [
+  "session_request",
+  "wc_sessionRequest",
+  "session_update",
+  "wc_sessionUpdate"
+];
+
 class ModalRequest extends React.Component<any, any> {
   approveRequest = async () => {
     const { address, chainId } = this.props;
     const screenProps = this.props.navigation.state.params;
     const { peerId, payload } = screenProps;
 
-    const sessionRequest =
-      payload.method === "wc_sessionRequest" ||
-      payload.method === "wc_sessionUpdate";
+    const sessionRequest = sessionMethods.includes(payload.method);
 
     if (sessionRequest) {
       const response = { accounts: [address], chainId };
@@ -133,9 +138,7 @@ class ModalRequest extends React.Component<any, any> {
     const screenProps = this.props.navigation.state.params;
     const { peerId, payload } = screenProps;
 
-    const sessionRequest =
-      payload.method === "wc_sessionRequest" ||
-      payload.method === "wc_sessionUpdate";
+    const sessionRequest = sessionMethods.includes(payload.method);
 
     if (sessionRequest) {
       await this.props.walletConnectRejectSessionRequest(peerId);
@@ -156,6 +159,7 @@ class ModalRequest extends React.Component<any, any> {
 
     if (payload) {
       switch (payload.method) {
+        case "session_request":
         case "wc_sessionRequest":
           return (
             <SessionRequest
@@ -166,6 +170,7 @@ class ModalRequest extends React.Component<any, any> {
               rejectRequest={this.rejectRequest}
             />
           );
+        case "session_update":
         case "wc_sessionUpdate":
           return (
             <SessionRequest

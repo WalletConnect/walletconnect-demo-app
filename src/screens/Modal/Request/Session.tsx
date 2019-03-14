@@ -24,7 +24,9 @@ class SessionRequest extends React.Component<any, any> {
       approveRequest,
       rejectRequest
     } = this.props;
-    const newSession = payload.method === "wc_sessionRequest";
+    const newSession =
+      payload.method === "wc_sessionRequest" ||
+      payload.method === "session_request";
     let params: { label: string; value: any }[] = [];
     const activeChain = getChainData(chainId);
     if (newSession) {
