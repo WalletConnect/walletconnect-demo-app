@@ -21,8 +21,7 @@ interface IContainerStyleProps {
   nesting: string;
 }
 
-const SContainerStyleTypes = styled.View<IContainerStyleProps>``;
-export const SContainer = styled(SContainerStyleTypes)`
+export const SContainer = styled.View<IContainerStyleProps>`
   width: 100%;
   min-height: 50px;
   padding: ${(props: any) =>
