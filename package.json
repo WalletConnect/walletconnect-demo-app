@@ -1,10 +1,34 @@
 {
   "name": "walletconnect-developer-app",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.10",
   "private": true,
+  "keywords": [
+    "walletconnect",
+    "ethereum",
+    "web3",
+    "crypto"
+  ],
+  "author": "WalletConnect <walletconnect.org>",
+  "homepage": "https://walletconnect.org",
+  "license": "LGPL-3.0",
+  "scripts": {
+    "clean:cache": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean --force && npm cache verify",
+    "start": "npm run clean:cache && react-native start --reset-cache",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "jest",
+    "postinstall": "./node_modules/.bin/rn-nodeify --hack --install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/walletconnect/walletconnect-developer-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/walletconnect/walletconnect-developer-app/issues"
+  },
   "dependencies": {
     "@tradle/react-native-http": "^2.0.1",
-    "@walletconnect/react-native": "^1.0.0-beta.6",
+    "@walletconnect/react-native": "^1.0.0-beta.10",
     "assert": "^1.4.1",
     "bignumber.js": "^8.0.1",
     "browserify-zlib": "^0.1.4",
@@ -50,14 +74,6 @@
     "url": "^0.10.3",
     "util": "^0.10.4",
     "vm-browserify": "0.0.4"
-  },
-  "scripts": {
-    "clean:cache": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean --force && npm cache verify",
-    "start": "npm run clean:cache && react-native start --reset-cache",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "test": "jest",
-    "postinstall": "./node_modules/.bin/rn-nodeify --hack --install"
   },
   "devDependencies": {
     "@types/bignumber.js": "^5.0.0",
