@@ -67,6 +67,7 @@ class ModalRequest extends React.Component<any, any> {
     if (sessionRequest) {
       const response = { accounts: [address], chainId };
       await this.props.walletConnectApproveSessionRequest(peerId, response);
+      this.onClose();
     } else {
       this.approveCallRequest();
     }
