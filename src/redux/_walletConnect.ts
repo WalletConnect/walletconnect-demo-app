@@ -144,6 +144,12 @@ export const walletConnectRejectSessionRequest = (peerId: string) => (
 ) => {
   const { pendingConnectors } = getState().walletConnect;
 
+  const walletConnector = pendingConnectors.filter(
+    (pendingConnector: WalletConnect) => pendingConnector.peerId === peerId
+  )[0];
+
+  walletConnector.rejectSession();
+
   const updatedPendingConnectors = pendingConnectors.filter(
     (walletConnector: WalletConnect) => walletConnector.peerId !== peerId
   );
@@ -230,19 +236,19 @@ export const walletConnectSubscribeToEvents = (peerId: string) => (
 export const walletConnectApproveCallRequest = (
   peerId: string,
   response: { id: number; result: any }
-) => (dispatch: any, getState: any) => {
+) => async (dispatch: any, getState: any) => {
   const walletConnector = getState().walletConnect.activeConnectors.filter(
     (activeConnector: WalletConnect) => activeConnector.peerId === peerId
   )[0];
 
-  walletConnector.approveRequest(response);
+  await walletConnector.approveRequest(response);
 
   const updatedCallRequests = getState().walletConnect.activeConnectors.filter(
     (callRequest: IWalletConnectCallRequest) =>
       callRequest.payload.id !== response.id
   );
 
-  dispatch({
+  await dispatch({
     type: WALLETCONNECT_CALL_APPROVAL,
     payload: updatedCallRequests
   });
@@ -250,20 +256,20 @@ export const walletConnectApproveCallRequest = (
 
 export const walletConnectRejectCallRequest = (
   peerId: string,
-  response: { id: number; result: any }
-) => (dispatch: any, getState: any) => {
+  response: { id: number; error: { message: string } }
+) => async (dispatch: any, getState: any) => {
   const walletConnector = getState().walletConnect.activeConnectors.filter(
     (activeConnector: WalletConnect) => activeConnector.peerId === peerId
   )[0];
 
-  walletConnector.rejectRequest(response);
+  await walletConnector.rejectRequest(response);
 
   const updatedCallRequests = getState().walletConnect.activeConnectors.filter(
     (callRequest: IWalletConnectCallRequest) =>
       callRequest.payload.id !== response.id
   );
 
-  dispatch({
+  await dispatch({
     type: WALLETCONNECT_CALL_REJECTION,
     payload: updatedCallRequests
   });

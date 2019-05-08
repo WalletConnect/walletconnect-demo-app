@@ -58,24 +58,30 @@ const sessionMethods = [
 
 class ModalRequest extends React.Component<any, any> {
   approveRequest = async () => {
-    const { address, chainId } = this.props;
     const screenProps = this.props.navigation.state.params;
-    const { peerId, payload } = screenProps;
+    const { payload } = screenProps;
 
     const sessionRequest = sessionMethods.includes(payload.method);
 
     if (sessionRequest) {
-      const response = { accounts: [address], chainId };
-      await this.props.walletConnectApproveSessionRequest(peerId, response);
-      this.onClose();
+      this.handleSessionRequest();
     } else {
-      this.approveCallRequest();
+      this.handleCallRequest();
     }
   };
 
-  approveCallRequest = async () => {
+  handleSessionRequest = async () => {
     const screenProps = this.props.navigation.state.params;
-    const { peerId, payload } = screenProps;
+    const { address, chainId } = this.props;
+    const { peerId } = screenProps;
+    const response = { accounts: [address], chainId };
+    await this.props.walletConnectApproveSessionRequest(peerId, response);
+    this.onClose();
+  };
+
+  handleCallRequest = async () => {
+    const screenProps = this.props.navigation.state.params;
+    const { payload } = screenProps;
 
     let result = null;
 
@@ -122,17 +128,25 @@ class ModalRequest extends React.Component<any, any> {
         break;
     }
 
+    if (result) {
+      await this.approveCallRequest(result);
+    } else {
+      await this.rejectRequest();
+    }
+  };
+
+  approveCallRequest = async (result: any) => {
+    const screenProps = this.props.navigation.state.params;
+    const { peerId, payload } = screenProps;
+
     const response = {
       id: payload.id,
       result
     };
 
-    if (result) {
-      await this.props.walletConnectApproveCallRequest(peerId, response);
-      this.onClose();
-    } else {
-      await this.rejectRequest();
-    }
+    await this.props.walletConnectApproveCallRequest(peerId, response);
+
+    this.onClose();
   };
 
   rejectRequest = async () => {
@@ -146,7 +160,7 @@ class ModalRequest extends React.Component<any, any> {
     } else {
       await this.props.walletConnectRejectCallRequest(peerId, {
         id: payload.id,
-        result: null
+        error: { message: "User rejected call request" }
       });
     }
 
