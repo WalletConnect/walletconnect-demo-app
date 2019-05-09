@@ -192,7 +192,7 @@ export const walletConnectSubscribeToEvents = (peerId: string) => (
     if (error) {
       throw error;
     }
-    const updatedRequests = [...getState().walletConnect.requestes];
+    const updatedRequests = [...getState().walletConnect.requests];
 
     const updatedconnector = getState().walletConnect.connectors.filter(
       (connector: WalletConnect) => connector.peerId === peerId
@@ -233,7 +233,7 @@ export const walletConnectSubscribeToEvents = (peerId: string) => (
   });
 };
 
-export const walletConnectApproveRequest = (
+export const walletConnectApproveCallRequest = (
   peerId: string,
   response: { id: number; result: any }
 ) => async (dispatch: any, getState: any) => {
@@ -253,7 +253,7 @@ export const walletConnectApproveRequest = (
   });
 };
 
-export const walletConnectRejectRequest = (
+export const walletConnectRejectCallRequest = (
   peerId: string,
   response: { id: number; error: { message: string } }
 ) => async (dispatch: any, getState: any) => {
