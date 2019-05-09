@@ -1,16 +1,16 @@
 import WalletConnect from "@walletconnect/react-native";
 import { IJsonRpcRequest } from "@walletconnect/types";
 
-export interface IWalletConnectCallRequest {
-  walletConnector: WalletConnect[];
+export interface IWalletConnectRequest {
+  connector: WalletConnect[];
   payload: IJsonRpcRequest;
 }
 
 export interface IWalletConnectReduxState {
   loading: boolean;
-  activeConnectors: WalletConnect[];
-  pendingConnectors: WalletConnect[];
-  callRequests: IWalletConnectCallRequest[];
+  connectors: WalletConnect[];
+  pending: WalletConnect[];
+  requests: IWalletConnectRequest[];
 }
 export interface IAssetData {
   symbol: string;

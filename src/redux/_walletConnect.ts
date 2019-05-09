@@ -2,7 +2,7 @@ import WalletConnect from "@walletconnect/react-native";
 import { navigate } from "../navigation";
 import {
   IWalletConnectReduxState,
-  IWalletConnectCallRequest
+  IWalletConnectRequest
 } from "../helpers/types";
 import {
   asyncStorageSaveSession,
@@ -67,13 +67,13 @@ export const walletConnectInit = () => async (dispatch: any) => {
   dispatch({ type: WALLETCONNECT_INIT_REQUEST });
   try {
     const sessions = await asyncStorageLoadSessions();
-    const activeConnectors = await Promise.all(
+    const connectors = await Promise.all(
       Object.values(sessions).map(async session => {
         const nativeOptions = await getNativeOptions();
         new WalletConnect({ session }, nativeOptions);
       })
     );
-    dispatch({ type: WALLETCONNECT_INIT_SUCCESS, payload: activeConnectors });
+    dispatch({ type: WALLETCONNECT_INIT_SUCCESS, payload: connectors });
   } catch (error) {
     console.error();
     dispatch({ type: WALLETCONNECT_INIT_FAILURE });
@@ -86,19 +86,19 @@ export const walletConnectOnSessionRequest = (uri: string) => async (
 ) => {
   const nativeOptions = await getNativeOptions();
 
-  const walletConnector = new WalletConnect({ uri }, nativeOptions);
+  const connector = new WalletConnect({ uri }, nativeOptions);
 
-  walletConnector.on("session_request", (error: any, payload: any) => {
+  connector.on("session_request", (error: any, payload: any) => {
     if (error) {
       throw error;
     }
-    const { pendingConnectors } = getState().walletConnect;
+    const { pending } = getState().walletConnect;
 
     const { peerId, peerMeta } = payload.params[0];
 
     dispatch({
       type: WALLETCONNECT_SESSION_REQUEST,
-      payload: [...pendingConnectors, walletConnector]
+      payload: [...pending, connector]
     });
 
     navigate("Request", { peerId, peerMeta, payload });
@@ -109,29 +109,29 @@ export const walletConnectApproveSessionRequest = (
   peerId: string,
   response: { accounts: string[]; chainId: number }
 ) => (dispatch: any, getState: any) => {
-  const { activeConnectors, pendingConnectors } = getState().walletConnect;
+  const { connectors, pending } = getState().walletConnect;
 
-  let updatedActiveConnectors = [...activeConnectors];
-  let updatedPendingConnectors;
+  let updatedConnectors = [...connectors];
+  let updatedPending;
 
-  pendingConnectors.forEach((walletConnector: WalletConnect) => {
-    if (walletConnector.peerId === peerId) {
-      walletConnector.approveSession({
+  pending.forEach((connector: WalletConnect) => {
+    if (connector.peerId === peerId) {
+      connector.approveSession({
         accounts: response.accounts,
         chainId: response.chainId
       });
-      asyncStorageSaveSession(walletConnector.session);
-      updatedActiveConnectors.push(walletConnector);
+      asyncStorageSaveSession(connector.session);
+      updatedConnectors.push(connector);
     } else {
-      updatedPendingConnectors.push(walletConnector);
+      updatedPending.push(connector);
     }
   });
 
   dispatch({
     type: WALLETCONNECT_SESSION_APPROVAL,
     payload: {
-      activeConnectors: updatedActiveConnectors,
-      pendingConnectors: updatedPendingConnectors
+      connectors: updatedConnectors,
+      pending: updatedPending
     }
   });
 
@@ -142,21 +142,21 @@ export const walletConnectRejectSessionRequest = (peerId: string) => (
   dispatch: any,
   getState: any
 ) => {
-  const { pendingConnectors } = getState().walletConnect;
+  const { pending } = getState().walletConnect;
 
-  const walletConnector = pendingConnectors.filter(
+  const connector = pending.filter(
     (pendingConnector: WalletConnect) => pendingConnector.peerId === peerId
   )[0];
 
-  walletConnector.rejectSession();
+  connector.rejectSession();
 
-  const updatedPendingConnectors = pendingConnectors.filter(
-    (walletConnector: WalletConnect) => walletConnector.peerId !== peerId
+  const updatedPending = pending.filter(
+    (connector: WalletConnect) => connector.peerId !== peerId
   );
 
   dispatch({
     type: WALLETCONNECT_SESSION_REJECTION,
-    payload: updatedPendingConnectors
+    payload: updatedPending
   });
 };
 
@@ -164,11 +164,11 @@ export const walletConnectKillSession = (peerId: string) => (
   dispatch: any,
   getState: any
 ) => {
-  const updatedActiveConnectors = getState().walletConnect.activeConnectors.filter(
-    (activeConnector: WalletConnect) => {
-      if (activeConnector.peerId === peerId) {
-        activeConnector.killSession();
-        asyncStorageDeleteSession(activeConnector.session);
+  const updatedConnectors = getState().walletConnect.connectors.filter(
+    (connector: WalletConnect) => {
+      if (connector.peerId === peerId) {
+        connector.killSession();
+        asyncStorageDeleteSession(connector.session);
         return false;
       }
       return true;
@@ -176,7 +176,7 @@ export const walletConnectKillSession = (peerId: string) => (
   );
   dispatch({
     type: WALLETCONNECT_SESSION_DISCONNECTED,
-    payload: updatedActiveConnectors
+    payload: updatedConnectors
   });
 };
 
@@ -184,43 +184,43 @@ export const walletConnectSubscribeToEvents = (peerId: string) => (
   dispatch: any,
   getState: any
 ) => {
-  const walletConnector = getState().walletConnect.activeConnectors.filter(
-    (activeConnector: WalletConnect) => activeConnector.peerId === peerId
+  const connector = getState().walletConnect.connectors.filter(
+    (connector: WalletConnect) => connector.peerId === peerId
   )[0];
 
-  walletConnector.on("call_request", (error: any, payload: any) => {
+  connector.on("call_request", (error: any, payload: any) => {
     if (error) {
       throw error;
     }
-    const updatedCallRequests = [...getState().walletConnect.callRequests];
+    const updatedRequests = [...getState().walletConnect.requestes];
 
-    const updatedWalletConnector = getState().walletConnect.activeConnectors.filter(
-      (activeConnector: WalletConnect) => activeConnector.peerId === peerId
+    const updatedconnector = getState().walletConnect.connectors.filter(
+      (connector: WalletConnect) => connector.peerId === peerId
     )[0];
 
-    updatedCallRequests.push({
-      walletConnector: updatedWalletConnector,
+    updatedRequests.push({
+      connector: updatedconnector,
       payload: payload
     });
 
     dispatch({
       type: WALLETCONNECT_CALL_REQUEST,
-      payload: updatedCallRequests
+      payload: updatedRequests
     });
 
-    const { peerMeta } = walletConnector;
+    const { peerMeta } = connector;
 
     navigate("Request", { peerId, peerMeta, payload });
   });
 
-  walletConnector.on("disconnect", (error: any, payload: any) => {
+  connector.on("disconnect", (error: any, payload: any) => {
     if (error) {
       throw error;
     }
-    const updatedActiveConnectors = getState().walletConnect.activeConnectors.filter(
-      (activeConnector: WalletConnect) => {
-        if (activeConnector.peerId === peerId) {
-          asyncStorageDeleteSession(activeConnector.session);
+    const updatedConnectors = getState().walletConnect.connectors.filter(
+      (connector: WalletConnect) => {
+        if (connector.peerId === peerId) {
+          asyncStorageDeleteSession(connector.session);
           return false;
         }
         return true;
@@ -228,59 +228,57 @@ export const walletConnectSubscribeToEvents = (peerId: string) => (
     );
     dispatch({
       type: WALLETCONNECT_SESSION_DISCONNECTED,
-      payload: updatedActiveConnectors
+      payload: updatedConnectors
     });
   });
 };
 
-export const walletConnectApproveCallRequest = (
+export const walletConnectApproveRequest = (
   peerId: string,
   response: { id: number; result: any }
 ) => async (dispatch: any, getState: any) => {
-  const walletConnector = getState().walletConnect.activeConnectors.filter(
-    (activeConnector: WalletConnect) => activeConnector.peerId === peerId
+  const connector = getState().walletConnect.connectors.filter(
+    (connector: WalletConnect) => connector.peerId === peerId
   )[0];
 
-  await walletConnector.approveRequest(response);
+  await connector.approveRequest(response);
 
-  const updatedCallRequests = getState().walletConnect.activeConnectors.filter(
-    (callRequest: IWalletConnectCallRequest) =>
-      callRequest.payload.id !== response.id
+  const updatedRequests = getState().walletConnect.connectors.filter(
+    (request: IWalletConnectRequest) => request.payload.id !== response.id
   );
 
   await dispatch({
     type: WALLETCONNECT_CALL_APPROVAL,
-    payload: updatedCallRequests
+    payload: updatedRequests
   });
 };
 
-export const walletConnectRejectCallRequest = (
+export const walletConnectRejectRequest = (
   peerId: string,
   response: { id: number; error: { message: string } }
 ) => async (dispatch: any, getState: any) => {
-  const walletConnector = getState().walletConnect.activeConnectors.filter(
-    (activeConnector: WalletConnect) => activeConnector.peerId === peerId
+  const connector = getState().walletConnect.connectors.filter(
+    (connector: WalletConnect) => connector.peerId === peerId
   )[0];
 
-  await walletConnector.rejectRequest(response);
+  await connector.rejectRequest(response);
 
-  const updatedCallRequests = getState().walletConnect.activeConnectors.filter(
-    (callRequest: IWalletConnectCallRequest) =>
-      callRequest.payload.id !== response.id
+  const updatedRequests = getState().walletConnect.connectors.filter(
+    (request: IWalletConnectRequest) => request.payload.id !== response.id
   );
 
   await dispatch({
     type: WALLETCONNECT_CALL_REJECTION,
-    payload: updatedCallRequests
+    payload: updatedRequests
   });
 };
 
 // -- Reducer --------------------------------------------------------------- //
 const INITIAL_STATE: IWalletConnectReduxState = {
   loading: false,
-  activeConnectors: [],
-  pendingConnectors: [],
-  callRequests: []
+  connectors: [],
+  pending: [],
+  requests: []
 };
 
 export default (
@@ -297,7 +295,7 @@ export default (
       return {
         ...state,
         loading: false,
-        activeConnectors: action.payload
+        connectors: action.payload
       };
     case WALLETCONNECT_INIT_FAILURE:
       return {
@@ -308,25 +306,25 @@ export default (
     case WALLETCONNECT_SESSION_REJECTION:
       return {
         ...state,
-        pendingConnectors: action.payload
+        pending: action.payload
       };
     case WALLETCONNECT_SESSION_APPROVAL:
       return {
         ...state,
-        activeConnectors: action.payload.activeConnectors,
-        pendingConnectors: action.payload.pendingConnectors
+        connectors: action.payload.connectors,
+        pending: action.payload.pending
       };
     case WALLETCONNECT_SESSION_DISCONNECTED:
       return {
         ...state,
-        activeConnectors: action.payload
+        connectors: action.payload
       };
     case WALLETCONNECT_CALL_REQUEST:
     case WALLETCONNECT_CALL_APPROVAL:
     case WALLETCONNECT_CALL_REJECTION:
       return {
         ...state,
-        callRequests: action.payload
+        requests: action.payload
       };
     default:
       return state;
