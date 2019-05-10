@@ -1,6 +1,6 @@
 {
   "name": "walletconnect-developer-app",
-  "version": "1.0.0-beta.20",
+  "version": "1.0.0-beta.22",
   "private": true,
   "keywords": [
     "walletconnect",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@tradle/react-native-http": "^2.0.1",
-    "@walletconnect/react-native": "^1.0.0-beta.20",
+    "@walletconnect/react-native": "^1.0.0-beta.22",
     "assert": "^1.4.1",
     "bignumber.js": "^8.0.1",
     "browserify-zlib": "^0.1.4",
