@@ -45,7 +45,7 @@ const getNativeOptions = async () => {
 
   const nativeOptions = {
     clientMeta: {
-      description: "WalletConnect Developer App",
+      description: "WalletConnect Test App",
       url: "https://walletconnect.org",
       icons: ["https://walletconnect.org/walletconnect-logo.png"],
       name: "WalletConnect",

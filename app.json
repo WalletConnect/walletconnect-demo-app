@@ -9,6 +9,6 @@
       "transformer": "node_modules/react-native-typescript-transformer/index.js"
     }
   },
-  "name": "walletconnectdeveloperapp",
+  "name": "walletconnecttestapp",
   "displayName": "WalletConnect"
 }

@@ -1,4 +1,4 @@
-rootProject.name = 'walletconnectdeveloperapp'
+rootProject.name = 'walletconnecttestapp'
 include ':react-native-randombytes'
 project(':react-native-randombytes').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-randombytes/android')
 include ':react-native-udp'

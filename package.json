@@ -1,5 +1,5 @@
 {
-  "name": "walletconnect-developer-app",
+  "name": "walletconnect-test-app",
   "version": "1.0.0-beta.24",
   "private": true,
   "keywords": [
@@ -21,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/walletconnect/walletconnect-developer-app.git"
+    "url": "git+https://github.com/walletconnect/walletconnect-test-app.git"
   },
   "bugs": {
-    "url": "https://github.com/walletconnect/walletconnect-developer-app/issues"
+    "url": "https://github.com/walletconnect/walletconnect-test-app/issues"
   },
   "dependencies": {
     "@tradle/react-native-http": "^2.0.1",
