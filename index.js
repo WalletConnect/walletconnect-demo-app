@@ -2,4 +2,4 @@ import "./shim";
 
 import { AppRegistry } from "react-native";
 import App from "./src";
-AppRegistry.registerComponent("walletconnecttestapp", () => App);
+AppRegistry.registerComponent("walletconnectdemoapp", () => App);

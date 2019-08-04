@@ -1,4 +1,3 @@
-# WalletConnect Test App
+# WalletConnect Demo App
 
-Test React-Native Wallet to Test WalletConnect integration
-**[NOT A SECURE WALLET - DO NOT STORE FUNDS]**
+Demo React-Native App to Test WalletConnect integration
